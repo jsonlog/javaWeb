@@ -1,5 +1,6 @@
 package com.smart.generator;
 
+import com.smart.framework.util.ClassUtil;
 import com.smart.framework.util.FileUtil;
 import com.smart.framework.util.StringUtil;
 import com.smart.generator.bean.Column;
@@ -62,7 +63,7 @@ public class Generator {
     }
 
     public void generator() {
-        String inputPath = config.getProperty("input_path");
+        String inputPath = ClassUtil.getClassPath() + "db.xls";
         String outputPath = config.getProperty("output_path");
         String packageName = config.getProperty("package_name");
 
