@@ -44,16 +44,16 @@ public class EntityBuilder extends Builder {
         typeMap.put("text", "String");
     }
 
+    private String javaPath = outputPath + "/java";
     private String packageName;
 
-    public EntityBuilder(String outputPath, String vmPath, Map<Table, List<Column>> tableMap, String packageName) {
-        super(outputPath, vmPath, tableMap);
+    public EntityBuilder(String outputPath, Map<Table, List<Column>> tableMap, String packageName) {
+        super(outputPath, tableMap);
         this.packageName = packageName;
     }
 
     @Override
     public void createFile() {
-        String javaPath = outputPath + "/java";
         FileUtil.createPath(javaPath);
     }
 
@@ -72,7 +72,7 @@ public class EntityBuilder extends Builder {
             dataMap.put("fieldList", fieldList);
             dataMap.put("StringUtil", new StringUtil());
 
-            VelocityUtil.mergeTemplate(vmPath, dataMap, outputPath + "/java/" + entityName + ".java");
+            VelocityUtil.mergeTemplate("vm/entity.vm", dataMap, javaPath + "/" + entityName + ".java");
         }
     }
 

@@ -10,13 +10,14 @@ import java.util.Map;
 
 public class SQLBuilder extends Builder {
 
-    public SQLBuilder(String outputPath, String vmPath, Map<Table, List<Column>> tableMap) {
-        super(outputPath, vmPath, tableMap);
+    private String sqlPath = outputPath + "/sql";
+
+    public SQLBuilder(String outputPath, Map<Table, List<Column>> tableMap) {
+        super(outputPath, tableMap);
     }
 
     @Override
     public void createFile() {
-        String sqlPath = outputPath + "/sql";
         FileUtil.createPath(sqlPath);
     }
 
@@ -25,6 +26,6 @@ public class SQLBuilder extends Builder {
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("tableMap", tableMap);
 
-        VelocityUtil.mergeTemplate(vmPath, dataMap, outputPath + "/sql/schema.sql");
+        VelocityUtil.mergeTemplate("vm/table.vm", dataMap, sqlPath + "/schema.sql");
     }
 }

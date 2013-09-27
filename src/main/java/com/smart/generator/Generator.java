@@ -24,11 +24,9 @@ public class Generator {
 
     private static final Properties config = FileUtil.loadPropFile("config.properties");
 
-    private static final String TABLE_VM = "vm/table.vm";
-    private static final String ENTITY_VM = "vm/entity.vm";
-
     public static void main(String[] args) throws Exception {
-        new Generator().generate();
+        Generator generator = new Generator();
+        generator.generate();
     }
 
     public void generate() {
@@ -38,10 +36,10 @@ public class Generator {
 
         Map<Table, List<Column>> tableMap = createTableMap(inputPath);
 
-        Builder sqlBuilder = new SQLBuilder(outputPath, TABLE_VM, tableMap);
+        Builder sqlBuilder = new SQLBuilder(outputPath, tableMap);
         sqlBuilder.build();
 
-        Builder entityBuilder = new EntityBuilder(outputPath, ENTITY_VM, tableMap, packageName);
+        Builder entityBuilder = new EntityBuilder(outputPath, tableMap, packageName);
         entityBuilder.build();
     }
 
