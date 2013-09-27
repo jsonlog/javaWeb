@@ -28,10 +28,10 @@ public class Generator {
     private static final String ENTITY_VM = "vm/entity.vm";
 
     public static void main(String[] args) throws Exception {
-        new Generator().generator();
+        new Generator().generate();
     }
 
-    public void generator() {
+    public void generate() {
         String inputPath = ClassUtil.getClassPath() + "db.xls";
         String outputPath = config.getProperty("output_path");
         String packageName = config.getProperty("package_name");
@@ -39,12 +39,10 @@ public class Generator {
         Map<Table, List<Column>> tableMap = createTableMap(inputPath);
 
         Builder sqlBuilder = new SQLBuilder(outputPath, TABLE_VM, tableMap);
-        sqlBuilder.createFile();
-        sqlBuilder.generateCode();
+        sqlBuilder.build();
 
         Builder entityBuilder = new EntityBuilder(outputPath, ENTITY_VM, tableMap, packageName);
-        entityBuilder.createFile();
-        entityBuilder.generateCode();
+        entityBuilder.build();
     }
 
     private Map<Table, List<Column>> createTableMap(String inputPath) {

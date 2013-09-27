@@ -17,6 +17,11 @@ public abstract class Builder {
         this.tableMap = tableMap;
     }
 
+    public void build() {
+        createFile();
+        generateCode();
+    }
+
     public abstract void createFile();
 
     public abstract void generateCode();
