@@ -4,13 +4,12 @@ import com.smart.framework.util.ClassUtil;
 import com.smart.framework.util.FileUtil;
 import com.smart.framework.util.StringUtil;
 import com.smart.generator.bean.Column;
-import com.smart.generator.bean.Field;
 import com.smart.generator.bean.Table;
-import com.smart.generator.util.VelocityUtil;
+import com.smart.generator.builder.Builder;
+import com.smart.generator.builder.EntityBuilder;
+import com.smart.generator.builder.SQLBuilder;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,36 +27,6 @@ public class Generator {
     private static final String TABLE_VM = "vm/table.vm";
     private static final String ENTITY_VM = "vm/entity.vm";
 
-    private static List<String> keywordList = new ArrayList<String>();
-    private static Map<String, String> typeMap = new HashMap<String, String>();
-
-    static {
-        keywordList = Arrays.asList(
-            "abstract", "assert",
-            "boolean", "break", "byte",
-            "case", "catch", "char", "class", "continue",
-            "default", "do", "double",
-            "else", "enum", "extends",
-            "final", "finally", "float", "for",
-            "if", "implements", "import", "instanceof", "int", "interface",
-            "long",
-            "native",
-            "new",
-            "package", "private", "protected", "public",
-            "return",
-            "strictfp", "short", "static", "super", "switch", "synchronized",
-            "this", "throw", "throws", "transient", "try",
-            "void", "volatile",
-            "while"
-        );
-
-        typeMap.put("bigint", "long");
-        typeMap.put("varchar", "String");
-        typeMap.put("char", "String");
-        typeMap.put("int", "int");
-        typeMap.put("text", "String");
-    }
-
     public static void main(String[] args) throws Exception {
         new Generator().generator();
     }
@@ -69,8 +38,13 @@ public class Generator {
 
         Map<Table, List<Column>> tableMap = createTableMap(inputPath);
 
-        generateSQL(tableMap, outputPath);
-        generateJava(tableMap, packageName, outputPath);
+        Builder sqlBuilder = new SQLBuilder(outputPath, TABLE_VM, tableMap);
+        sqlBuilder.createFile();
+        sqlBuilder.generateCode();
+
+        Builder entityBuilder = new EntityBuilder(outputPath, ENTITY_VM, tableMap, packageName);
+        entityBuilder.createFile();
+        entityBuilder.generateCode();
     }
 
     private Map<Table, List<Column>> createTableMap(String inputPath) {
@@ -104,67 +78,5 @@ public class Generator {
             throw new RuntimeException(e.getMessage(), e);
         }
         return tableMap;
-    }
-
-    private void generateSQL(Map<Table, List<Column>> tableMap, String outputPath) {
-        String sqlPath = outputPath + "/sql";
-        FileUtil.createPath(sqlPath);
-
-        Map<String, Object> dataMap = new HashMap<String, Object>();
-        dataMap.put("tableMap", tableMap);
-
-        VelocityUtil.mergeTemplate(TABLE_VM, dataMap, sqlPath + "/schema.sql");
-    }
-
-    private void generateJava(Map<Table, List<Column>> tableMap, String packageName, String outputPath) {
-        String javaPath = outputPath + "/java";
-        FileUtil.createPath(javaPath);
-
-        for (Map.Entry<Table, List<Column>> entry : tableMap.entrySet()) {
-            Table table = entry.getKey();
-            String tableName = table.getName();
-            String entityName = StringUtil.firstToUpper(StringUtil.toCamelhump(tableName));
-            List<Column> columnList = entry.getValue();
-            List<Field> fieldList = transformFieldList(columnList);
-
-            Map<String, Object> dataMap = new HashMap<String, Object>();
-            dataMap.put("packageName", packageName);
-            dataMap.put("entityName", entityName);
-            dataMap.put("fieldList", fieldList);
-            dataMap.put("StringUtil", new StringUtil());
-
-            VelocityUtil.mergeTemplate(ENTITY_VM, dataMap, javaPath + "/" + entityName + ".java");
-        }
-    }
-
-    private List<Field> transformFieldList(List<Column> columnList) {
-        List<Field> fieldList = new ArrayList<Field>(columnList.size());
-        for (Column column : columnList) {
-            String fieldName = this.transformFieldName(column.getName());
-            String fieldType = this.transformFieldType(column.getType());
-            String fieldComment = column.getComment();
-            fieldList.add(new Field(fieldName, fieldType, fieldComment));
-        }
-        return fieldList;
-    }
-
-    private String transformFieldName(String columnName) {
-        String fieldName;
-        if (keywordList.contains(columnName)) {
-            fieldName = columnName + "_";
-        } else {
-            fieldName = columnName;
-        }
-        return StringUtil.toCamelhump(fieldName);
-    }
-
-    private String transformFieldType(String columnType) {
-        String fieldType;
-        if (typeMap.containsKey(columnType)) {
-            fieldType = typeMap.get(columnType);
-        } else {
-            fieldType = "String";
-        }
-        return fieldType;
     }
 }
