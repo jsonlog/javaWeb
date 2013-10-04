@@ -15,7 +15,7 @@ public abstract class Builder {
         this.tableMap = tableMap;
     }
 
-    public void build() {
+    public final void build() {
         createFile();
         generateCode();
     }
