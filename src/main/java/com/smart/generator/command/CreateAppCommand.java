@@ -62,11 +62,11 @@ public class CreateAppCommand implements Command {
     }
 
     private void createApp() {
-        // 复制 template/src 目录（不会复制空目录）
+        // 复制 app/src 目录
         File appDir = FileUtil.createDir(appPath);
         if (appDir.exists()) {
             String classPath = ClassUtil.getClassPath();
-            String templdatePath = classPath + "/template/src";
+            String templdatePath = classPath + "/app/src";
             FileUtil.copyDir(templdatePath, appPath);
         }
 
