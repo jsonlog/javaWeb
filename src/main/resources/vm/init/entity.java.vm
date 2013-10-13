@@ -1,0 +1,22 @@
+package ${packageName};
+
+import com.smart.framework.base.BaseEntity;
+
+public class ${entityName} extends BaseEntity {
+
+#foreach($field in ${fieldList})
+    private ${field.type} ${field.name}; // ${field.comment}
+
+#end
+#foreach($field in ${fieldList})
+#set($upperFieldName = $StringUtil.firstToUpper(${field.name}))
+    public ${field.type} get${upperFieldName}() {
+        return ${field.name};
+    }
+
+    public void set${upperFieldName}(${field.type} ${field.name}) {
+        this.${field.name} = ${field.name};
+    }
+
+#end
+}

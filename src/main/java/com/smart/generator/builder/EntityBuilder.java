@@ -54,7 +54,7 @@ public class EntityBuilder extends Builder {
 
     @Override
     public void createFile() {
-        FileUtil.createPath(javaPath);
+        FileUtil.createDir(javaPath);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class EntityBuilder extends Builder {
             dataMap.put("fieldList", fieldList);
             dataMap.put("StringUtil", new StringUtil());
 
-            VelocityUtil.mergeTemplate("vm/entity.vm", dataMap, javaPath + "/" + entityName + ".java");
+            VelocityUtil.mergeTemplateIntoFile("vm/init/entity.java.vm", dataMap, javaPath + "/" + entityName + ".java");
         }
     }
 

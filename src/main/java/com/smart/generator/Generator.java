@@ -70,8 +70,8 @@ public class Generator {
             }
             workbook.close();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(e.getMessage(), e);
+            logger.error("创建 Table 数据出错！", e);
+            throw new RuntimeException( e);
         }
         return tableMap;
     }

@@ -21,7 +21,22 @@ public class VelocityUtil {
         engine.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
     }
 
-    public static String mergeTemplate(String vmPath, Map<String, Object> dataMap) {
+    // 合并模板到文件中
+    public static void mergeTemplateIntoFile(String vmPath, Map<String, Object> dataMap, String filePath) {
+        try {
+            Template template = engine.getTemplate(vmPath);
+            VelocityContext context = new VelocityContext(dataMap);
+            FileWriter writer = new FileWriter(filePath);
+            template.merge(context, writer);
+            writer.close();
+        } catch (Exception e) {
+            logger.error("合并模板出错！", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 合并模板并返回字符串
+    public static String mergeTemplateReturnString(String vmPath, Map<String, Object> dataMap) {
         String result;
         try {
             Template template = engine.getTemplate(vmPath);
@@ -31,22 +46,9 @@ public class VelocityUtil {
             result = writer.toString();
             writer.close();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(e.getMessage(), e);
+            logger.error("合并模板出错！", e);
+            throw new RuntimeException(e);
         }
         return result;
-    }
-
-    public static void mergeTemplate(String vmPath, Map<String, Object> dataMap, String filePath) {
-        try {
-            Template template = engine.getTemplate(vmPath);
-            VelocityContext context = new VelocityContext(dataMap);
-            FileWriter writer = new FileWriter(filePath);
-            template.merge(context, writer);
-            writer.close();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(e.getMessage(), e);
-        }
     }
 }
