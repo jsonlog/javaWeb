@@ -21,6 +21,11 @@ public class VelocityUtil {
         engine.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
     }
 
+    // 设置 VM 文件加载路径（默认为 classpath）
+    public static void setVmLoaderPath(String path) {
+        engine.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, path);
+    }
+
     // 合并模板到文件中
     public static void mergeTemplateIntoFile(String vmPath, Map<String, Object> dataMap, String filePath) {
         try {

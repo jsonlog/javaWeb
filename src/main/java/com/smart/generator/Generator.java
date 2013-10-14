@@ -1,6 +1,5 @@
 package com.smart.generator;
 
-import com.smart.framework.util.ClassUtil;
 import com.smart.framework.util.FileUtil;
 import com.smart.framework.util.StringUtil;
 import com.smart.generator.bean.Column;
@@ -30,7 +29,7 @@ public class Generator {
     }
 
     public void generate() {
-        String inputPath = ClassUtil.getClassPath() + "db.xls";
+        String inputPath = config.getProperty("input_file");
         String outputPath = config.getProperty("output_path");
         String packageName = config.getProperty("package_name");
 
@@ -71,7 +70,7 @@ public class Generator {
             workbook.close();
         } catch (Exception e) {
             logger.error("创建 Table 数据出错！", e);
-            throw new RuntimeException( e);
+            throw new RuntimeException(e);
         }
         return tableMap;
     }

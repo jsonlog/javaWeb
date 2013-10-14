@@ -8,10 +8,10 @@ public interface Command {
      * @param params 命令参数（零个或多个）
      * @return 是否成功
      */
-    boolean execute(String... params);
+    boolean exec(String... params);
 
     /**
      * 撤销
      */
-    void revoke();
+    void undo();
 }

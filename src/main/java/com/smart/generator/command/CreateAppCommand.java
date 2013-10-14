@@ -8,8 +8,11 @@ import com.smart.generator.util.VelocityUtil;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 public class CreateAppCommand implements Command {
+
+    private static Logger logger = Logger.getLogger(CreateAppCommand.class);
 
     private static final int PARAMS_LENGTH = 5;
 
@@ -21,7 +24,7 @@ public class CreateAppCommand implements Command {
     private String appPath;
 
     @Override
-    public boolean execute(String... params) {
+    public boolean exec(String... params) {
         boolean result = true;
         try {
             // 检查输入参数
@@ -38,13 +41,14 @@ public class CreateAppCommand implements Command {
             // 生成文件
             generateFiles();
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             result = false;
         }
         return result;
     }
 
     @Override
-    public void revoke() {
+    public void undo() {
         // 删除应用
         FileUtil.deleteDir(appPath);
     }
@@ -59,14 +63,31 @@ public class CreateAppCommand implements Command {
 
         // 创建应用目录（当前路径 + 应用名称）
         appPath = currentPath + "/" + appName;
+
+        System.out.println("--------------------------------------------------");
+        System.out.println("Current Path:\t" + currentPath);
+        System.out.println("App Name:\t" + appName);
+        System.out.println("App Group:\t" + appGroup);
+        System.out.println("App Artifact:\t" + appArtifact);
+        System.out.println("App Package:\t" + appPackage);
+        System.out.println("--------------------------------------------------");
     }
 
     private void createApp() {
-        // 复制 app/src 目录
+        // 获取环境变量
+        String basePath = System.getenv("SMART_HOME");
+        if (StringUtil.isEmpty(basePath)) {
+            throw new RuntimeException("请设置环境变量！SMART_HOME");
+        }
+
+        // 设置 VM 加载路径（相对于环境变量）
+        String vmLoaderPath = basePath + "/vm";
+        VelocityUtil.setVmLoaderPath(basePath);
+
+        // 复制 src 目录
         File appDir = FileUtil.createDir(appPath);
         if (appDir.exists()) {
-            String classPath = ClassUtil.getClassPath();
-            String templdatePath = classPath + "/app/src";
+            String templdatePath = basePath + "/src";
             FileUtil.copyDir(templdatePath, appPath);
         }
 
