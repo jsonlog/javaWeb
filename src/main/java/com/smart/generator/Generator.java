@@ -29,9 +29,10 @@ public class Generator {
     }
 
     public void generate() {
-        String inputPath = config.getProperty("input_file");
-        String outputPath = config.getProperty("output_path");
-        String packageName = config.getProperty("package_name");
+        // TODO 重构
+        String inputPath = "D:\\Workspace\\smart\\smart-generator\\db.xls";
+        String outputPath = "D:\\Workspace\\smart\\smart-generator\\gen";
+        String packageName = "com.smart.sample.entity";
 
         Map<Table, List<Column>> tableMap = createTableMap(inputPath);
 

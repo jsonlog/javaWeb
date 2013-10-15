@@ -18,7 +18,7 @@ public class SQLBuilder extends Builder {
 
     @Override
     public void createFile() {
-        FileUtil.createDir(sqlPath);
+        FileUtil.createPath(sqlPath);
     }
 
     @Override
@@ -26,6 +26,6 @@ public class SQLBuilder extends Builder {
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("tableMap", tableMap);
 
-        VelocityUtil.mergeTemplateIntoFile("vm/init/table.sql.vm", dataMap, sqlPath + "/schema.sql");
+        VelocityUtil.mergeTemplateIntoFile("vm/init-app/table.sql.vm", dataMap, sqlPath + "/schema.sql");
     }
 }

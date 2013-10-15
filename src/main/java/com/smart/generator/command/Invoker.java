@@ -19,14 +19,10 @@ public class Invoker {
         return command.exec(params);
     }
 
-    public void undoCommand() {
-        command.undo();
-    }
-
     public static void main(String[] args) {
         // 验证命令行参数（至少有一个参数，即命令类名）
         if (ArrayUtil.isEmpty(args) && args.length < 1) {
-            System.out.println("请输入命令行参数！");
+            System.err.println("请输入命令参数！");
             return;
         }
 
@@ -45,10 +41,8 @@ public class Invoker {
 
         // 执行命令
         boolean result = invoker.execCommand(params);
-
-        // 判断命令执行结果，决定是否撤销命令
         if (!result) {
-            invoker.undoCommand();
+            System.err.println("执行命令出错！");
         }
     }
 }

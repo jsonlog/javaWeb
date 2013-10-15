@@ -15,11 +15,12 @@
     </properties>
 
     <dependencies>
-        <!-- Smart -->
+        <!-- JUnit -->
         <dependency>
-            <groupId>com.smart</groupId>
-            <artifactId>smart-framework</artifactId>
-            <version>1.0</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- JExcelApi -->
@@ -46,6 +47,13 @@
                     <artifactId>commons-lang</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- Smart -->
+        <dependency>
+            <groupId>com.smart</groupId>
+            <artifactId>smart-framework</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

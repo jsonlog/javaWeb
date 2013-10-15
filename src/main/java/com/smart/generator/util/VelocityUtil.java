@@ -1,6 +1,7 @@
 package com.smart.generator.util;
 
 import com.smart.framework.util.ClassUtil;
+import com.smart.framework.util.FileUtil;
 import java.io.FileWriter;
 import java.io.StringWriter;
 import java.util.Map;
@@ -29,10 +30,16 @@ public class VelocityUtil {
     // 合并模板到文件中
     public static void mergeTemplateIntoFile(String vmPath, Map<String, Object> dataMap, String filePath) {
         try {
+            // 创建路径
+            FileUtil.createPath(filePath);
+
+            // 合并模板
             Template template = engine.getTemplate(vmPath);
             VelocityContext context = new VelocityContext(dataMap);
             FileWriter writer = new FileWriter(filePath);
             template.merge(context, writer);
+
+            // 释放资源
             writer.close();
         } catch (Exception e) {
             logger.error("合并模板出错！", e);
@@ -44,11 +51,14 @@ public class VelocityUtil {
     public static String mergeTemplateReturnString(String vmPath, Map<String, Object> dataMap) {
         String result;
         try {
+            // 合并模板
             Template template = engine.getTemplate(vmPath);
             VelocityContext context = new VelocityContext(dataMap);
             StringWriter writer = new StringWriter();
             template.merge(context, writer);
             result = writer.toString();
+
+            // 释放资源
             writer.close();
         } catch (Exception e) {
             logger.error("合并模板出错！", e);
