@@ -24,11 +24,6 @@ public class CreateServiceCommand extends Command {
 
     @Override
     public void generateFiles() {
-        // 生成 Service 类
-        generateService();
-    }
-
-    private void generateService() {
         // 获取应用包名
         String appPackage = getAppPackage(appPath);
 
@@ -46,17 +41,17 @@ public class CreateServiceCommand extends Command {
         generateServiceImplement(packageName, serviceNameCamelhump, dataMap);
     }
 
-    private void generateServiceInterface(String packageName, String serviceClassName, Map<String, Object> dataMap) {
+    private void generateServiceInterface(String packageName, String serviceNameCamelhump, Map<String, Object> dataMap) {
         // 生成 Service 接口
         String vmPath = "create-service/service.java.vm";
-        String filePath = appPath + "/src/main/java/" + packageName + "/service/" + serviceClassName + ".java";
+        String filePath = appPath + "/src/main/java/" + packageName + "/service/" + serviceNameCamelhump + ".java";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 
-    private void generateServiceImplement(String packageName, String serviceClassName, Map<String, Object> dataMap) {
+    private void generateServiceImplement(String packageName, String serviceNameCamelhump, Map<String, Object> dataMap) {
         // 生成 Service 实现
         String vmPath = "create-service/service.impl.java.vm";
-        String filePath = appPath + "/src/main/java/" + packageName + "/service/impl/" + serviceClassName + "Impl.java";
+        String filePath = appPath + "/src/main/java/" + packageName + "/service/impl/" + serviceNameCamelhump + "Impl.java";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 }

@@ -18,7 +18,7 @@ public class SQLBuilder extends Builder {
 
     @Override
     public void createFile() {
-        FileUtil.createPath(sqlPath);
+        FileUtil.createFile(sqlPath);
     }
 
     @Override

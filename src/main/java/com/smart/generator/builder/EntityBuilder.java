@@ -54,7 +54,7 @@ public class EntityBuilder extends Builder {
 
     @Override
     public void createFile() {
-        FileUtil.createPath(javaPath);
+        FileUtil.createFile(javaPath);
     }
 
     @Override

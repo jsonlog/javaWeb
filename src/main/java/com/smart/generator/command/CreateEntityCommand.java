@@ -1,14 +1,10 @@
 package com.smart.generator.command;
 
-import com.smart.framework.util.StringUtil;
 import com.smart.generator.util.VelocityUtil;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.log4j.Logger;
 
 public class CreateEntityCommand extends Command {
-
-    private static Logger logger = Logger.getLogger(CreateEntityCommand.class);
 
     private String appPath;
     private String entityName;

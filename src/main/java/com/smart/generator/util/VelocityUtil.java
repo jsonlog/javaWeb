@@ -31,7 +31,7 @@ public class VelocityUtil {
     public static void mergeTemplateIntoFile(String vmPath, Map<String, Object> dataMap, String filePath) {
         try {
             // 创建路径
-            FileUtil.createPath(filePath);
+            FileUtil.createFile(filePath);
 
             // 合并模板
             Template template = engine.getTemplate(vmPath);

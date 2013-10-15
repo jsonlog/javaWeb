@@ -3,25 +3,20 @@ package com.smart.generator.command;
 import com.smart.framework.util.FileUtil;
 import com.smart.framework.util.StringUtil;
 import com.smart.generator.util.VelocityUtil;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.log4j.Logger;
 
 public class CreateAppCommand extends Command {
-
-    private static Logger logger = Logger.getLogger(CreateAppCommand.class);
 
     private String appPath;
     private String appName;
     private String appGroup;
-    private String appArtifact;
     private String appPackage;
 
     @Override
     public int getParamsLength() {
         // 返回参数个数
-        return 5;
+        return 4;
     }
 
     @Override
@@ -30,13 +25,12 @@ public class CreateAppCommand extends Command {
         appPath = params[0] + "/" + params[1]; // 应用目录 = 当前路径 + 应用名称
         appName = params[1];
         appGroup = params[2];
-        appArtifact = params[3];
-        appPackage = params[4];
+        appPackage = params[3];
     }
 
     @Override
     public void preGenerate() {
-        // 复制 src 目录
+        // 复制 src 目录（无法复制空目录）
         copyStrDir();
 
         // 创建空目录
@@ -44,12 +38,12 @@ public class CreateAppCommand extends Command {
     }
 
     private void copyStrDir() {
-        // 无法复制空目录
-        File appDir = FileUtil.createPath(appPath);
-        if (appDir.exists()) {
-            String templdatePath = smartHome + "/src";
-            FileUtil.copyDir(templdatePath, appPath);
-        }
+        // 先创建应用目录
+        FileUtil.createDir(appPath);
+
+        // 再将 src 目录复制到应用目录
+        String templdatePath = smartHome + "/src";
+        FileUtil.copyDir(templdatePath, appPath);
     }
 
     private void createEmptyDirs() {
@@ -65,7 +59,7 @@ public class CreateAppCommand extends Command {
 
         // 创建所有空目录
         for (String emptyDir : emptyDirs) {
-            FileUtil.createPath(appPath + "/" + emptyDir);
+            FileUtil.createDir(appPath + "/" + emptyDir);
         }
     }
 
@@ -87,8 +81,8 @@ public class CreateAppCommand extends Command {
     private void generateMavenFile() {
         // 创建数据
         Map<String, Object> dataMap = new HashMap<String, Object>();
+        dataMap.put("app_name", appName);
         dataMap.put("app_group", appGroup);
-        dataMap.put("app_artifact", appArtifact);
 
         // 生成文件
         String pomVMPath = "create-app/pom.xml.vm";

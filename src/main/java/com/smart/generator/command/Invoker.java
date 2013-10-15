@@ -2,10 +2,6 @@ package com.smart.generator.command;
 
 import com.smart.framework.util.ArrayUtil;
 import com.smart.framework.util.ObjectUtil;
-import com.smart.generator.util.VelocityUtil;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Invoker {
 
@@ -35,9 +31,8 @@ public class Invoker {
         invoker.setCommand(command);
 
         // 初始化参数（从第二个命令行参数开始）
-        List<String> paramList = new ArrayList<String>();
-        paramList.addAll(Arrays.asList(args).subList(1, args.length));
-        String[] params = paramList.toArray(new String[paramList.size()]);
+        String[] params = new String[args.length - 1];
+        System.arraycopy(args, 1, params, 0, args.length - 1);
 
         // 执行命令
         boolean result = invoker.execCommand(params);
