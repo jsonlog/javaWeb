@@ -1,12 +1,12 @@
 package com.smart.generator.test;
 
+import com.smart.generator.command.Invoker;
 import com.smart.generator.command.impl.CreateActionCommand;
 import com.smart.generator.command.impl.CreateAppCommand;
 import com.smart.generator.command.impl.CreateCRUDCommand;
 import com.smart.generator.command.impl.CreateEntityCommand;
 import com.smart.generator.command.impl.CreatePageCommand;
 import com.smart.generator.command.impl.CreateServiceCommand;
-import com.smart.generator.command.Invoker;
 import com.smart.generator.command.impl.LoadDictCommand;
 import org.junit.Test;
 
@@ -116,8 +116,8 @@ public class CommandTest {
         invoker.setCommand(new LoadDictCommand()); // smart load-dict <dict-path>
 
         String[] params = {
-            "C:\\Smart\\demo",      // Current Path
-            "C:\\Smart\\db.xls",    // Dict Path
+            "C:\\Smart\\demo",          // Current Path
+            "C:\\Smart\\demo\\db.xls",  // Dict Path
         };
 
         boolean result = invoker.execCommand(params);

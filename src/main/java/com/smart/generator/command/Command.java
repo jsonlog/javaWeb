@@ -2,7 +2,7 @@ package com.smart.generator.command;
 
 import com.smart.framework.util.ArrayUtil;
 import com.smart.framework.util.StringUtil;
-import com.smart.generator.util.VelocityUtil;
+import com.smart.framework.util.VelocityUtil;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,25 +18,12 @@ public abstract class Command {
     public final boolean exec(String... params) {
         boolean result = true;
         try {
-            // 检查输入参数
             checkParams(params);
-
-            // 初始化环境变量
             initSmartHome();
-
-            // 设置 VM 加载路径（相对于环境变量）
             setVmLoaderPath();
-
-            // 初始化相关变量
             initVariables(params);
-
-            // 在创建前执行
             preGenerate();
-
-            // 生成文件
             generateFiles();
-
-            // 在创建后执行
             postGenerate();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -95,32 +82,5 @@ public abstract class Command {
             throw new RuntimeException("加载 config.properties 文件出错！");
         }
         return appName;
-    }
-
-    protected final String getCamelhumpName(String name) {
-        return StringUtil.firstToUpper(StringUtil.toCamelhump(getUnderlineName(name)));
-    }
-
-    protected final String getUnderlineName(String name) {
-        name = name.trim().toLowerCase();
-        if (name.contains("-")) {
-            name = name.replace("-", "_");
-        }
-        return name;
-    }
-
-    protected final String getDisplayName(String name) {
-        String displayName = "";
-        name = name.trim().toLowerCase();
-        if (name.contains("-")) {
-            String[] words = StringUtil.splitString(name, "-");
-            for (String word : words) {
-                displayName += StringUtil.firstToUpper(word) + " ";
-            }
-            displayName = displayName.trim();
-        } else {
-            displayName = StringUtil.firstToUpper(name);
-        }
-        return displayName;
     }
 }

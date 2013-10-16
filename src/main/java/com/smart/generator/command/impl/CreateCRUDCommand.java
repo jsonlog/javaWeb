@@ -14,23 +14,15 @@ public class CreateCRUDCommand extends Command {
 
     @Override
     public void initVariables(String... params) {
-        // 获取命令参数
         appPath = params[0];
         crudName = params[1];
     }
 
     @Override
     public void generateFiles() {
-        // 创建 Entity
         generateEntity();
-
-        // 创建 Service
         generateService();
-
-        // 创建 Action
         generateAction();
-
-        // 创建 Page
         generatePage();
     }
 
