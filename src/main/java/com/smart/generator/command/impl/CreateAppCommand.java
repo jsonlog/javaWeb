@@ -1,7 +1,8 @@
-package com.smart.generator.command;
+package com.smart.generator.command.impl;
 
 import com.smart.framework.util.FileUtil;
 import com.smart.framework.util.StringUtil;
+import com.smart.generator.command.Command;
 import com.smart.generator.util.VelocityUtil;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,6 +103,7 @@ public class CreateAppCommand extends Command {
     private void generateConfigFileForMain(String dbName) {
         // 创建数据
         Map<String, Object> dataMap = new HashMap<String, Object>();
+        dataMap.put("app_name", appName);
         dataMap.put("app_package", appPackage);
         dataMap.put("db_name", dbName);
 
@@ -114,6 +116,7 @@ public class CreateAppCommand extends Command {
     private void generateConfigFileForTest(String dbName) {
         // 创建数据
         Map<String, Object> dataMap = new HashMap<String, Object>();
+        dataMap.put("app_name", appName);
         dataMap.put("app_package", appPackage);
         dataMap.put("db_name", dbName + "_test");
 

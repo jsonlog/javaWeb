@@ -1,4 +1,4 @@
-package com.smart.generator.builder;
+package com.smart.generator.command.impl.builder;
 
 import com.smart.generator.bean.Column;
 import com.smart.generator.bean.Table;
@@ -15,12 +15,5 @@ public abstract class Builder {
         this.tableMap = tableMap;
     }
 
-    public final void build() {
-        createFile();
-        generateCode();
-    }
-
-    public abstract void createFile();
-
-    public abstract void generateCode();
+    public abstract void build();
 }

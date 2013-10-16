@@ -1,10 +1,11 @@
-package com.smart.generator.builder;
+package com.smart.generator.command.impl.builder.impl;
 
 import com.smart.framework.util.FileUtil;
 import com.smart.framework.util.StringUtil;
 import com.smart.generator.bean.Column;
 import com.smart.generator.bean.Field;
 import com.smart.generator.bean.Table;
+import com.smart.generator.command.impl.builder.Builder;
 import com.smart.generator.util.VelocityUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +45,6 @@ public class EntityBuilder extends Builder {
         typeMap.put("text", "String");
     }
 
-    private String javaPath = outputPath + "/java";
     private String packageName;
 
     public EntityBuilder(String outputPath, Map<Table, List<Column>> tableMap, String packageName) {
@@ -53,30 +53,33 @@ public class EntityBuilder extends Builder {
     }
 
     @Override
-    public void createFile() {
-        FileUtil.createFile(javaPath);
-    }
+    public void build() {
+        FileUtil.createFile(outputPath);
 
-    @Override
-    public void generateCode() {
         for (Map.Entry<Table, List<Column>> entry : tableMap.entrySet()) {
+            // 定义相关变量
             Table table = entry.getKey();
             String tableName = table.getName();
             String entityName = StringUtil.firstToUpper(StringUtil.toCamelhump(tableName));
             List<Column> columnList = entry.getValue();
             List<Field> fieldList = transformFieldList(columnList);
 
+            // 创建数据
             Map<String, Object> dataMap = new HashMap<String, Object>();
             dataMap.put("packageName", packageName);
             dataMap.put("entityName", entityName);
             dataMap.put("fieldList", fieldList);
             dataMap.put("StringUtil", new StringUtil());
 
-            VelocityUtil.mergeTemplateIntoFile("vm/init-app/entity.java.vm", dataMap, javaPath + "/" + entityName + ".java");
+            // 生成文件
+            String vmPath = "load-dict/entity.java.vm";
+            String filePath = outputPath + "/" + entityName + ".java";
+            VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
         }
     }
 
     private List<Field> transformFieldList(List<Column> columnList) {
+        // 将 Column List 转换为 Field List
         List<Field> fieldList = new ArrayList<Field>(columnList.size());
         for (Column column : columnList) {
             String fieldName = this.transformFieldName(column.getName());
@@ -88,6 +91,7 @@ public class EntityBuilder extends Builder {
     }
 
     private String transformFieldName(String columnName) {
+        // 将 Column Name 转换为 Field Name
         String fieldName;
         if (keywordList.contains(columnName)) {
             fieldName = columnName + "_";
@@ -98,6 +102,7 @@ public class EntityBuilder extends Builder {
     }
 
     private String transformFieldType(String columnType) {
+        // 将 Column Type 转换为 Field Type
         String fieldType;
         if (typeMap.containsKey(columnType)) {
             fieldType = typeMap.get(columnType);

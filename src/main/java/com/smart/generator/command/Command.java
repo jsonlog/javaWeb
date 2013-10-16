@@ -4,6 +4,8 @@ import com.smart.framework.util.ArrayUtil;
 import com.smart.framework.util.StringUtil;
 import com.smart.generator.util.VelocityUtil;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 
@@ -73,16 +75,26 @@ public abstract class Command {
     public void postGenerate() {
     }
 
+    protected final String getAppName(String appPath) {
+        return getConfigProperty(appPath, "app");
+    }
+
     protected final String getAppPackage(String appPath) {
-        String appPackage;
+        return getConfigProperty(appPath, "package");
+    }
+
+    private String getConfigProperty(String appPath, String property) {
+        String appName;
         try {
             Properties config = new Properties();
             config.load(new FileInputStream(appPath + "/src/main/resources/config.properties"));
-            appPackage = config.getProperty("package");
-        } catch (Exception e) {
-            throw new RuntimeException("无法获取应用包名！");
+            appName = config.getProperty(property);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("无法找到 config.properties 文件！");
+        } catch (IOException e) {
+            throw new RuntimeException("加载 config.properties 文件出错！");
         }
-        return appPackage;
+        return appName;
     }
 
     protected final String getCamelhumpName(String name) {
@@ -95,5 +107,20 @@ public abstract class Command {
             name = name.replace("-", "_");
         }
         return name;
+    }
+
+    protected final String getDisplayName(String name) {
+        String displayName = "";
+        name = name.trim().toLowerCase();
+        if (name.contains("-")) {
+            String[] words = StringUtil.splitString(name, "-");
+            for (String word : words) {
+                displayName += StringUtil.firstToUpper(word) + " ";
+            }
+            displayName = displayName.trim();
+        } else {
+            displayName = StringUtil.firstToUpper(name);
+        }
+        return displayName;
     }
 }

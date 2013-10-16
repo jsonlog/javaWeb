@@ -1,5 +1,6 @@
-package com.smart.generator.command;
+package com.smart.generator.command.impl;
 
+import com.smart.generator.command.Command;
 import com.smart.generator.util.VelocityUtil;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,14 +45,14 @@ public class CreateServiceCommand extends Command {
     private void generateServiceInterface(String packageName, String serviceNameCamelhump, Map<String, Object> dataMap) {
         // 生成 Service 接口
         String vmPath = "create-service/service.java.vm";
-        String filePath = appPath + "/src/main/java/" + packageName + "/service/" + serviceNameCamelhump + ".java";
+        String filePath = appPath + "/src/main/java/" + packageName + "/service/" + serviceNameCamelhump + "Service.java";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 
     private void generateServiceImplement(String packageName, String serviceNameCamelhump, Map<String, Object> dataMap) {
         // 生成 Service 实现
         String vmPath = "create-service/service.impl.java.vm";
-        String filePath = appPath + "/src/main/java/" + packageName + "/service/impl/" + serviceNameCamelhump + "Impl.java";
+        String filePath = appPath + "/src/main/java/" + packageName + "/service/impl/" + serviceNameCamelhump + "ServiceImpl.java";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 }
