@@ -2,7 +2,7 @@ package com.smart.generator.test;
 
 import com.smart.framework.OrderedRunner;
 import com.smart.framework.annotation.Order;
-import com.smart.generator.command.Invoker;
+import com.smart.generator.Invoker;
 import com.smart.generator.command.impl.CreateActionCommand;
 import com.smart.generator.command.impl.CreateAppCommand;
 import com.smart.generator.command.impl.CreateCRUDCommand;

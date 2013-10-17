@@ -1,7 +1,8 @@
-package com.smart.generator.command;
+package com.smart.generator;
 
 import com.smart.framework.util.ArrayUtil;
 import com.smart.framework.util.ObjectUtil;
+import com.smart.generator.command.Command;
 
 public class Invoker {
 
