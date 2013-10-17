@@ -5,6 +5,7 @@ import com.smart.framework.util.VelocityUtil;
 import com.smart.generator.bean.Column;
 import com.smart.generator.bean.Field;
 import com.smart.generator.bean.Table;
+import com.smart.generator.builder.Builder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

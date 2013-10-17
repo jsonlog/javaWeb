@@ -3,6 +3,7 @@ package com.smart.generator.builder.impl;
 import com.smart.framework.util.VelocityUtil;
 import com.smart.generator.bean.Column;
 import com.smart.generator.bean.Table;
+import com.smart.generator.builder.Builder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
