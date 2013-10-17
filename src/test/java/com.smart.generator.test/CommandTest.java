@@ -10,7 +10,6 @@ import com.smart.generator.command.impl.CreateEntityCommand;
 import com.smart.generator.command.impl.CreatePageCommand;
 import com.smart.generator.command.impl.CreateServiceCommand;
 import com.smart.generator.command.impl.LoadDictCommand;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -130,7 +129,6 @@ public class CommandTest {
         }
     }
 
-    @Ignore
     @Test
     @Order(7)
     public void loadDictCommandTest() {
