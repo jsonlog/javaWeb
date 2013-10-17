@@ -22,7 +22,7 @@ public class SQLBuilder extends Builder {
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("table_map", tableMap);
 
-        String vmPath = "load-dict/table.sql.vm";
+        String vmPath = "load-dict/table_sql.vm";
         String filePath = outputPath + "/" + appName + ".sql";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }

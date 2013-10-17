@@ -24,21 +24,17 @@ public class CreatePageCommand extends Command {
 
     @Override
     public void generateFiles() {
-        generatePage();
-    }
-
-    private void generatePage() {
         String appName = getAppName(appPath);
 
-        String appNameDisplay = StringUtil.toDisplayStyle(appName);
-        String pageNameDisplay = StringUtil.toDisplayStyle(pageName);
-        String pageNameUnderline = StringUtil.toUnderlineStyle(pageName);
+        String appNameDisplay = StringUtil.toDisplayStyle(appName, "-");
+        String pageNameDisplay = StringUtil.toDisplayStyle(pageName, "-");
+        String pageNameUnderline = StringUtil.toUnderlineStyle(pageName, "-");
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("app_name_d", appNameDisplay);
         dataMap.put("page_name_d", pageNameDisplay);
 
-        String vmPath = "create-page/page.html.vm";
+        String vmPath = "create-page/page_html.vm";
         String filePath = appPath + "/src/main/webapp/www/page/" + pageNameUnderline + ".html";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }

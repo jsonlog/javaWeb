@@ -13,6 +13,8 @@ public abstract class Command {
 
     private static final Logger logger = Logger.getLogger(Command.class);
 
+    private static Properties config;
+
     protected String smartHome;
 
     public final boolean exec(String... params) {
@@ -73,8 +75,10 @@ public abstract class Command {
     private String getConfigProperty(String appPath, String property) {
         String appName;
         try {
-            Properties config = new Properties();
-            config.load(new FileInputStream(appPath + "/src/main/resources/config.properties"));
+            if (config == null) {
+                config = new Properties();
+                config.load(new FileInputStream(appPath + "/src/main/resources/config.properties"));
+            }
             appName = config.getProperty(property);
         } catch (FileNotFoundException e) {
             throw new RuntimeException("无法找到 config.properties 文件！");

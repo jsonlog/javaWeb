@@ -67,7 +67,7 @@ public class CreateAppCommand extends Command {
         dataMap.put("app_name", appName);
         dataMap.put("app_group", appGroup);
 
-        String pomVMPath = "create-app/pom.xml.vm";
+        String pomVMPath = "create-app/pom_xml.vm";
         String pomFilePath = appPath + "/pom.xml";
         VelocityUtil.mergeTemplateIntoFile(pomVMPath, dataMap, pomFilePath);
     }
@@ -85,7 +85,7 @@ public class CreateAppCommand extends Command {
         dataMap.put("app_package", appPackage);
         dataMap.put("db_name", dbName);
 
-        String vmPath = "create-app/config.properties.vm";
+        String vmPath = "create-app/config_properties.vm";
         String filePath = appPath + "/src/main/resources/config.properties";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
@@ -96,7 +96,7 @@ public class CreateAppCommand extends Command {
         dataMap.put("app_package", appPackage);
         dataMap.put("db_name", dbName + "_test");
 
-        String vmPath = "create-app/config.properties.vm";
+        String vmPath = "create-app/config_properties.vm";
         String filePath = appPath + "/src/test/resources/config.properties";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
@@ -106,18 +106,18 @@ public class CreateAppCommand extends Command {
         dataMap.put("app_name", appName);
         dataMap.put("app_package", appPackage);
 
-        String vmPath = "create-app/log4j.properties.vm";
+        String vmPath = "create-app/log4j_properties.vm";
         String filePath = appPath + "/src/main/resources/log4j.properties";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 
     private void generateIndexFile() {
-        String pageNameDisplay = StringUtil.toDisplayStyle(appName);
+        String pageNameDisplay = StringUtil.toDisplayStyle(appName, "-");
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("page_name_c", pageNameDisplay);
 
-        String vmPath = "create-app/index.html.vm";
+        String vmPath = "create-app/index_html.vm";
         String filePath = appPath + "/src/main/webapp/www/page/index.html";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }

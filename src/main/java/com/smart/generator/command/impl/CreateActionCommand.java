@@ -24,22 +24,18 @@ public class CreateActionCommand extends Command {
 
     @Override
     public void generateFiles() {
-        generateAction();
-    }
-
-    private void generateAction() {
         String appPackage = getAppPackage(appPath);
         String packageName = appPackage.replace('.', '/');
-        String actionNameCamelhump = StringUtil.toCamelhumpStyle(actionName);
-        String actionNameUnderline = StringUtil.toUnderlineStyle(actionName);
+        String actionNamePascal = StringUtil.toPascalStyle(actionName, "-");
+        String actionNameUnderline = StringUtil.toUnderlineStyle(actionName, "-");
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("app_package", appPackage);
-        dataMap.put("action_name_c", actionNameCamelhump);
+        dataMap.put("action_name_p", actionNamePascal);
         dataMap.put("action_name_u", actionNameUnderline);
 
-        String vmPath = "create-action/action.java.vm";
-        String filePath = appPath + "/src/main/java/" + packageName + "/action/" + actionNameCamelhump + "Action.java";
+        String vmPath = "create-action/action_java.vm";
+        String filePath = appPath + "/src/main/java/" + packageName + "/action/" + actionNamePascal + "Action.java";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 }

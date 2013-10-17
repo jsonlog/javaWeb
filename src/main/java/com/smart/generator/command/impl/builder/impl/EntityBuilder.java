@@ -56,18 +56,18 @@ public class EntityBuilder extends Builder {
         for (Map.Entry<Table, List<Column>> entry : tableMap.entrySet()) {
             Table table = entry.getKey();
             String tableName = table.getName();
-            String entityName = StringUtil.toCamelhumpStyle(tableName);
+            String entityNamePascal = StringUtil.toPascalStyle(tableName, "-");
             List<Column> columnList = entry.getValue();
             List<Field> fieldList = transformFieldList(columnList);
 
             Map<String, Object> dataMap = new HashMap<String, Object>();
             dataMap.put("app_package", packageName);
-            dataMap.put("entity_name_c", entityName);
+            dataMap.put("entity_name_p", entityNamePascal);
             dataMap.put("field_list", fieldList);
             dataMap.put("SU", new StringUtil());
 
-            String vmPath = "load-dict/entity.java.vm";
-            String filePath = outputPath + "/" + entityName + ".java";
+            String vmPath = "load-dict/entity_java.vm";
+            String filePath = outputPath + "/" + entityNamePascal + ".java";
             VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
         }
     }

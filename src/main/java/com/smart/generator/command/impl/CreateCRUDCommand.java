@@ -1,6 +1,10 @@
 package com.smart.generator.command.impl;
 
+import com.smart.framework.util.StringUtil;
+import com.smart.framework.util.VelocityUtil;
 import com.smart.generator.command.Command;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateCRUDCommand extends Command {
 
@@ -39,9 +43,19 @@ public class CreateCRUDCommand extends Command {
     }
 
     private void generateAction() {
-        Command command = new CreateActionCommand();
-        command.initVariables(appPath, crudName);
-        command.generateFiles();
+        String appPackage = getAppPackage(appPath);
+        String packageName = appPackage.replace('.', '/');
+        String actionNamePascal = StringUtil.toPascalStyle(crudName, "-");
+        String actionNameUnderline = StringUtil.toUnderlineStyle(crudName, "-");
+
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+        dataMap.put("app_package", appPackage);
+        dataMap.put("action_name_p", actionNamePascal);
+        dataMap.put("action_name_u", actionNameUnderline);
+
+        String vmPath = "create-crud/action_java.vm";
+        String filePath = appPath + "/src/main/java/" + packageName + "/action/" + actionNamePascal + "Action.java";
+        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 
     private void generatePage() {

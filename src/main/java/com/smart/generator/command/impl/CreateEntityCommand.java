@@ -24,20 +24,16 @@ public class CreateEntityCommand extends Command {
 
     @Override
     public void generateFiles() {
-        generateEntity();
-    }
-
-    private void generateEntity() {
         String appPackage = getAppPackage(appPath);
         String packageName = appPackage.replace('.', '/');
-        String entityNameCamelhump = StringUtil.toCamelhumpStyle(entityName);
+        String entityNamePascal = StringUtil.toPascalStyle(entityName, "-");
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("app_package", appPackage);
-        dataMap.put("entity_name_c", entityNameCamelhump);
+        dataMap.put("entity_name_p", entityNamePascal);
 
-        String vmPath = "create-entity/entity.java.vm";
-        String filePath = appPath + "/src/main/java/" + packageName + "/entity/" + entityNameCamelhump + ".java";
+        String vmPath = "create-entity/entity_java.vm";
+        String filePath = appPath + "/src/main/java/" + packageName + "/entity/" + entityNamePascal + ".java";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 }

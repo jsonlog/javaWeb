@@ -26,25 +26,25 @@ public class CreateServiceCommand extends Command {
     public void generateFiles() {
         String appPackage = getAppPackage(appPath);
         String packageName = appPackage.replace('.', '/');
-        String serviceNameCamelhump = StringUtil.toCamelhumpStyle(serviceName);
+        String serviceNamePascal = StringUtil.toPascalStyle(serviceName, "-");
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("app_package", appPackage);
-        dataMap.put("service_name_c", serviceNameCamelhump);
+        dataMap.put("service_name_p", serviceNamePascal);
 
-        generateServiceInterface(packageName, serviceNameCamelhump, dataMap);
-        generateServiceImplement(packageName, serviceNameCamelhump, dataMap);
+        generateServiceInterface(packageName, serviceNamePascal, dataMap);
+        generateServiceImplement(packageName, serviceNamePascal, dataMap);
     }
 
-    private void generateServiceInterface(String packageName, String serviceNameCamelhump, Map<String, Object> dataMap) {
-        String vmPath = "create-service/service.java.vm";
-        String filePath = appPath + "/src/main/java/" + packageName + "/service/" + serviceNameCamelhump + "Service.java";
+    private void generateServiceInterface(String packageName, String serviceNamePascal, Map<String, Object> dataMap) {
+        String vmPath = "create-service/service_java.vm";
+        String filePath = appPath + "/src/main/java/" + packageName + "/service/" + serviceNamePascal + "Service.java";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 
-    private void generateServiceImplement(String packageName, String serviceNameCamelhump, Map<String, Object> dataMap) {
-        String vmPath = "create-service/service.impl.java.vm";
-        String filePath = appPath + "/src/main/java/" + packageName + "/service/impl/" + serviceNameCamelhump + "ServiceImpl.java";
+    private void generateServiceImplement(String packageName, String serviceNamePascal, Map<String, Object> dataMap) {
+        String vmPath = "create-service/service_impl_java.vm";
+        String filePath = appPath + "/src/main/java/" + packageName + "/service/impl/" + serviceNamePascal + "ServiceImpl.java";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 }
