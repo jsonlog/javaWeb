@@ -1,0 +1,4 @@
+package ${app_package}.service;
+
+public interface ${service_name_p}Service {
+}

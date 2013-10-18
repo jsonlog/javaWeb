@@ -1,0 +1,6 @@
+package ${app_package}.entity;
+
+import com.smart.framework.base.BaseEntity;
+
+public class ${entity_name_p} extends BaseEntity {
+}

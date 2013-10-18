@@ -1,0 +1,21 @@
+package ${app_package};
+
+import com.smart.framework.base.BaseEntity;
+
+public class ${entity_name_p} extends BaseEntity {
+#foreach($field in ${field_list})
+
+    private ${field.type} ${field.name}; // ${field.comment}
+#end
+#foreach($field in ${field_list})
+#set($fieldName = $SU.firstToUpper(${field.name}))
+
+    public ${field.type} get${fieldName}() {
+        return ${field.name};
+    }
+
+    public void set${fieldName}(${field.type} ${field.name}) {
+        this.${field.name} = ${field.name};
+    }
+#end
+}
