@@ -4,7 +4,6 @@ setlocal EnableDelayedExpansion
 
 set JAVA_OPTS=-Dfile.encoding=UTF-8
 set JAVA_OPTS=%JAVA_OPTS% -Dsmart.home=%SMART_HOME%
-echo %JAVA_OPTS%
 
 set CLASS_PATH=%SMART_HOME%\config
 for %%i in (%SMART_HOME%\lib\*.jar) do (
