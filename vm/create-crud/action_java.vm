@@ -16,25 +16,25 @@ public class ${action_name_p}Action extends BaseAction {
     }
 
     @Request("post:/${action_name_u}/search")
-    public Result search(Map<String, Object> formFieldMap) {
+    public Result search(Map<String, Object> fieldMap) {
         // TODO
         return new Result(true);
     }
 
-    @Request("get:/${action_name_u}/show/{id}")
-    public Result show(long id) {
+    @Request("get:/${action_name_u}/view/{id}")
+    public Result view(long id) {
         // TODO
         return new Result(true);
     }
 
     @Request("post:/${action_name_u}/create")
-    public Result create(Map<String, Object> formFieldMap) {
+    public Result create(Map<String, Object> fieldMap) {
         // TODO
         return new Result(true);
     }
 
     @Request("put:/${action_name_u}/update/{id}")
-    public Result update(long id, Map<String, Object> formFieldMap) {
+    public Result update(long id, Map<String, Object> fieldMap) {
         // TODO
         return new Result(true);
     }
