@@ -2,8 +2,8 @@
 
 setlocal EnableDelayedExpansion
 
-set JAVA_OPTS=-Dfile.encoding=UTF-8
-set JAVA_OPTS=%JAVA_OPTS% -Dsmart.home=%SMART_HOME%
+set SMART_OPTS=-Dfile.encoding=UTF-8
+set SMART_OPTS=%SMART_OPTS% -Dsmart.home=%SMART_HOME%
 
 set CLASS_PATH=%SMART_HOME%\config
 for %%i in (%SMART_HOME%\lib\*.jar) do (
@@ -165,7 +165,7 @@ goto end
 ::----------------------------------------------------------------------------------------------------
 :java
 ::----------------------------------------------------------------------------------------------------
-java %JAVA_OPTS% -cp "%CLASS_PATH%" %INVOKER_CLASS% %COMMAND_CLASS% "%CD%" %COMMAND_PARAMS%
+java %SMART_OPTS% -cp "%CLASS_PATH%" %INVOKER_CLASS% %COMMAND_CLASS% "%CD%" %COMMAND_PARAMS%
 goto end
 
 ::----------------------------------------------------------------------------------------------------
