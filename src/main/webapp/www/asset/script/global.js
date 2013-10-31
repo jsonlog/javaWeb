@@ -1,3 +1,6 @@
+/* 全局变量 */
+var BASE = 'smart-sample'; // 应用 Context 名称
+
 var Pager = function(pagerId, $tableComponent) {
     (function() {
         // 翻页
@@ -146,6 +149,10 @@ $(function() {
         cache: false,
         error: function(jqXHR, textStatus, errorThrown) {
             switch (jqXHR.status) {
+                case 403:
+                    document.write('');
+                    location.href = BASE + '/';
+                    break;
                 case 503:
                     alert(errorThrown);
                     break;
