@@ -65,11 +65,11 @@ public abstract class Command {
     }
 
     protected final String getAppName(String appPath) {
-        return getConfigProperty(appPath, "app");
+        return getConfigProperty(appPath, "app.name");
     }
 
     protected final String getAppPackage(String appPath) {
-        return getConfigProperty(appPath, "package");
+        return getConfigProperty(appPath, "app.package");
     }
 
     private String getConfigProperty(String appPath, String property) {
