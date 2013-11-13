@@ -37,10 +37,19 @@ if not "%1" == "" (
 ::----------------------------------------------------------------------------------------------------
 set COMMAND_CLASS=com.smart.generator.command.impl.CreateAppCommand
 
+:app_name
 set /p APP_NAME="1/3 - Name: "
-set /p APP_GROUP="2/3 - Group: "
-set /p APP_PACKAGE="3/3 - Package: [%APP_GROUP%.%APP_NAME%] "
+if "%APP_NAME%"=="" (
+    goto app_name;
+)
 
+:app_group
+set /p APP_GROUP="2/3 - Group: "
+if "%APP_GROUP%"=="" (
+    goto app_group;
+)
+
+set /p APP_PACKAGE="3/3 - Package: [%APP_GROUP%.%APP_NAME%] "
 if "%APP_PACKAGE%"=="" (
     set APP_PACKAGE=%APP_GROUP%.%APP_NAME%
 )
