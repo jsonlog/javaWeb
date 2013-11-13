@@ -44,8 +44,9 @@ public class CreateAppCommand extends Command {
         String[] emptyDirs = {
             "src/main/java",
             "src/main/resources",
-            "src/main/webapp/www/page",
-            "src/main/webapp/www/script",
+            "src/main/webapp/www/html",
+            "src/main/webapp/www/css",
+            "src/main/webapp/www/js",
             "src/test/java",
             "src/test/resources/sql",
         };
@@ -60,6 +61,7 @@ public class CreateAppCommand extends Command {
         generateConfigFile();
         generateLog4jFile();
         generateIndexFile();
+        generateGlobalJS();
     }
 
     private void generateMavenFile() {
@@ -115,10 +117,19 @@ public class CreateAppCommand extends Command {
         String pageNameDisplay = StringUtil.toDisplayStyle(appName, "-");
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
-        dataMap.put("page_name_c", pageNameDisplay);
+        dataMap.put("page_name_d", pageNameDisplay);
 
         String vmPath = "create-app/index_html.vm";
-        String filePath = appPath + "/src/main/webapp/www/page/index.html";
+        String filePath = appPath + "/src/main/webapp/www/html/index.html";
+        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+    }
+
+    private void generateGlobalJS() {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+        dataMap.put("app_name", appName);
+
+        String vmPath = "create-app/global.js.vm";
+        String filePath = appPath + "/src/main/webapp/www/js/global.js";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 }

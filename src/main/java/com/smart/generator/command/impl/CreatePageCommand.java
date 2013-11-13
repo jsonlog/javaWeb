@@ -35,7 +35,7 @@ public class CreatePageCommand extends Command {
         dataMap.put("page_name_d", pageNameDisplay);
 
         String vmPath = "create-page/page_html.vm";
-        String filePath = appPath + "/src/main/webapp/www/page/" + pageNameUnderline + ".html";
+        String filePath = appPath + "/src/main/webapp/www/html/" + pageNameUnderline + ".html";
         VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
     }
 }
