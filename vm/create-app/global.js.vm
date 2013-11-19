@@ -1,0 +1,9 @@
+var BASE = '/${app_name}';
+
+$(function() {
+    $.ajaxSetup({
+        error: function() {
+            location.href = BASE + '/';
+        }
+    });
+});
