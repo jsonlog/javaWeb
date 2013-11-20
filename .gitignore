@@ -1,8 +1,1 @@
-# Maven #
-target/
-
-# IDEA #
-*.iml
-
-# Eclipse #
 /build
