@@ -1,4 +1,4 @@
-Smart Sample
+Smart Sample for Eclipse
 
 运行环境
 
