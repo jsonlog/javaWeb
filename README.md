@@ -2,7 +2,7 @@ Smart Sample for Eclipse
 
 运行环境
 
-1. 数据库：MySQL 5.5
+1. 数据库：MySQL 5.5/MariaDB 10.0
 2. Web 服务器：Tomcat 7.0
 
 使用方法
