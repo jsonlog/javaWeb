@@ -1,7 +1,7 @@
 package com.smart.generator.builder.impl;
 
 import com.smart.framework.util.StringUtil;
-import com.smart.framework.util.VelocityUtil;
+import com.smart.generator.CodeGenerator;
 import com.smart.generator.bean.Column;
 import com.smart.generator.bean.Field;
 import com.smart.generator.bean.Table;
@@ -68,7 +68,7 @@ public class EntityBuilder extends Builder {
 
             String vmPath = "load-dict/entity_java.vm";
             String filePath = outputPath + "/" + entityNamePascal + ".java";
-            VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+            CodeGenerator.generateCode(vmPath, dataMap, filePath);
         }
     }
 

@@ -2,7 +2,7 @@ package com.smart.generator.command.impl;
 
 import com.smart.framework.util.FileUtil;
 import com.smart.framework.util.StringUtil;
-import com.smart.framework.util.VelocityUtil;
+import com.smart.generator.CodeGenerator;
 import com.smart.generator.command.Command;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +36,7 @@ public class CreateAppCommand extends Command {
     private void copyStrDir() {
         FileUtil.createDir(appPath);
 
-        String templdatePath = smartHome + "/src";
+        String templdatePath = CodeGenerator.getVmPath() + "/src";
         FileUtil.copyDir(templdatePath, appPath);
     }
 
@@ -71,7 +71,7 @@ public class CreateAppCommand extends Command {
 
         String pomVMPath = "create-app/pom_xml.vm";
         String pomFilePath = appPath + "/pom.xml";
-        VelocityUtil.mergeTemplateIntoFile(pomVMPath, dataMap, pomFilePath);
+        CodeGenerator.generateCode(pomVMPath, dataMap, pomFilePath);
     }
 
     private void generateConfigFile() {
@@ -89,7 +89,7 @@ public class CreateAppCommand extends Command {
 
         String vmPath = "create-app/config_properties.vm";
         String filePath = appPath + "/src/main/resources/config.properties";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 
     private void generateConfigFileForTest(String dbName) {
@@ -100,7 +100,7 @@ public class CreateAppCommand extends Command {
 
         String vmPath = "create-app/config_properties.vm";
         String filePath = appPath + "/src/test/resources/config.properties";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 
     private void generateLog4jFile() {
@@ -110,7 +110,7 @@ public class CreateAppCommand extends Command {
 
         String vmPath = "create-app/log4j_properties.vm";
         String filePath = appPath + "/src/main/resources/log4j.properties";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 
     private void generateIndexFile() {
@@ -121,7 +121,7 @@ public class CreateAppCommand extends Command {
 
         String vmPath = "create-app/index_html.vm";
         String filePath = appPath + "/src/main/webapp/www/html/index.html";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 
     private void generateGlobalJS() {
@@ -130,6 +130,6 @@ public class CreateAppCommand extends Command {
 
         String vmPath = "create-app/global.js.vm";
         String filePath = appPath + "/src/main/webapp/www/js/global.js";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 }

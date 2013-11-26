@@ -1,7 +1,7 @@
 package com.smart.generator.command.impl;
 
 import com.smart.framework.util.StringUtil;
-import com.smart.framework.util.VelocityUtil;
+import com.smart.generator.CodeGenerator;
 import com.smart.generator.command.Command;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,12 +39,12 @@ public class CreateServiceCommand extends Command {
     private void generateServiceInterface(String packageName, String serviceNamePascal, Map<String, Object> dataMap) {
         String vmPath = "create-service/service_java.vm";
         String filePath = appPath + "/src/main/java/" + packageName + "/service/" + serviceNamePascal + "Service.java";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 
     private void generateServiceImplement(String packageName, String serviceNamePascal, Map<String, Object> dataMap) {
         String vmPath = "create-service/service_impl_java.vm";
         String filePath = appPath + "/src/main/java/" + packageName + "/service/impl/" + serviceNamePascal + "ServiceImpl.java";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 }

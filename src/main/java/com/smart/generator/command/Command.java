@@ -1,8 +1,6 @@
 package com.smart.generator.command;
 
 import com.smart.framework.util.ArrayUtil;
-import com.smart.framework.util.StringUtil;
-import com.smart.framework.util.VelocityUtil;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,14 +13,10 @@ public abstract class Command {
 
     private static Properties config;
 
-    protected String smartHome;
-
     public final boolean exec(String... params) {
         boolean result = true;
         try {
             checkParams(params);
-            initSmartHome();
-            setVmLoaderPath();
             initVariables(params);
             preGenerate();
             generateFiles();
@@ -38,18 +32,6 @@ public abstract class Command {
         if (ArrayUtil.isEmpty(params) || params.length != getParamsLength()) {
             throw new RuntimeException("命令参数有误！");
         }
-    }
-
-    private void initSmartHome() {
-        smartHome = System.getenv("SMART_HOME");
-        if (StringUtil.isEmpty(smartHome)) {
-            throw new RuntimeException("请设置环境变量！SMART_HOME");
-        }
-    }
-
-    private void setVmLoaderPath() {
-        String vmLoaderPath = smartHome + "/vm";
-        VelocityUtil.setVmLoaderPath(vmLoaderPath);
     }
 
     public abstract int getParamsLength();

@@ -1,7 +1,7 @@
 package com.smart.generator.command.impl;
 
 import com.smart.framework.util.StringUtil;
-import com.smart.framework.util.VelocityUtil;
+import com.smart.generator.CodeGenerator;
 import com.smart.generator.command.Command;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +36,6 @@ public class CreatePageCommand extends Command {
 
         String vmPath = "create-page/page_html.vm";
         String filePath = appPath + "/src/main/webapp/www/html/" + pageNameUnderline + ".html";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 }

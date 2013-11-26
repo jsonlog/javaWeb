@@ -1,7 +1,7 @@
 package com.smart.generator.command.impl;
 
 import com.smart.framework.util.StringUtil;
-import com.smart.framework.util.VelocityUtil;
+import com.smart.generator.CodeGenerator;
 import com.smart.generator.command.Command;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class CreateCRUDCommand extends Command {
 
         String vmPath = "create-crud/action_java.vm";
         String filePath = appPath + "/src/main/java/" + packageName + "/action/" + actionNamePascal + "Action.java";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 
     private void generatePage() {

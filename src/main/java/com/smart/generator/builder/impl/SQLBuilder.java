@@ -1,6 +1,6 @@
 package com.smart.generator.builder.impl;
 
-import com.smart.framework.util.VelocityUtil;
+import com.smart.generator.CodeGenerator;
 import com.smart.generator.bean.Column;
 import com.smart.generator.bean.Table;
 import com.smart.generator.builder.Builder;
@@ -24,6 +24,6 @@ public class SQLBuilder extends Builder {
 
         String vmPath = "load-dict/table_sql.vm";
         String filePath = outputPath + "/" + appName + ".sql";
-        VelocityUtil.mergeTemplateIntoFile(vmPath, dataMap, filePath);
+        CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 }
