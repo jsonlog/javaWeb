@@ -1,6 +1,6 @@
 package com.smart.generator;
 
-import com.smart.framework.Constant;
+import com.smart.framework.FrameworkConstant;
 import com.smart.framework.util.FileUtil;
 import com.smart.framework.util.StringUtil;
 import java.io.FileWriter;
@@ -33,8 +33,8 @@ public class CodeGenerator {
 
     private static void initVelocity() {
         Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, NullLogChute.class.getName());
-        Velocity.setProperty(Velocity.INPUT_ENCODING, Constant.DEFAULT_CHARSET);
-        Velocity.setProperty(Velocity.OUTPUT_ENCODING, Constant.DEFAULT_CHARSET);
+        Velocity.setProperty(Velocity.INPUT_ENCODING, FrameworkConstant.DEFAULT_CHARSET);
+        Velocity.setProperty(Velocity.OUTPUT_ENCODING, FrameworkConstant.DEFAULT_CHARSET);
         Velocity.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, VM_PATH);
         Velocity.init();
     }
