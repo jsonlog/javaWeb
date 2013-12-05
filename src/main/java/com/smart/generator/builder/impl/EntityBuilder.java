@@ -37,11 +37,13 @@ public class EntityBuilder extends Builder {
             "while"
         );
 
-        typeMap.put("bigint", "long");
-        typeMap.put("varchar", "String");
         typeMap.put("char", "String");
-        typeMap.put("int", "int");
+        typeMap.put("varchar", "String");
         typeMap.put("text", "String");
+        typeMap.put("bigint", "long");
+        typeMap.put("int", "int");
+        typeMap.put("smallint", "int");
+        typeMap.put("tinyint", "int");
     }
 
     private String packageName;
