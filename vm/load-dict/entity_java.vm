@@ -4,11 +4,14 @@ import com.smart.framework.base.BaseEntity;
 
 public class ${entity_name_p} extends BaseEntity {
 #foreach($field in ${field_list})
+#if($field.name != "id")
 
     private ${field.type} ${field.name}; // ${field.comment}
 #end
+#end
 #foreach($field in ${field_list})
 #set($fieldName = $SU.firstToUpper(${field.name}))
+#if($field.name != "id")
 
     public ${field.type} get${fieldName}() {
         return ${field.name};
@@ -17,5 +20,6 @@ public class ${entity_name_p} extends BaseEntity {
     public void set${fieldName}(${field.type} ${field.name}) {
         this.${field.name} = ${field.name};
     }
+#end
 #end
 }
