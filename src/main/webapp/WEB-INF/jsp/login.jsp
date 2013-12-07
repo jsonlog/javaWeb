@@ -9,7 +9,12 @@
     <%@ include file="common/css.jsp" %>
 </head>
 <body>
-<%@ include file="common/header_none.jsp" %>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <div class="navbar-brand"><f:message key="common.title"/></div>
+    </div>
+</nav>
 
 <div class="container">
     <div class="row">
@@ -53,5 +58,6 @@
 
 <%@ include file="common/footer.jsp" %>
 <%@ include file="common/js.jsp" %>
+
 </body>
 </html>
