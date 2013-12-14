@@ -23,7 +23,6 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-
         <!-- Velocity -->
         <dependency>
             <groupId>org.apache.velocity</groupId>
@@ -36,7 +35,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <!-- JExcelApi -->
         <dependency>
             <groupId>net.sourceforge.jexcelapi</groupId>
@@ -49,7 +47,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <!-- Smart -->
         <dependency>
             <groupId>com.smart</groupId>
@@ -70,7 +67,6 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-
             <!-- Test -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -80,8 +76,7 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-
-            <!-- Package -->
+            <!-- Jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -93,7 +88,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-
             <!-- Shade -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
