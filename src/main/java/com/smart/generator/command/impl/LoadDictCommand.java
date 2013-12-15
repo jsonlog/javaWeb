@@ -16,11 +16,12 @@ import java.util.Map;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LoadDictCommand extends Command {
 
-    private static final Logger logger = Logger.getLogger(LoadDictCommand.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoadDictCommand.class);
 
     private String appPath;
     private String dictPath;

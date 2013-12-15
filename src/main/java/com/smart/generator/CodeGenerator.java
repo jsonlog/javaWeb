@@ -5,16 +5,17 @@ import com.smart.framework.util.FileUtil;
 import com.smart.framework.util.StringUtil;
 import java.io.FileWriter;
 import java.util.Map;
-import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.log.NullLogChute;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CodeGenerator {
 
-    private static final Logger logger = Logger.getLogger(CodeGenerator.class);
+    private static final Logger logger = LoggerFactory.getLogger(CodeGenerator.class);
 
     private static String VM_PATH;
 

@@ -5,11 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class Command {
 
-    private static final Logger logger = Logger.getLogger(Command.class);
+    private static final Logger logger = LoggerFactory.getLogger(Command.class);
 
     private static Properties config;
 
