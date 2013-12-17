@@ -5,15 +5,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.smart</groupId>
-    <artifactId>smart-generator</artifactId>
-    <version>1.0</version>
-    <packaging>jar</packaging>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <smart.version>2.0-SNAPSHOT</smart.version>
     </properties>
+
+    <groupId>com.smart</groupId>
+    <artifactId>smart-generator</artifactId>
+    <version>${smart.version}</version>
 
     <dependencies>
         <!-- JUnit -->
