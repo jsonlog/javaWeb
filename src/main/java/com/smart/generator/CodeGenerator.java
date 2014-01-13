@@ -34,8 +34,8 @@ public class CodeGenerator {
 
     private static void initVelocity() {
         Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, NullLogChute.class.getName());
-        Velocity.setProperty(Velocity.INPUT_ENCODING, FrameworkConstant.DEFAULT_CHARSET);
-        Velocity.setProperty(Velocity.OUTPUT_ENCODING, FrameworkConstant.DEFAULT_CHARSET);
+        Velocity.setProperty(Velocity.INPUT_ENCODING, FrameworkConstant.CHARSET_UTF);
+        Velocity.setProperty(Velocity.OUTPUT_ENCODING, FrameworkConstant.CHARSET_UTF);
         Velocity.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, VM_PATH);
         Velocity.init();
     }
