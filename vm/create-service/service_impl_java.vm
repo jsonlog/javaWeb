@@ -1,9 +1,8 @@
 package ${app_package}.service.impl;
 
-import com.smart.framework.annotation.Bean;
-import com.smart.framework.base.BaseService;
+import com.smart.framework.annotation.Service;
 import ${app_package}.service.${service_name_p}Service;
 
-@Bean
-public class ${service_name_p}ServiceImpl extends BaseService implements ${service_name_p}Service {
+@Service
+public class ${service_name_p}ServiceImpl implements ${service_name_p}Service {
 }

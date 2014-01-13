@@ -7,5 +7,3 @@ jdbc.driver=com.mysql.jdbc.Driver
 jdbc.url=jdbc:mysql://localhost:3306/${db_name}
 jdbc.username=root
 jdbc.password=root
-jdbc.max.active=10
-jdbc.max.idle=10

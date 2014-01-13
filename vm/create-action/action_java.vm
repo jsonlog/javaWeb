@@ -1,12 +1,11 @@
 package ${app_package}.action;
 
-import com.smart.framework.annotation.Bean;
+import com.smart.framework.annotation.Action;
 import com.smart.framework.annotation.Request;
-import com.smart.framework.base.BaseAction;
 import com.smart.framework.bean.Result;
 
-@Bean
-public class ${action_name_p}Action extends BaseAction {
+@Action
+public class ${action_name_p}Action {
 
     @Request("get:/${action_name_u}")
     public Result index() {
