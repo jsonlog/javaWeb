@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../lib/jquery-form/jquery.form.min.js"></script>
+    <script src="../lib/jquery-tmpl/jquery.tmpl.min.js"></script>
+    <script src="../js/global.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <table id="product_table" class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Code</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<script id="product_tr" type="text/x-jquery-tmpl">
+    <tr>
+        <td>${name}</td>
+        <td>${code}</td>
+        <td>${price}</td>
+        <td>${description}</td>
+    </tr>
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        $.ajax({
+            url: 'http://localhost:8080/rest-server/ws/rest/ProductService/products',
+            success: function(data) {
+                $('#product_tr').tmpl(data).appendTo('#product_table tbody');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
