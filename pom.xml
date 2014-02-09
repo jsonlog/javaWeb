@@ -16,12 +16,11 @@
     <packaging>war</packaging>
 
     <dependencies>
-        <!-- CAS -->
+        <!-- Smart -->
         <dependency>
-            <groupId>org.jasig.cas.client</groupId>
-            <artifactId>cas-client-core</artifactId>
-            <version>3.2.1</version>
-            <scope>runtime</scope>
+            <groupId>com.smart</groupId>
+            <artifactId>smart-module-sso</artifactId>
+            <version>${smart.version}</version>
         </dependency>
     </dependencies>
 
