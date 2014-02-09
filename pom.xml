@@ -30,13 +30,6 @@
             <version>5.1.25</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- CAS -->
-        <dependency>
-            <groupId>org.jasig.cas.client</groupId>
-            <artifactId>cas-client-core</artifactId>
-            <version>3.2.1</version>
-            <scope>runtime</scope>
-        </dependency>
         <!-- Smart -->
         <dependency>
             <groupId>com.smart</groupId>
@@ -46,6 +39,11 @@
         <dependency>
             <groupId>com.smart</groupId>
             <artifactId>smart-plugin-ws</artifactId>
+            <version>${smart.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.smart</groupId>
+            <artifactId>smart-module-sso</artifactId>
             <version>${smart.version}</version>
         </dependency>
     </dependencies>
