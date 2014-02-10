@@ -19,7 +19,7 @@
         <!-- Smart -->
         <dependency>
             <groupId>com.smart</groupId>
-            <artifactId>smart-module-sso</artifactId>
+            <artifactId>smart-sso</artifactId>
             <version>${smart.version}</version>
         </dependency>
     </dependencies>
