@@ -61,13 +61,13 @@
 <script src="../lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="../lib/jquery-form/jquery.form.min.js"></script>
 <script src="../lib/jquery-tmpl/jquery.tmpl.min.js"></script>
-<script src="../lib/smart/smart-sso.js"></script>
-<script src="../js/global.js"></script>
+<!--<script src="../lib/smart/smart-sso.js"></script>-->
+<!--<script src="../js/global.js"></script>-->
 
 <script type="text/javascript">
     $(function() {
         $.ajax({
-            url: 'http://localhost:8080/rest-server/ws/rest/ProductService/products',
+            url: 'http://server:8080/rest-server/ws/rest/ProductService/products',
             success: function(data) {
                 $('#product_tr').tmpl(data).appendTo('#product_table tbody');
             }
