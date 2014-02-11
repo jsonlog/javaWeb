@@ -7,7 +7,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <smart.version>2.0</smart.version>
     </properties>
 
     <groupId>com.smart</groupId>
@@ -20,7 +19,7 @@
         <dependency>
             <groupId>com.smart</groupId>
             <artifactId>smart-sso</artifactId>
-            <version>${smart.version}</version>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 
