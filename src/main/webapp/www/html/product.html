@@ -66,9 +66,20 @@
 
 <script type="text/javascript">
     $(function() {
+//        $.ajax({
+//            url: 'http://server:8080/rest-server/ws/rest/ProductService/products',
+//            type: 'GET',
+//            dataType: 'json',
+//            success: function(data) {
+//                $('#product_tr').tmpl(data).appendTo('#product_table tbody');
+//            }
+//        });
         $.ajax({
             url: 'http://server:8080/rest-server/ws/rest/ProductService/products',
+            type: 'GET',
+            dataType: 'jsonp',
             success: function(data) {
+//                $('#product_tr').tmpl(data.product).appendTo('#product_table tbody'); // jettison
                 $('#product_tr').tmpl(data).appendTo('#product_table tbody');
             }
         });
