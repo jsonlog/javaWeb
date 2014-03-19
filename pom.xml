@@ -5,7 +5,8 @@
     <artifactId>Args</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
-    <name>Args 是用来获取Web中Action(或Controller)参数的,可以通过反射传入参数调用Action方法,Args的作用是获取参数,不提供其他功能</name>
+    <name>Args - Smart适配器</name>
+    <description>Args 是用来获取Web中Action(或Controller)参数的,可以通过反射传入参数调用Action方法,Args的作用是获取参数,不提供其他功能</description>
     <url>http://blog.csdn.net/isea533</url>
     <developers>
         <developer>
@@ -45,6 +46,11 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.8.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.smart</groupId>
+            <artifactId>smart-framework</artifactId>
+            <version>2.0</version>
         </dependency>
     </dependencies>
     <build>

@@ -26,9 +26,9 @@ import java.util.regex.Pattern;
  * Created by liuzh on 14-3-11.
  */
 public class ArgsUtil {
-    private UploadFileItem uploadFileItem;
-    private Map<String, List<Object>> multiParts;
-    private Map<String,Object> pathValues;
+    protected UploadFileItem uploadFileItem;
+    protected Map<String, List<Object>> multiParts;
+    protected Map<String,Object> pathValues;
     /**
      * 建议使用<code>ArgsUtil(UploadFileItem uploadFileItem, String mappingUrl)</code>
      */
@@ -192,7 +192,7 @@ public class ArgsUtil {
      * @return
      * @throws Exception
      */
-    private Object resolveStandardArgument(HttpServletRequest request, HttpServletResponse response, MethodParameter methodParam) throws Exception {
+    protected Object resolveStandardArgument(HttpServletRequest request, HttpServletResponse response, MethodParameter methodParam) throws Exception {
         Class<?> parameterType = methodParam.getParameterType();
         if (ServletRequest.class.isAssignableFrom(parameterType)) {
             return request;
@@ -226,7 +226,7 @@ public class ArgsUtil {
         return ValueConstants.UNRESOLVED;
     }
 
-    private Object resolveComplexParam(Class<?> paramType, HttpServletRequest request) throws Exception {
+    protected Object resolveComplexParam(Class<?> paramType, HttpServletRequest request) throws Exception {
         Object object = paramType.newInstance();
         if(multiParts!=null){
             BeanUtils.populate(object, multiParts);
@@ -241,7 +241,7 @@ public class ArgsUtil {
         return object;
     }
 
-    private Object resolveRequestParam(String paramName, boolean required, String defaultValue,
+    protected Object resolveRequestParam(String paramName, boolean required, String defaultValue,
                                        MethodParameter methodParam, HttpServletRequest request)
             throws Exception {
         Class<?> paramType = methodParam.getParameterType();
@@ -282,7 +282,7 @@ public class ArgsUtil {
         return checkType(paramName, paramValue, paramType);
     }
 
-    private Object resolveSessionAttributes(String sessionName, boolean required, String defaultValue,
+    protected Object resolveSessionAttributes(String sessionName, boolean required, String defaultValue,
                                        MethodParameter methodParam, HttpServletRequest request)
             throws Exception {
         HttpSession session = request.getSession();
@@ -307,7 +307,7 @@ public class ArgsUtil {
         return checkType(sessionName, paramValue,paramType);
     }
 
-    private Object resolveRequestHeader(String headerName, boolean required, String defaultValue,
+    protected Object resolveRequestHeader(String headerName, boolean required, String defaultValue,
                                         MethodParameter methodParam, HttpServletRequest request)
             throws Exception {
         Class<?> paramType = methodParam.getParameterType();
@@ -338,7 +338,7 @@ public class ArgsUtil {
         return checkType(headerName, headerValue, paramType);
     }
 
-    private String[] getHeaderValues(HttpServletRequest request, String headerName) {
+    protected String[] getHeaderValues(HttpServletRequest request, String headerName) {
         List<String> list = Collections.list(request.getHeaders(headerName));
         String[] headerValues = list.toArray(new String[list.size()]);
         if (headerValues.length == 0) {
@@ -441,7 +441,7 @@ public class ArgsUtil {
      * @param request
      * @return
      */
-    private Map resolveRequestHeaderMap(HttpServletRequest request) {
+    protected Map resolveRequestHeaderMap(HttpServletRequest request) {
         Map<String, String> result = new LinkedHashMap<String, String>();
         for (Enumeration<String> iterator = request.getHeaderNames(); iterator.hasMoreElements(); ) {
             String headerName = iterator.nextElement();
@@ -456,13 +456,16 @@ public class ArgsUtil {
      * @param request
      * @return
      */
-    private Map resolveRequestParamMap(HttpServletRequest request) {
+    protected Map resolveRequestParamMap(HttpServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();
-        Map<String, String> result = new LinkedHashMap<String, String>(parameterMap.size());
+        Map<String, Object> result = new LinkedHashMap<String, Object>(parameterMap.size());
         for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
             if (entry.getValue().length > 0) {
                 result.put(entry.getKey(), entry.getValue()[0]);
             }
+        }
+        if(multiParts!=null){
+            result.putAll(multiParts);
         }
         return result;
     }
@@ -472,7 +475,7 @@ public class ArgsUtil {
      * @param request
      * @return
      */
-    private Map resolveSessionMap(HttpServletRequest request) {
+    protected Map resolveSessionMap(HttpServletRequest request) {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
         HttpSession session = request.getSession();
 
@@ -483,7 +486,7 @@ public class ArgsUtil {
         return result;
     }
 
-    private Object checkType(String name, Object value, Class paramType) {
+    protected Object checkType(String name, Object value, Class paramType) {
         if(!paramType.isInstance(value)){
             throw new IllegalStateException("类型:"+paramType+" 参数 '"+name+"' 值的类型:"+value.getClass()+"和当前要求的类型不一致");
         }
@@ -497,7 +500,7 @@ public class ArgsUtil {
      * @param paramType
      * @return
      */
-    private Object checkValue(String name, Object value, Class paramType) {
+    protected Object checkValue(String name, Object value, Class paramType) {
         if (value == null) {
             if (boolean.class.equals(paramType)) {
                 return Boolean.FALSE;
