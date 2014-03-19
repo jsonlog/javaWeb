@@ -23,6 +23,7 @@ import java.util.*;
 public class SmartArgsUtil extends ArgsUtil{
     private Multiparts multiparts;
 
+    @Override
     public final Object[] resolveHandlerArguments(HttpServletRequest request, HttpServletResponse response, Method method) throws Exception {
         //获取mappingUrl
         String requestPath = null;
