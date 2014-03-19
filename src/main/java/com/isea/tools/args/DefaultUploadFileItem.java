@@ -28,7 +28,6 @@ public class DefaultUploadFileItem implements UploadFileItem {
         factory.setRepository(repository);
 
         ServletFileUpload upload = new ServletFileUpload(factory);
-        List<Object> results = new ArrayList<Object>();
         try {
             List<FileItem> items = upload.parseRequest(request);
             for (FileItem item : items) {
