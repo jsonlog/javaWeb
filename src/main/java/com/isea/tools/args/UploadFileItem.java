@@ -1,4 +1,4 @@
-package com.isea.tools.parameter;
+package com.isea.tools.args;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

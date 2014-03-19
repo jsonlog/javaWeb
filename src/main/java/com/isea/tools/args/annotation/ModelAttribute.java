@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.isea.tools.parameter.annotation;
+package com.isea.tools.args.annotation;
 
 import java.lang.annotation.*;
 
@@ -26,7 +26,7 @@ public @interface ModelAttribute {
 	/**
 	 * The name of the model attribute to bind to.
 	 * <p>The default model attribute name is inferred from the declared
-	 * attribute type (i.e. the method parameter type or method return type),
+	 * attribute type (i.e. the method args type or method return type),
 	 * based on the non-qualified class name:
 	 * e.g. "orderAddress" for class "mypackage.OrderAddress",
 	 * or "orderAddressList" for "List&lt;mypackage.OrderAddress&gt;".

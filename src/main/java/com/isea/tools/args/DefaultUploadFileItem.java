@@ -1,4 +1,4 @@
-package com.isea.tools.parameter;
+package com.isea.tools.args;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;

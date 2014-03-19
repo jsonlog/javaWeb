@@ -2,7 +2,7 @@ package com.isea.servlet;
 
 import com.isea.controller.LoginController;
 import com.isea.controller.User;
-import com.isea.tools.parameter.ArgsUtil;
+import com.isea.tools.args.ArgsUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;

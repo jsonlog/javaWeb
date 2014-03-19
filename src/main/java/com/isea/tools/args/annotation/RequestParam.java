@@ -14,26 +14,25 @@
  * limitations under the License.
  */
 
-package com.isea.tools.parameter.annotation;
+package com.isea.tools.args.annotation;
 
 import java.lang.annotation.*;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface CookieValue {
+public @interface RequestParam {
 
 	/**
-	 * The name of the cookie to bind to.
+	 * The name of the request args to bind to.
 	 */
 	String value() default "";
 
 	/**
-	 * Whether the header is required.
-	 * <p>Default is <code>true</code>, leading to an exception being thrown
-	 * in case the header is missing in the request. Switch this to
-	 * <code>false</code> if you prefer a <code>null</value> in case of the
-	 * missing header.
+	 * Whether the args is required.
+	 * <p>Default is <code>true</code>, leading to an exception thrown in case
+	 * of the args missing in the request. Switch this to <code>false</code>
+	 * if you prefer a <code>null</value> in case of the args missing.
 	 * <p>Alternatively, provide a {@link #defaultValue() defaultValue},
 	 * which implicitly sets this flag to <code>false</code>.
 	 */

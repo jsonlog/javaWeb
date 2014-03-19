@@ -1,4 +1,4 @@
-package com.isea.tools.parameter;
+package com.isea.tools.args;
 
 import sun.security.action.GetPropertyAction;
 
@@ -83,7 +83,7 @@ public class DecodeUtil {
         int i = 0;
 
         if (enc.length() == 0) {
-            throw new UnsupportedEncodingException ("URLDecoder: empty string enc parameter");
+            throw new UnsupportedEncodingException ("URLDecoder: empty string enc args");
         }
 
         char c;

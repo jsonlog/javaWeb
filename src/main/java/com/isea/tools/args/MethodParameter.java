@@ -1,19 +1,15 @@
-package com.isea.tools.parameter;
+package com.isea.tools.args;
 
 import com.isea.controller.LoginController;
-import com.isea.tools.parameter.annotation.RequestMapping;
+import com.isea.tools.args.annotation.RequestMapping;
 import javassist.*;
 import javassist.bytecode.CodeAttribute;
 import javassist.bytecode.LocalVariableAttribute;
 import javassist.bytecode.MethodInfo;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by liuzh on 14-3-11.
@@ -37,8 +33,8 @@ public class MethodParameter {
 
     /**
      * Create a new MethodParameter for the given method, with nesting level 1.
-     * @param method the Method to specify a parameter for
-     * @param parameterIndex the index of the parameter
+     * @param method the Method to specify a args for
+     * @param parameterIndex the index of the args
      */
     public MethodParameter(Method method, int parameterIndex) {
         this.method = method;
@@ -47,8 +43,8 @@ public class MethodParameter {
 
 
     /**
-     * Return the type of the method/constructor parameter.
-     * @return the parameter type (never <code>null</code>)
+     * Return the type of the method/constructor args.
+     * @return the args type (never <code>null</code>)
      */
     public Class<?> getParameterType() {
         if (this.parameterType == null) {
@@ -64,7 +60,7 @@ public class MethodParameter {
 
 
     /**
-     * Return the annotations associated with the specific method/constructor parameter.
+     * Return the annotations associated with the specific method/constructor args.
      */
     public Annotation[] getParameterAnnotations() {
         if (this.parameterAnnotations == null) {
