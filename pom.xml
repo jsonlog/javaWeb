@@ -54,6 +54,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>Parameter</finalName>
+        <finalName>com.isea.tools.smartArgs</finalName>
     </build>
 </project>
