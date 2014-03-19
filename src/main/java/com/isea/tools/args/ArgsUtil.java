@@ -47,7 +47,24 @@ public class ArgsUtil {
     }
 
     /**
-     * 获取全部参数
+     * 获取全部参数 - 该方法适用于使用了<code>RequestMapping</code>注解的方法
+     * @param request
+     * @param response
+     * @param method
+     * @return
+     * @throws Exception
+     */
+    public final Object[] resolveHandlerArguments(HttpServletRequest request, HttpServletResponse response, Method method) throws Exception {
+        String mappingUrl = null;
+        if(method.isAnnotationPresent(RequestMapping.class)){
+            RequestMapping requestMapping = (RequestMapping)method.getAnnotation(RequestMapping.class);
+            mappingUrl = requestMapping.value();
+        }
+        return resolveHandlerArguments(request, response, method,mappingUrl);
+    }
+
+    /**
+     * 获取全部参数 - 对于没有使用<code>RequestMapping</code>注解的方法，提供了一个直接将格式化url传入参数的方法
      * @param request
      * @param response
      * @param method
