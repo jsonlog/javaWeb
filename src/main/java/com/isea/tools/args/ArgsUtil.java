@@ -54,7 +54,7 @@ public class ArgsUtil {
      * @return
      * @throws Exception
      */
-    public final Object[] resolveHandlerArguments(HttpServletRequest request, HttpServletResponse response, Method method) throws Exception {
+    public Object[] resolveHandlerArguments(HttpServletRequest request, HttpServletResponse response, Method method) throws Exception {
         String mappingUrl = null;
         if(method.isAnnotationPresent(RequestMapping.class)){
             RequestMapping requestMapping = (RequestMapping)method.getAnnotation(RequestMapping.class);
@@ -72,7 +72,7 @@ public class ArgsUtil {
      * @return
      * @throws Exception
      */
-    public final Object[] resolveHandlerArguments(HttpServletRequest request, HttpServletResponse response, Method method, String mappingUrl) throws Exception {
+    public Object[] resolveHandlerArguments(HttpServletRequest request, HttpServletResponse response, Method method, String mappingUrl) throws Exception {
         Class[] paramTypes = method.getParameterTypes();
         Object[] args = new Object[paramTypes.length];
 
