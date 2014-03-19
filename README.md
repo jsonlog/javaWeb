@@ -40,47 +40,46 @@ Object[] args = argsUtil.resolveHandlerArguments(request, response, actionBean.g
 将上面返回的args参数作为反射调用invoke中的参数.
 
 然后在action中的方法可以像下面这样写(例子):
-<pre><code>    @RequestMapping("/login/{userid}/{roleName}")
-    public String login2(HttpServletRequest request,
-                        User user,
-                        @SessionAttributes("user")User user2,
-                        @RequestParam("hehe")FileItem item,
-                        @CookieValue("Hello")String hello,
-                        @RequestHeader("Accept")String accept,
-                        @PathVariable("userid")int userid,
-                        @PathVariable()String roleName) {
+<pre><code>@RequestMapping("/login/{userid}/{roleName}")
+public String login2(HttpServletRequest request,
+                    User user,
+                    @SessionAttributes("user")User user2,
+                    @RequestParam("hehe")FileItem item,
+                    @CookieValue("Hello")String hello,
+                    @RequestHeader("Accept")String accept,
+                    @PathVariable("userid")int userid,
+                    @PathVariable()String roleName) {
 
-        System.out.println("request:"+request.toString());
-        System.out.println("User:"+user.toString());
-        System.out.println("File:"+item.getFieldName()+","+item.getName());
-        System.out.println("Cookie:Hello="+hello);
-        System.out.println("Header:Accept="+accept);
-        System.out.println("userid:"+userid);
-        System.out.println("roleName:"+roleName);
+    System.out.println("request:"+request.toString());
+    System.out.println("User:"+user.toString());
+    System.out.println("File:"+item.getFieldName()+","+item.getName());
+    System.out.println("Cookie:Hello="+hello);
+    System.out.println("Header:Accept="+accept);
+    System.out.println("userid:"+userid);
+    System.out.println("roleName:"+roleName);
 
-        return "SUCCESS";
-    }
-</code></pre>
+    return "SUCCESS";
+}</code></pre>
 
 
 
 需要在smart-framework中做如下修改:
 
 原代码:
-<pre><code>    List<Object> actionMethodParamList = createActionMethodParamList(request, requestPathMatcher, actionBean);
-    // 调用 Action 方法
-    invokeActionMethod(request, response, actionClass, actionMethod, actionMethodParamList);
+<pre><code>List<Object> actionMethodParamList = createActionMethodParamList(request, requestPathMatcher, actionBean);
+// 调用 Action 方法
+invokeActionMethod(request, response, actionClass, actionMethod, actionMethodParamList);
 </code></pre>
 
 修改为:
 <pre><code>SmartArgsUtil argsUtil = new SmartArgsUtil();
-    Object[] args = argsUtil.resolveHandlerArguments(request, response, actionBean.getActionMethod());
-    // 调用 Action 方法
-    invokeActionMethod(request, response, actionClass, actionMethod, args);
+Object[] args = argsUtil.resolveHandlerArguments(request, response, actionBean.getActionMethod());
+// 调用 Action 方法
+invokeActionMethod(request, response, actionClass, actionMethod, args);
 </code></pre>
 
 原代码：
-<pre><code>    private void invokeActionMethod(HttpServletRequest request,
+<pre><code>private void invokeActionMethod(HttpServletRequest request,
     HttpServletResponse response, Class<?> actionClass,
     Method actionMethod, List<Object> actionMethodParamList) {
     // 从 BeanHelper 中创建 Action 实例
@@ -106,7 +105,7 @@ Object[] args = argsUtil.resolveHandlerArguments(request, response, actionBean.g
 </code></pre>
 
 修改为：
-<pre><code>    private void invokeActionMethod(HttpServletRequest request,
+<pre><code>private void invokeActionMethod(HttpServletRequest request,
     HttpServletResponse response, Class<?> actionClass,
     Method actionMethod, Object[] args) {
     // 从 BeanHelper 中创建 Action 实例
