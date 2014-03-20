@@ -35,6 +35,8 @@ org.json.JSONWriter（需要org.json包)<br>
 =======
 该分支提供了一个便于smart框架使用的方法类：com.isea.tools.smart.SmartArgsUtil<br>
 
+<h3>SmartArgsUtil该类应该放到smart-framework中，只有该类需要修改时，才会更新分支内容</h3>
+
 调用方法：
 <pre><code>SmartArgsUtil argsUtil = new SmartArgsUtil();
 Object[] args = argsUtil.resolveHandlerArguments(request, response, actionBean.getActionMethod());
