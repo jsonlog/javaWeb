@@ -28,6 +28,8 @@ org.json.JSONWriter（需要org.json包)<br>
 
 具体使用方法见最下面的例子。<br>
 
+<h2>下一步计划:</h2>
+增加基本的类型转换功能..目前各种注解对基本类型只支持String
 
 分支:Smart_args
 =======

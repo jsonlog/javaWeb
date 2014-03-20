@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.isea.tools</groupId>
     <artifactId>Args</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>1.0</version>
-    <name>Args - Smart适配器</name>
+    <name>Args - 参数处理</name>
     <description>Args 是用来获取Web中Action(或Controller)参数的,可以通过反射传入参数调用Action方法,Args的作用是获取参数,不提供其他功能</description>
     <url>http://blog.csdn.net/isea533</url>
     <developers>
@@ -26,6 +26,7 @@
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>servlet-api-2.5</artifactId>
             <version>6.1.5</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
