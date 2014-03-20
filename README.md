@@ -63,69 +63,47 @@ public String login2(HttpServletRequest request,
 
 
 
-需要在smart-framework中做如下修改:
+需要在smart-framework（最新代码）中做如下修改:
 
 原代码:
-<pre><code>List<Object> actionMethodParamList = createActionMethodParamList(request, requestPathMatcher, actionBean);
-// 调用 Action 方法
-invokeActionMethod(request, response, actionClass, actionMethod, actionMethodParamList);
-</code></pre>
+<pre><code>private void invokeActionMethod(HttpServletRequest request, HttpServletResponse response, ActionBean actionBean, Matcher requestPathMatcher) throws Exception {
+   // 获取 Action 相关信息
+   Class<?> actionClass = actionBean.getActionClass();
+   Method actionMethod = actionBean.getActionMethod();
+   // 从 BeanHelper 中创建 Action 实例
+   Object actionInstance = BeanHelper.getBean(actionClass);
+   // 调用 Action 方法
+   Object actionMethodResult;
+   Class<?>[] paramTypes = actionMethod.getParameterTypes();
+   List<Object> paramList = createActionMethodParamList(request, actionBean, requestPathMatcher);
+   if (paramTypes.length != paramList.size()) {
+       throw new RuntimeException("由于参数不匹配，无法调用 Action 方法！");
+   }
+   actionMethod.setAccessible(true); // 取消类型安全检测（可提高反射性能）
+   actionMethodResult = actionMethod.invoke(actionInstance, paramList.toArray());
+   // 处理 Action 方法返回值
+   handleActionMethodReturn(request, response, actionMethodResult);
+}</code></pre>
+
 
 修改为:
-<pre><code>SmartArgsUtil argsUtil = new SmartArgsUtil();
-Object[] args = argsUtil.resolveHandlerArguments(request, response, actionBean.getActionMethod());
-// 调用 Action 方法
-invokeActionMethod(request, response, actionClass, actionMethod, args);
-</code></pre>
+<pre><code>private void invokeActionMethod(HttpServletRequest request, HttpServletResponse response, ActionBean actionBean, Matcher requestPathMatcher) throws Exception {
+   // 获取 Action 相关信息
+   Class<?> actionClass = actionBean.getActionClass();
+   Method actionMethod = actionBean.getActionMethod();
+   // 从 BeanHelper 中创建 Action 实例
+   Object actionInstance = BeanHelper.getBean(actionClass);
+   // 调用 Action 方法
+   Object actionMethodResult;
+   Class<?>[] paramTypes = actionMethod.getParameterTypes();
 
-原代码：
-<pre><code>private void invokeActionMethod(HttpServletRequest request,
-    HttpServletResponse response, Class<?> actionClass,
-    Method actionMethod, List<Object> actionMethodParamList) {
-    // 从 BeanHelper 中创建 Action 实例
-    Object actionInstance = BeanHelper.getBean(actionClass);
-    // 调用 Action 方法
-    Object actionMethodResult;
-    try {
-        Class<?>[] paramTypes = actionMethod.getParameterTypes();
-        if (paramTypes.length != actionMethodParamList.size()) {
-            throw new RuntimeException("由于参数不匹配，无法调用 Action 方法！");
-        }
-        actionMethod.setAccessible(true); // 取消类型安全检测（可提高反射性能）
-        actionMethodResult = actionMethod.invoke(actionInstance, actionMethodParamList.toArray());
-    } catch (Exception e) {
-        // 处理 Action 方法异常
-        handleActionMethodException(request, response, e);
-        // 直接返回
-        return;
-    }
-    // 处理 Action 方法返回值
-    handleActionMethodReturn(request, response, actionMethodResult);
-}
-</code></pre>
+   Object[] args = new SmartArgsUtil().resolveHandlerArguments(request,response,actionMethod);
 
-修改为：
-<pre><code>private void invokeActionMethod(HttpServletRequest request,
-    HttpServletResponse response, Class<?> actionClass,
-    Method actionMethod, Object[] args) {
-    // 从 BeanHelper 中创建 Action 实例
-    Object actionInstance = BeanHelper.getBean(actionClass);
-    // 调用 Action 方法
-    Object actionMethodResult;
-    try {
-        Class<?>[] paramTypes = actionMethod.getParameterTypes();
-        if (paramTypes.length != args.length) {
-            throw new RuntimeException("由于参数不匹配，无法调用 Action 方法！");
-        }
-        actionMethod.setAccessible(true); // 取消类型安全检测（可提高反射性能）
-        actionMethodResult = actionMethod.invoke(actionInstance, args);
-    } catch (Exception e) {
-        // 处理 Action 方法异常
-        handleActionMethodException(request, response, e);
-        // 直接返回
-        return;
-    }
-    // 处理 Action 方法返回值
-    handleActionMethodReturn(request, response, actionMethodResult);
-}
-</code></pre>
+   if (paramTypes.length != args.length) {
+       throw new RuntimeException("由于参数不匹配，无法调用 Action 方法！");
+   }
+   actionMethod.setAccessible(true); // 取消类型安全检测（可提高反射性能）
+   actionMethodResult = actionMethod.invoke(actionInstance, args);
+   // 处理 Action 方法返回值
+   handleActionMethodReturn(request, response, actionMethodResult);
+}</code></pre>
