@@ -28,7 +28,8 @@ import java.util.regex.Pattern;
 public class ArgsUtil {
     protected UploadFileItem uploadFileItem;
     protected Map<String, List<Object>> multiParts;
-    protected Map<String,Object> pathValues;
+    protected Map<String, Object> pathValues;
+
     /**
      * 建议使用<code>ArgsUtil(UploadFileItem uploadFileItem, String mappingUrl)</code>
      */
@@ -40,7 +41,7 @@ public class ArgsUtil {
     /**
      * 建议使用该方法，需要自己集成<code>UploadFileItem</code>接口
      *
-     * @param uploadFileItem   上传文件的处理方法，实现该接口
+     * @param uploadFileItem 上传文件的处理方法，实现该接口
      */
     public ArgsUtil(UploadFileItem uploadFileItem) {
         this.uploadFileItem = uploadFileItem;
@@ -48,6 +49,7 @@ public class ArgsUtil {
 
     /**
      * 获取全部参数 - 该方法适用于使用了<code>RequestMapping</code>注解的方法
+     *
      * @param request
      * @param response
      * @param method
@@ -56,15 +58,16 @@ public class ArgsUtil {
      */
     public Object[] resolveHandlerArguments(HttpServletRequest request, HttpServletResponse response, Method method) throws Exception {
         String mappingUrl = null;
-        if(method.isAnnotationPresent(RequestMapping.class)){
-            RequestMapping requestMapping = (RequestMapping)method.getAnnotation(RequestMapping.class);
+        if (method.isAnnotationPresent(RequestMapping.class)) {
+            RequestMapping requestMapping = (RequestMapping) method.getAnnotation(RequestMapping.class);
             mappingUrl = requestMapping.value();
         }
-        return resolveHandlerArguments(request, response, method,mappingUrl);
+        return resolveHandlerArguments(request, response, method, mappingUrl);
     }
 
     /**
      * 获取全部参数 - 对于没有使用<code>RequestMapping</code>注解的方法，提供了一个直接将格式化url传入参数的方法
+     *
      * @param request
      * @param response
      * @param method
@@ -110,7 +113,7 @@ public class ArgsUtil {
                     required = sessionAttributes.required();
                     defaultValue = parseDefaultValueAttribute(sessionAttributes.defaultValue());
                     annotationsFound++;
-                }else if (RequestHeader.class.isInstance(paramAnn)) {
+                } else if (RequestHeader.class.isInstance(paramAnn)) {
                     RequestHeader requestHeader = (RequestHeader) paramAnn;
                     headerName = requestHeader.value();
                     required = requestHeader.required();
@@ -245,7 +248,7 @@ public class ArgsUtil {
 
     protected Object resolveComplexParam(Class<?> paramType, HttpServletRequest request) throws Exception {
         Object object = paramType.newInstance();
-        if(multiParts!=null){
+        if (multiParts != null) {
             BeanUtils.populate(object, multiParts);
         }
         HashMap map = new HashMap();
@@ -259,7 +262,7 @@ public class ArgsUtil {
     }
 
     protected Object resolveRequestParam(String paramName, boolean required, String defaultValue,
-                                       MethodParameter methodParam, HttpServletRequest request)
+                                         MethodParameter methodParam, HttpServletRequest request)
             throws Exception {
         Class<?> paramType = methodParam.getParameterType();
         if (Map.class.isAssignableFrom(paramType) && paramName.length() == 0) {
@@ -272,11 +275,17 @@ public class ArgsUtil {
         Object paramValue = null;
 
         if (multiParts != null) {
+            //TODO 测试上传时，多个字段同名情况下的list参数
             if (Collection.class.isAssignableFrom(paramType)) {
                 paramValue = multiParts.get(paramName);
-            } else {
-                paramValue = multiParts.get(paramName)!=null&&multiParts.get(paramName).size() > 0 ? multiParts.get(paramName).get(0) : null;
             }
+            //TODO 测试上传时，多个字段同名情况下的数组参数
+            else if(paramType.isArray()){
+                paramValue = multiParts.get(paramName).toArray();
+            } else {
+                paramValue = multiParts.get(paramName) != null && multiParts.get(paramName).size() > 0 ? multiParts.get(paramName).get(0) : null;
+            }
+            //TODO 这里判断类型有点早
             if (paramValue != null && !paramType.isAssignableFrom(paramValue.getClass())) {
                 paramValue = null;
             }
@@ -284,6 +293,7 @@ public class ArgsUtil {
 
         if (paramValue == null) {
             String[] paramValues = request.getParameterValues(paramName);
+            //TODO 测试这种情况的数组和list
             if (paramValues != null) {
                 paramValue = (paramValues.length == 1 ? paramValues[0] : paramValues);
             }
@@ -300,7 +310,7 @@ public class ArgsUtil {
     }
 
     protected Object resolveSessionAttributes(String sessionName, boolean required, String defaultValue,
-                                       MethodParameter methodParam, HttpServletRequest request)
+                                              MethodParameter methodParam, HttpServletRequest request)
             throws Exception {
         HttpSession session = request.getSession();
         Class<?> paramType = methodParam.getParameterType();
@@ -321,11 +331,11 @@ public class ArgsUtil {
             }
             paramValue = checkValue(sessionName, paramValue, paramType);
         }
-        return checkType(sessionName, paramValue,paramType);
+        return checkType(sessionName, paramValue, paramType);
     }
 
     protected Object resolveRequestHeader(String headerName, boolean required, String defaultValue,
-                                        MethodParameter methodParam, HttpServletRequest request)
+                                          MethodParameter methodParam, HttpServletRequest request)
             throws Exception {
         Class<?> paramType = methodParam.getParameterType();
         if (Map.class.isAssignableFrom(paramType)) {
@@ -392,13 +402,13 @@ public class ArgsUtil {
 
     protected Object resolvePathVariable(String pathVarName, String mappingUrl, Class paramType, MethodParameter methodParam, HttpServletRequest request)
             throws Exception {
-        if(mappingUrl==null||mappingUrl.equals("")){
+        if (mappingUrl == null || mappingUrl.equals("")) {
             throw new IllegalStateException("缺少mappingUrl值，不能使用@PathVariable");
         }
-        if(pathValues==null){
+        if (pathValues == null) {
             String servletPath = request.getServletPath();
             String pathInfo = request.getPathInfo();
-            if(pathInfo!=null){
+            if (pathInfo != null) {
                 servletPath += pathInfo;
             }
             // 去掉当前请求路径末尾的“/”
@@ -407,12 +417,12 @@ public class ArgsUtil {
             }
             pathValues = getPathValueMap(mappingUrl, servletPath);
         }
-        if(pathVarName.length()==0){
+        if (pathVarName.length() == 0) {
             pathVarName = methodParam.getParameterName();
         }
         Object pathValue = pathValues.get(pathVarName);
-        if(pathValue == null){
-            raisePathVarException(pathVarName,paramType);
+        if (pathValue == null) {
+            raisePathVarException(pathVarName, paramType);
         }
         if (paramType.equals(int.class) || paramType.equals(Integer.class)) {
             pathValue = Integer.parseInt(String.valueOf(pathValue));
@@ -427,26 +437,25 @@ public class ArgsUtil {
         return pathValue;
     }
 
-    public static Map<String,Object> getPathValueMap(final String requestPath, final String requestUrl) throws Exception{
+    public static Map<String, Object> getPathValueMap(final String requestPath, final String requestUrl) throws Exception {
         String path = requestPath;
 
-        String reg = path.replaceAll("\\{\\w+\\}","((\\\\w|[\\\\u4e00-\\\\u9fa5])+)");
+        String reg = path.replaceAll("\\{\\w+\\}", "((\\\\w|[\\\\u4e00-\\\\u9fa5])+)");
 
-        path = path.replaceAll("\\{","").replaceAll("\\}", "");
+        path = path.replaceAll("\\{", "").replaceAll("\\}", "");
 
         Pattern pattern = Pattern.compile(reg);
         Matcher name_matcher = pattern.matcher(path);
         Matcher value_matcher = pattern.matcher(requestUrl);
-        Map<String,Object> pathValue = new HashMap<String,Object>();
+        Map<String, Object> pathValue = new HashMap<String, Object>();
         // 部分匹配find
         // 完整匹配matches
-        if(name_matcher.matches()&&value_matcher.matches()){
-            if(name_matcher.groupCount() == value_matcher.groupCount()){
-                for(int i=1;i<=name_matcher.groupCount();i++){
-                    pathValue.put(name_matcher.group(i),value_matcher.group(i));
+        if (name_matcher.matches() && value_matcher.matches()) {
+            if (name_matcher.groupCount() == value_matcher.groupCount()) {
+                for (int i = 1; i <= name_matcher.groupCount(); i++) {
+                    pathValue.put(name_matcher.group(i), value_matcher.group(i));
                 }
-            }
-            else {
+            } else {
                 throw new RuntimeException("错误:参数个数不一致");
             }
         }
@@ -455,6 +464,7 @@ public class ArgsUtil {
 
     /**
      * 将header转成Map返回
+     *
      * @param request
      * @return
      */
@@ -470,6 +480,7 @@ public class ArgsUtil {
 
     /**
      * 将request转成Map返回
+     *
      * @param request
      * @return
      */
@@ -481,7 +492,7 @@ public class ArgsUtil {
                 result.put(entry.getKey(), entry.getValue()[0]);
             }
         }
-        if(multiParts!=null){
+        if (multiParts != null) {
             result.putAll(multiParts);
         }
         return result;
@@ -489,6 +500,7 @@ public class ArgsUtil {
 
     /**
      * 将session转为map返回
+     *
      * @param request
      * @return
      */
@@ -496,7 +508,7 @@ public class ArgsUtil {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
         HttpSession session = request.getSession();
 
-        for (Enumeration<String> iterator = session.getAttributeNames();iterator.hasMoreElements();) {
+        for (Enumeration<String> iterator = session.getAttributeNames(); iterator.hasMoreElements(); ) {
             String sessionKey = iterator.nextElement();
             result.put(sessionKey, session.getAttribute(sessionKey));
         }
@@ -504,14 +516,23 @@ public class ArgsUtil {
     }
 
     protected Object checkType(String name, Object value, Class paramType) {
-        if(!paramType.isInstance(value)){
-            throw new IllegalStateException("类型:"+paramType+" 参数 '"+name+"' 值的类型:"+value.getClass()+"和当前要求的类型不一致");
+        if (!paramType.isInstance(value)) {
+            //对基本类型进行转换
+            if(isSimpleProperty(paramType)){
+                Object newValue = TypeConverter.convertToBasic(value,paramType);
+                if(newValue != null){
+                    return newValue;
+                }
+            }
+            throw new IllegalStateException("类型:" + paramType + " 参数 '" + name + "' 值的类型:" + value.getClass() + "和当前要求的类型不一致");
+
         }
         return value;
     }
 
     /**
      * 对于required=false的参数，如果没有值，就返回一个默认值，false或者null，8种基本类型中的数字类型不能使用
+     *
      * @param name
      * @param value
      * @param paramType
@@ -522,8 +543,8 @@ public class ArgsUtil {
             if (boolean.class.equals(paramType)) {
                 return Boolean.FALSE;
             } else if (paramType.isPrimitive()) {
-                throw new IllegalStateException("类型:"+paramType+" 参数 '"+name
-                        +"' 是一个原始类型，程序不能将它转换为NULL，建议使用基本类型的包装类");
+                throw new IllegalStateException("类型:" + paramType + " 参数 '" + name
+                        + "' 是一个原始类型，程序不能将它转换为NULL，建议使用基本类型的包装类");
             }
         }
         return value;
