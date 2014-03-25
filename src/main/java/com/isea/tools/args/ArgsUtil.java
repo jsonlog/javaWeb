@@ -247,7 +247,13 @@ public class ArgsUtil {
     }
 
     protected Object resolveComplexParam(Class<?> paramType, HttpServletRequest request) throws Exception {
-        Object object = paramType.newInstance();
+        Object object = null;
+        try {
+            object = paramType.newInstance();
+        } catch (Exception e){
+            System.out.println(paramType.getName() + "不包含无参数的构造方法..不能自动创建该对象!");
+            return null;
+        }
         if (multiParts != null) {
             BeanUtils.populate(object, multiParts);
         }
