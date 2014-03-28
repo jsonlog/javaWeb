@@ -179,21 +179,4 @@ public class MethodParameter {
         }
         return getMethodParamNames(cm);
     }
-
-    public static void main(String[] args) {
-        Method method = LoginController.class.getDeclaredMethods()[0];
-
-        Annotation annotation = method.getAnnotation(RequestMapping.class);
-
-        try {
-            Method method1 = annotation.getClass().getMethod("value");
-
-            String value = (String) method1.invoke(annotation);
-            System.out.println(value);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-
-    }
 }
