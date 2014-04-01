@@ -1,8 +1,5 @@
 package com.isea.tools.args;
 
-import com.isea.tools.args.annotation.Param;
-import com.isea.tools.args.annotation.Path;
-import com.isea.tools.args.annotation.ValueConstants;
 import com.smart.framework.annotation.Request;
 import com.smart.framework.bean.Multipart;
 import com.smart.framework.bean.Multiparts;
@@ -22,8 +19,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URL;
 import java.security.Principal;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -33,10 +28,6 @@ import java.util.regex.Pattern;
  * Created by liuzh on 14-3-11.
  */
 public class ArgsUtil {
-    protected Map<String, Object> requestMap;
-    protected Map<String, Object> pathValues;
-    private Multiparts multiparts;
-
     /**
      * 获取全部参数 - 该方法适用于使用了<code>RequestMapping</code>注解的方法
      *
@@ -86,6 +77,10 @@ public class ArgsUtil {
      * @throws Exception
      */
     public Object[] resolveHandlerArguments(HttpServletRequest request, HttpServletResponse response, Method method, String mappingUrl) throws Exception {
+        Map<String, Object> requestMap = null;
+        Map<String, Object> pathValues = null;
+        Multiparts multiparts = null;
+
         Class[] paramTypes = method.getParameterTypes();
         //TODO smart中需要判断null - 无参数方法直接返回null
         if (paramTypes.length == 0) {
@@ -95,9 +90,9 @@ public class ArgsUtil {
 
         //处理上传和普通request的情况
         if (UploadHelper.isMultipart(request)) {
-            resolveMultiparts(request);
+            requestMap = resolveMultiparts(request,multiparts);
         } else {
-            resolveRequestMap(request);
+            requestMap = resolveRequestMap(request);
         }
 
         //逐个处理参数
@@ -133,7 +128,7 @@ public class ArgsUtil {
 
             if (annotationsFound == 0) {
                 //处理标准Http类型
-                Object argValue = resolveStandardArgument(request, response, methodParam);
+                Object argValue = resolveStandardArgument(request, response, methodParam,multiparts);
                 if (argValue != ValueConstants.UNRESOLVED) {
                     args[i] = argValue;
                 } else if (defaultValue != null) {
@@ -152,11 +147,11 @@ public class ArgsUtil {
             }
 
             if (paramName != null) {
-                args[i] = resolveRequestParam(paramName, required, defaultValue, methodParam, request);
+                args[i] = resolveRequestParam(paramName, required, defaultValue, methodParam, request,requestMap);
             } else if (pathVarName != null) {
-                args[i] = resolvePathVariable(pathVarName, mappingUrl, paramType, methodParam, request);
+                args[i] = resolvePathVariable(pathVarName, mappingUrl, paramType, methodParam, request,requestMap,pathValues);
             } else if (attrName != null) {
-                args[i] = resolveComplexParam(paramType);
+                args[i] = resolveComplexParam(paramType,requestMap);
             }
         }
 
@@ -170,11 +165,9 @@ public class ArgsUtil {
      * @param request
      * @throws Exception
      */
-    protected void resolveMultiparts(HttpServletRequest request) throws Exception {
+    protected Map<String, Object> resolveMultiparts(HttpServletRequest request,Multiparts multiparts) throws Exception {
+        Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
         List<Object> paramList = UploadHelper.createMultipartParamList(request);
-        if(requestMap == null) {
-            requestMap = new LinkedHashMap<String, Object>();
-        }
         for (Object obj : paramList) {
             if(obj == null){
                 continue;
@@ -214,6 +207,7 @@ public class ArgsUtil {
                 }
             }
         }
+        return requestMap;
     }
 
     /**
@@ -221,11 +215,9 @@ public class ArgsUtil {
      * @param request
      * @throws Exception
      */
-    protected void resolveRequestMap(HttpServletRequest request) throws Exception {
+    protected Map<String, Object> resolveRequestMap(HttpServletRequest request) throws Exception {
+        Map<String, Object> requestMap = new LinkedHashMap<String, Object>();
         Map<String, String[]> parameterMap = request.getParameterMap();
-        if (requestMap == null) {
-            requestMap = new LinkedHashMap<String, Object>(parameterMap.size());
-        }
         for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
             if (entry.getValue().length > 0) {
                 requestMap.put(entry.getKey(), entry.getValue()[0]);
@@ -235,6 +227,7 @@ public class ArgsUtil {
                 requestMap.put(entry.getKey()+"[]", entry.getValue());
             }
         }
+        return requestMap;
     }
 
     /**
@@ -245,7 +238,7 @@ public class ArgsUtil {
      * @return
      * @throws Exception
      */
-    protected Object resolveStandardArgument(HttpServletRequest request, HttpServletResponse response, MethodParameter methodParam) throws Exception {
+    protected Object resolveStandardArgument(HttpServletRequest request, HttpServletResponse response, MethodParameter methodParam,Multiparts multiparts) throws Exception {
         Class<?> parameterType = methodParam.getParameterType();
         if (ServletRequest.class.isAssignableFrom(parameterType)) {
             return request;
@@ -283,7 +276,7 @@ public class ArgsUtil {
      * @return
      * @throws Exception
      */
-    protected Object resolveComplexParam(Class<?> paramType) throws Exception {
+    protected Object resolveComplexParam(Class<?> paramType,Map<String, Object> requestMap) throws Exception {
         Object object = null;
         try {
             object = paramType.newInstance();
@@ -307,7 +300,7 @@ public class ArgsUtil {
      * @throws Exception
      */
     protected Object resolveRequestParam(String paramName, boolean required, String defaultValue,
-                                         MethodParameter methodParam, HttpServletRequest request)
+                                         MethodParameter methodParam, HttpServletRequest request,Map<String, Object> requestMap)
             throws Exception {
         Class<?> paramType = methodParam.getParameterType();
         //当对象是一个Map类型的时候，返回Map类型,这里匹配无注解和@Param无参数值类型为Map的情况
@@ -352,7 +345,13 @@ public class ArgsUtil {
      * @return
      * @throws Exception
      */
-    protected Object resolvePathVariable(String pathVarName, String mappingUrl, Class paramType, MethodParameter methodParam, HttpServletRequest request)
+    protected Object resolvePathVariable(String pathVarName,
+                                         String mappingUrl,
+                                         Class paramType,
+                                         MethodParameter methodParam,
+                                         HttpServletRequest request,
+                                         Map<String, Object> requestMap,
+                                         Map<String, Object> pathValues)
             throws Exception {
         if (mappingUrl == null || mappingUrl.equals("")) {
             throw new IllegalStateException("缺少mappingUrl值，不能使用@Path");

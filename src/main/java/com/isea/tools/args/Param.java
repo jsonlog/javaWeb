@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.isea.tools.args.annotation;
+package com.isea.tools.args;
 
 import java.lang.annotation.*;
 

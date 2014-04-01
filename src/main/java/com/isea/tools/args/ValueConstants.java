@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2012 the original author or authors.
+ * Copyright 2002-2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-package com.isea.tools.args.annotation;
+package com.isea.tools.args;
 
-import java.lang.annotation.*;
+public interface ValueConstants {
 
-@Target(ElementType.PARAMETER)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Path {
+	String DEFAULT_NONE = "\n\t\t\n\t\t\n\uE000\uE001\uE002\n\t\t\t\t\n";
 
-	/** The URI template variable to bind to. */
-	String value() default "";
-
+    Object UNRESOLVED = new Object();
 }
