@@ -1,22 +1,58 @@
 package com.isea.tools.args;
 
+import com.isea.controller.User;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
+import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.*;
 
 /**
  * Created by liuzh on 14-3-21.
  */
 public class TypeConverter {
 
+
     /**
-     * 8种基本类型转换
+     * 判断类是否为简单类
+     *
+     * @param clazz
+     * @return
+     */
+    public static boolean isSimpleProperty(Class<?> clazz) {
+        return isSimpleValueType(clazz) || (clazz.isArray() && isSimpleValueType(clazz.getComponentType()));
+    }
+
+    /**
+     * 判断类是否为简单类
+     *
+     * @param clazz
+     * @return
+     */
+    public static boolean isSimpleValueType(Class<?> clazz) {
+        return clazz.isPrimitive() || clazz.isEnum() ||
+                CharSequence.class.isAssignableFrom(clazz) ||
+                Number.class.isAssignableFrom(clazz) ||
+                Date.class.isAssignableFrom(clazz) ||
+                clazz.equals(URI.class) || clazz.equals(URL.class) ||
+                clazz.equals(Locale.class) || clazz.equals(Class.class);
+    }
+
+    /**
+     * 基本类型转换
+     *
+     * @param value
+     * @param requiredType
+     * @param <T>
+     * @return
+     * @throws IllegalArgumentException
      */
     public static <T> T convertToBasic(Object value, Class<T> requiredType)  throws IllegalArgumentException {
         if(requiredType.isInstance(value)){
@@ -78,4 +114,86 @@ public class TypeConverter {
         return (T)convertedValue;
     }
 
+
+    /**
+     * 转换为集合或数组
+     *
+     * @param value
+     * @param requiredType
+     * @param type
+     * @param <T>
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public static <T> T convertToCollection(Object value, Class<T> requiredType, Type type)  throws IllegalArgumentException {
+        Class<?> clazz = null;
+        Object convertedValue = null;
+        //数组
+        if(requiredType.isArray()){
+            clazz = requiredType.getComponentType();
+            if(value.getClass().isArray()){
+                int length = Array.getLength(value);
+                convertedValue = Array.newInstance(clazz,length);
+                for(int i=0;i<length;i++){
+                    Array.set(convertedValue,i,convertToBasic(Array.get(value,i),clazz));
+                }
+            }
+            else if(Collection.class.isAssignableFrom(value.getClass())){
+                Collection collection = (Collection)value;
+                Iterator iterator = collection.iterator();
+                int length = collection.size();
+                convertedValue = Array.newInstance(clazz,length);
+                for(int i=0;i<length;i++){
+                    Array.set(convertedValue,i,convertToBasic(iterator.next(),clazz));
+                }
+            }
+            else if(isSimpleValueType(value.getClass())){
+                convertedValue = Array.newInstance(clazz,1);
+                Array.set(convertedValue,0,convertToBasic(value,clazz));
+            }
+        }
+        //集合
+        else if(Collection.class.isAssignableFrom(requiredType)){
+            ParameterizedType ptype = (ParameterizedType)type;
+            clazz = (Class<?>) ptype.getActualTypeArguments()[0];
+            try {
+                convertedValue = requiredType.newInstance();
+            } catch (Exception e) {
+                //TODO
+            }
+            Collection convertCollection = (Collection)convertedValue;
+            //存值
+            if(value.getClass().isArray()){
+                int length = Array.getLength(value);
+                for(int i=0;i<length;i++){
+                    convertCollection.add(convertToBasic(Array.get(value,i),clazz));
+                }
+            }
+            else if(Collection.class.isAssignableFrom(value.getClass())){
+                Collection collection = (Collection)value;
+                Iterator iterator = collection.iterator();
+                while(iterator.hasNext()){
+                    convertCollection.add(convertToBasic(iterator.next(),clazz));
+                }
+            }
+            else if(isSimpleProperty(value.getClass())){
+                convertCollection.add(convertToBasic(value,clazz));
+            }
+        }
+        return (T)convertedValue;
+    }
+
+    public static void main(String[] args) throws Exception {
+
+    }
+
+    public void show(List<User> users){
+
+    }
+    public void show(User[] users){}
+    public void show(Map<Date,User> users){}
+
+    public void show(){
+        System.out.println("Hehe");
+    }
 }

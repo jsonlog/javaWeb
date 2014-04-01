@@ -8,6 +8,7 @@ import javassist.bytecode.MethodInfo;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
 
 /**
  * Created by liuzh on 14-3-11.
@@ -20,6 +21,8 @@ public class MethodParameter {
     private final int parameterIndex;
 
     private Class<?> parameterType;
+
+    private Type type;
 
     private Annotation[] parameterAnnotations;
 
@@ -39,6 +42,21 @@ public class MethodParameter {
         this.parameterIndex = parameterIndex;
     }
 
+    /**
+     * Return the type of the method/constructor args.
+     * @return the args type (never <code>null</code>)
+     */
+    public Type getType() {
+        if (this.type == null) {
+            if (this.parameterIndex < 0) {
+                this.type = (this.method != null ? this.method.getReturnType() : null);
+            }
+            else {
+                this.type = (this.method != null ? this.method.getGenericParameterTypes()[this.parameterIndex] :null);
+            }
+        }
+        return this.type;
+    }
 
     /**
      * Return the type of the method/constructor args.

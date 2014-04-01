@@ -87,6 +87,10 @@ public class ArgsUtil {
      */
     public Object[] resolveHandlerArguments(HttpServletRequest request, HttpServletResponse response, Method method, String mappingUrl) throws Exception {
         Class[] paramTypes = method.getParameterTypes();
+        //TODO smart中需要判断null - 无参数方法直接返回null
+        if (paramTypes.length == 0) {
+            return null;
+        }
         Object[] args = new Object[paramTypes.length];
 
         //处理上传和普通request的情况
@@ -136,7 +140,7 @@ public class ArgsUtil {
                     args[i] = defaultValue;
                 } else {
                     //尝试使用参数名来构建对象
-                    if (isSimpleProperty(paramType)) {
+                    if (TypeConverter.isSimpleProperty(paramType)) {
                         //简单对象
                         paramName = "";
                     } else {
@@ -160,30 +164,6 @@ public class ArgsUtil {
     }
 
 
-    /**
-     * 判断类是否为简单类
-     *
-     * @param clazz
-     * @return
-     */
-    public static boolean isSimpleProperty(Class<?> clazz) {
-        return isSimpleValueType(clazz) || (clazz.isArray() && isSimpleValueType(clazz.getComponentType()));
-    }
-
-    /**
-     * 判断类是否为简单类
-     *
-     * @param clazz
-     * @return
-     */
-    public static boolean isSimpleValueType(Class<?> clazz) {
-        return clazz.isPrimitive() || clazz.isEnum() ||
-                CharSequence.class.isAssignableFrom(clazz) ||
-                Number.class.isAssignableFrom(clazz) ||
-                Date.class.isAssignableFrom(clazz) ||
-                clazz.equals(URI.class) || clazz.equals(URL.class) ||
-                clazz.equals(Locale.class) || clazz.equals(Class.class);
-    }
 
     /**
      * 处理上传的情况
@@ -361,7 +341,7 @@ public class ArgsUtil {
             }
             paramValue = checkValue(paramName, paramValue, paramType);
         }
-        return checkType(paramName, paramValue, paramType);
+        return checkType(paramName, paramValue, methodParam);
     }
 
     /**
@@ -399,7 +379,7 @@ public class ArgsUtil {
             raisePathVarException(pathVarName, paramType);
         }
         //TODO 测试pathValue类型
-        return checkType(pathVarName,pathValue,paramType);
+        return checkType(pathVarName,pathValue,methodParam);
     }
 
     /**
@@ -435,26 +415,32 @@ public class ArgsUtil {
     }
 
     /**
-     * 检查类型
+     * 检查类型 - 只有Param和Path会调用这里，POJO对象不会
      * @param name
-     * @param value
-     * @param paramType
+     * @param value value的类型有String,List,Array，不会有其他的
+     * @param methodParam
      * @return
      */
-    protected Object checkType(String name, Object value, Class paramType) {
+    protected Object checkType(String name, Object value, MethodParameter methodParam) {
         //TODO 处理URL,URI,Class<?>,Collection,Array,基本类型
-        if (!paramType.isInstance(value)) {
-            //对基本类型进行转换
-            if(isSimpleProperty(paramType)){
-                Object newValue = TypeConverter.convertToBasic(value, paramType);
-                if(newValue != null){
-                    return newValue;
-                }
+        //对基本类型进行转换
+        Object newValue = null;
+        Class<?> paramType = methodParam.getParameterType();
+        if(TypeConverter.isSimpleValueType(paramType)){
+            if (paramType.isInstance(value)) {
+                return value;
             }
-            throw new IllegalStateException("类型:" + paramType + " 参数 '" + name + "' 值的类型:" + value.getClass() + "和当前要求的类型不一致");
+            newValue = TypeConverter.convertToBasic(value, paramType);
 
         }
-        return value;
+        //复合类型
+        else {
+            newValue = TypeConverter.convertToCollection(value, paramType, methodParam.getType());
+        }
+        if(newValue == null){
+            throw new IllegalStateException("类型:" + paramType + " 参数 '" + name + "' 值的类型:" + value.getClass() + "和当前要求的类型不一致");
+        }
+        return newValue;
     }
 
     /**
