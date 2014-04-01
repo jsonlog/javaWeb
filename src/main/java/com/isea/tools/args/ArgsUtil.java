@@ -322,11 +322,9 @@ public class ArgsUtil {
 
         Object paramValue = null;
 
-        //TODO 测试上传时，多个字段同名情况下的list参数
         if (Collection.class.isAssignableFrom(paramType)) {
             paramValue = requestMap.get(paramName+"[]");
         }
-        //TODO 测试上传时，多个字段同名情况下的数组参数
         else if(paramType.isArray()&&requestMap.get(paramName+"[]")!=null){
             paramValue = ((List)requestMap.get(paramName+"[]")).toArray();
         } else {
@@ -422,7 +420,6 @@ public class ArgsUtil {
      * @return
      */
     protected Object checkType(String name, Object value, MethodParameter methodParam) {
-        //TODO 处理URL,URI,Class<?>,Collection,Array,基本类型
         //对基本类型进行转换
         Object newValue = null;
         Class<?> paramType = methodParam.getParameterType();
@@ -433,7 +430,7 @@ public class ArgsUtil {
             newValue = TypeConverter.convertToBasic(value, paramType);
 
         }
-        //复合类型
+        //集合或数组类型
         else {
             newValue = TypeConverter.convertToCollection(value, paramType, methodParam.getType());
         }

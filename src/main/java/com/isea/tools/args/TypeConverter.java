@@ -63,30 +63,23 @@ public class TypeConverter {
         if(String.class.isAssignableFrom(requiredType)){
             convertedValue = strValue;
         }
-        else if(Number.class.isAssignableFrom(requiredType)){
-            if(NumberUtils.isNumber(strValue)){
-                if(int.class.equals(requiredType)||Integer.class.equals(requiredType)){
-                    convertedValue = NumberUtils.toInt(strValue);
-                }
-                else if(long.class.equals(requiredType)||Long.class.equals(requiredType)){
-                    convertedValue = NumberUtils.toLong(strValue);
-                }
-                else if(short.class.equals(requiredType)||Short.class.equals(requiredType)){
-                    convertedValue = NumberUtils.toShort(strValue);
-                }
-                else if(float.class.equals(requiredType)||Float.class.equals(requiredType)){
-                    convertedValue = NumberUtils.toFloat(strValue);
-                }
-                else if(double.class.equals(requiredType)||Double.class.equals(requiredType)){
-                    convertedValue = NumberUtils.toDouble(strValue);
-                }
-                else if(BigDecimal.class.equals(requiredType)){
-                    convertedValue = NumberUtils.createBigDecimal(strValue);
-                }
-            }
-            else {
-                convertedValue = 0;
-            }
+        else if(int.class.equals(requiredType)||Integer.class.equals(requiredType)){
+            convertedValue = NumberUtils.toInt(strValue);
+        }
+        else if(long.class.equals(requiredType)||Long.class.equals(requiredType)){
+            convertedValue = NumberUtils.toLong(strValue);
+        }
+        else if(short.class.equals(requiredType)||Short.class.equals(requiredType)){
+            convertedValue = NumberUtils.toShort(strValue);
+        }
+        else if(float.class.equals(requiredType)||Float.class.equals(requiredType)){
+            convertedValue = NumberUtils.toFloat(strValue);
+        }
+        else if(double.class.equals(requiredType)||Double.class.equals(requiredType)){
+            convertedValue = NumberUtils.toDouble(strValue);
+        }
+        else if(BigDecimal.class.equals(requiredType)){
+            convertedValue = NumberUtils.createBigDecimal(strValue);
         }
         else if(boolean.class.equals(requiredType)||Boolean.class.equals(requiredType)){
             convertedValue = BooleanUtils.toBoolean(strValue);
@@ -156,10 +149,17 @@ public class TypeConverter {
         else if(Collection.class.isAssignableFrom(requiredType)){
             ParameterizedType ptype = (ParameterizedType)type;
             clazz = (Class<?>) ptype.getActualTypeArguments()[0];
-            try {
-                convertedValue = requiredType.newInstance();
-            } catch (Exception e) {
-                //TODO
+            if(LinkedList.class.isAssignableFrom(requiredType)){
+                convertedValue = new LinkedList();
+            }
+            else if(List.class.isAssignableFrom(requiredType)){
+                convertedValue = new ArrayList();
+            }
+            else if(SortedSet.class.isAssignableFrom(requiredType)){
+                convertedValue = new TreeSet();
+            }
+            else {
+                convertedValue = new LinkedHashSet();
             }
             Collection convertCollection = (Collection)convertedValue;
             //存值
@@ -183,17 +183,18 @@ public class TypeConverter {
         return (T)convertedValue;
     }
 
-    public static void main(String[] args) throws Exception {
-
-    }
-
-    public void show(List<User> users){
-
-    }
-    public void show(User[] users){}
-    public void show(Map<Date,User> users){}
-
-    public void show(){
-        System.out.println("Hehe");
-    }
+//    测试代码
+//    public static void main(String[] args) throws Exception {
+//        Method method = TypeConverter.class.getDeclaredMethod("show",List.class);
+//        MethodParameter parameter = new MethodParameter(method,0);
+//
+//        String strs = "1234";
+//
+//        List<Integer> list = (List<Integer>) convertToCollection(strs,parameter.getParameterType(),parameter.getType());
+//
+//        System.out.println(list.toString());
+//
+//    }
+//
+//    public void show(List<Integer> users){}
 }
