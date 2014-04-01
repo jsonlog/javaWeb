@@ -14,11 +14,11 @@ public class LoginController {
     public String login(HttpServletRequest request,
                         User user,
                         @SessionAttributes("user")User user2,
-                        @RequestParam("hehe")FileItem item,
+                        @Param("hehe")FileItem item,
                         @CookieValue("Hello")String hello,
                         @RequestHeader("Accept")String accept,
-                        @PathVariable("userid")int userid,
-                        @PathVariable()String roleName) {
+                        @Path("userid")int userid,
+                        @Path()String roleName) {
 
         System.out.println("request:"+request.toString());
         System.out.println("User:"+user.toString());
@@ -35,11 +35,11 @@ public class LoginController {
     public String login2(HttpServletRequest request,
                         User user,
                         @SessionAttributes("user")User user2,
-                        @RequestParam("hehe")FileItem item,
+                        @Param("hehe")FileItem item,
                         @CookieValue("Hello")String hello,
                         @RequestHeader("Accept")String accept,
-                        @PathVariable("userid")int userid,
-                        @PathVariable()String roleName) {
+                        @Path("userid")int userid,
+                        @Path()String roleName) {
 
         System.out.println("request:"+request.toString());
         System.out.println("User:"+user.toString());

@@ -21,25 +21,25 @@ import java.lang.annotation.*;
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface RequestHeader {
+public @interface Param {
 
 	/**
-	 * The name of the request header to bind to.
+	 * The name of the request args to bind to.
 	 */
 	String value() default "";
 
 	/**
-	 * Whether the header is required.
+	 * Whether the args is required.
 	 * <p>Default is <code>true</code>, leading to an exception thrown in case
-	 * of the header missing in the request. Switch this to <code>false</code>
-	 * if you prefer a <code>null</value> in case of the header missing.
+	 * of the args missing in the request. Switch this to <code>false</code>
+	 * if you prefer a <code>null</value> in case of the args missing.
 	 * <p>Alternatively, provide a {@link #defaultValue() defaultValue},
-	 * which implicitely sets this flag to <code>false</code>.
+	 * which implicitly sets this flag to <code>false</code>.
 	 */
 	boolean required() default true;
 
 	/**
-	 * The default value to use as a fallback. Supplying a default value implicitely
+	 * The default value to use as a fallback. Supplying a default value implicitly
 	 * sets {@link #required()} to false.
 	 */
 	String defaultValue() default ValueConstants.DEFAULT_NONE;

@@ -5,6 +5,10 @@ import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Created by liuzh on 14-3-21.
@@ -53,6 +57,20 @@ public class TypeConverter {
         }
         else if(char.class.equals(requiredType)||Character.class.equals(requiredType)){
             CharUtils.toChar(strValue);
+        }
+        else if(URL.class.equals(requiredType)){
+            try {
+                convertedValue = new URL(strValue);
+            } catch (MalformedURLException e) {
+
+            }
+        }
+        else if(URI.class.equals(requiredType)){
+            try {
+                convertedValue = new URI(strValue);
+            } catch (URISyntaxException e) {
+
+            }
         }
         else {
             return null;
