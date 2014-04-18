@@ -1,44 +1,44 @@
 package ${app_package}.action;
 
-import com.smart.framework.annotation.Action;
-import com.smart.framework.annotation.Request;
-import com.smart.framework.bean.Result;
+import smart.framework.annotation.Action;
+import smart.framework.annotation.Request;
+import smart.framework.bean.Result;
 import java.util.Map;
 
 @Action
 public class ${action_name_p}Action {
 
-    @Request("get:/${action_name_u}")
+    @Request.Get("/${action_name_u}")
     public Result index() {
         // TODO
         return new Result(true);
     }
 
-    @Request("post:/${action_name_u}/search")
-    public Result search(Map<String, Object> fieldMap) {
+    @Request.Post("/${action_name_u}/search")
+    public Result search(Params params) {
         // TODO
         return new Result(true);
     }
 
-    @Request("get:/${action_name_u}/view/{id}")
+    @Request.Get("/${action_name_u}/view/{id}")
     public Result view(long id) {
         // TODO
         return new Result(true);
     }
 
-    @Request("post:/${action_name_u}/create")
-    public Result create(Map<String, Object> fieldMap) {
+    @Request.Post("/${action_name_u}/create")
+    public Result create(Params params) {
         // TODO
         return new Result(true);
     }
 
-    @Request("put:/${action_name_u}/update/{id}")
-    public Result update(long id, Map<String, Object> fieldMap) {
+    @Request.Put("/${action_name_u}/update/{id}")
+    public Result update(long id, Params params) {
         // TODO
         return new Result(true);
     }
 
-    @Request("delete:/${action_name_u}/delete/{id}")
+    @Request.Delete("/${action_name_u}/delete/{id}")
     public Result delete(long id) {
         // TODO
         return new Result(true);

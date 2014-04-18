@@ -1,4 +1,3 @@
-app.name=${app_name}
 app.package=${app_package}
 app.www_path=/www/
 app.home_page=/www/html/index.html

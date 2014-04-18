@@ -1,13 +1,13 @@
 package ${app_package}.action;
 
-import com.smart.framework.annotation.Action;
-import com.smart.framework.annotation.Request;
-import com.smart.framework.bean.Result;
+import smart.framework.annotation.Action;
+import smart.framework.annotation.Request;
+import smart.framework.bean.Result;
 
 @Action
 public class ${action_name_p}Action {
 
-    @Request("get:/${action_name_u}")
+    @Request.Get("/${action_name_u}")
     public Result index() {
         return new Result(true);
     }

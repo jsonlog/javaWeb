@@ -1,6 +1,6 @@
 package ${app_package}.service.impl;
 
-import com.smart.framework.annotation.Service;
+import smart.framework.annotation.Service;
 import ${app_package}.service.${service_name_p}Service;
 
 @Service

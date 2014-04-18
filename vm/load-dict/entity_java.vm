@@ -1,6 +1,6 @@
 package ${app_package};
 
-import com.smart.framework.base.BaseEntity;
+import smart.framework.base.BaseEntity;
 
 public class ${entity_name_p} extends BaseEntity {
 #foreach($field in ${field_list})
