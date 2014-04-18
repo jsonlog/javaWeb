@@ -1,10 +1,5 @@
-package com.smart.sample.service;
+package smart.sample.service;
 
-import com.smart.framework.DataSet;
-import com.smart.framework.annotation.Service;
-import com.smart.framework.annotation.Transaction;
-import com.smart.plugin.rest.Rest;
-import com.smart.sample.entity.Product;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.Consumes;
@@ -16,6 +11,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import smart.framework.DataSet;
+import smart.framework.annotation.Service;
+import smart.framework.annotation.Transaction;
+import smart.plugin.rest.Rest;
+import smart.sample.entity.Product;
 
 @Service
 @Rest("/rest/ProductService")

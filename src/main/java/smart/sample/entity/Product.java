@@ -1,9 +1,9 @@
-package com.smart.sample.entity;
+package smart.sample.entity;
 
-import com.smart.framework.base.BaseEntity;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import smart.framework.base.BaseEntity;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
