@@ -1,10 +1,10 @@
-package com.smart.bootstrap.action;
+package smart.bootstrap.action;
 
-import com.smart.framework.DataContext;
-import com.smart.framework.annotation.Action;
-import com.smart.framework.annotation.Request;
-import com.smart.framework.bean.Result;
-import com.smart.framework.bean.View;
+import smart.framework.DataContext;
+import smart.framework.annotation.Action;
+import smart.framework.annotation.Request;
+import smart.framework.bean.Result;
+import smart.framework.bean.View;
 
 @Action
 public class SystemAction {
