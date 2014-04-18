@@ -1,12 +1,12 @@
-package com.smart.generator.command;
+package smart.generator.command;
 
-import com.smart.framework.util.ArrayUtil;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import smart.framework.util.ArrayUtil;
 
 public abstract class Command {
 

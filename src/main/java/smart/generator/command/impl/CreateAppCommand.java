@@ -1,11 +1,11 @@
-package com.smart.generator.command.impl;
+package smart.generator.command.impl;
 
-import com.smart.framework.util.FileUtil;
-import com.smart.framework.util.StringUtil;
-import com.smart.generator.CodeGenerator;
-import com.smart.generator.command.Command;
 import java.util.HashMap;
 import java.util.Map;
+import smart.framework.util.FileUtil;
+import smart.framework.util.StringUtil;
+import smart.generator.CodeGenerator;
+import smart.generator.command.Command;
 
 public class CreateAppCommand extends Command {
 
@@ -83,7 +83,6 @@ public class CreateAppCommand extends Command {
 
     private void generateConfigFileForMain(String dbName) {
         Map<String, Object> dataMap = new HashMap<String, Object>();
-        dataMap.put("app_name", appName);
         dataMap.put("app_package", appPackage);
         dataMap.put("db_name", dbName);
 
@@ -94,7 +93,6 @@ public class CreateAppCommand extends Command {
 
     private void generateConfigFileForTest(String dbName) {
         Map<String, Object> dataMap = new HashMap<String, Object>();
-        dataMap.put("app_name", appName);
         dataMap.put("app_package", appPackage);
         dataMap.put("db_name", dbName + "_test");
 

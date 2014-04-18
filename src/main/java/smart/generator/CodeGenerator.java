@@ -1,8 +1,5 @@
-package com.smart.generator;
+package smart.generator;
 
-import com.smart.framework.FrameworkConstant;
-import com.smart.framework.util.FileUtil;
-import com.smart.framework.util.StringUtil;
 import java.io.FileWriter;
 import java.util.Map;
 import org.apache.velocity.Template;
@@ -12,6 +9,9 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.log.NullLogChute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import smart.framework.FrameworkConstant;
+import smart.framework.util.FileUtil;
+import smart.framework.util.StringUtil;
 
 public class CodeGenerator {
 

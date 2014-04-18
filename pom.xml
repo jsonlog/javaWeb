@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <groupId>com.smart</groupId>
+    <groupId>smart</groupId>
     <artifactId>smart-generator</artifactId>
     <version>1.0</version>
 
@@ -41,9 +41,9 @@
         </dependency>
         <!-- Smart -->
         <dependency>
-            <groupId>com.smart</groupId>
+            <groupId>smart</groupId>
             <artifactId>smart-framework</artifactId>
-            <version>2.0</version>
+            <version>2.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

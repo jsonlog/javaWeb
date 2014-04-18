@@ -1,17 +1,17 @@
-package com.smart.generator.test;
+package smart.generator.test;
 
-import com.smart.framework.OrderedRunner;
-import com.smart.framework.annotation.Order;
-import com.smart.generator.Invoker;
-import com.smart.generator.command.impl.CreateActionCommand;
-import com.smart.generator.command.impl.CreateAppCommand;
-import com.smart.generator.command.impl.CreateCRUDCommand;
-import com.smart.generator.command.impl.CreateEntityCommand;
-import com.smart.generator.command.impl.CreatePageCommand;
-import com.smart.generator.command.impl.CreateServiceCommand;
-import com.smart.generator.command.impl.LoadDictCommand;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import smart.framework.OrderedRunner;
+import smart.framework.annotation.Order;
+import smart.generator.Invoker;
+import smart.generator.command.impl.CreateActionCommand;
+import smart.generator.command.impl.CreateAppCommand;
+import smart.generator.command.impl.CreateCRUDCommand;
+import smart.generator.command.impl.CreateEntityCommand;
+import smart.generator.command.impl.CreatePageCommand;
+import smart.generator.command.impl.CreateServiceCommand;
+import smart.generator.command.impl.LoadDictCommand;
 
 @RunWith(OrderedRunner.class)
 public class CommandTest {
@@ -25,8 +25,8 @@ public class CommandTest {
         String[] params = {
             "C:\\Smart",        // Current Path
             "demo",             // App Name
-            "com.smart",        // App Group
-            "com.smart.demo"    // App Package = <App Group> + <App Artifact>
+            "smart",        // App Group
+            "smart.demo"    // App Package = <App Group> + <App Artifact>
         };
         boolean result = invoker.execCommand(params);
         if (!result) {

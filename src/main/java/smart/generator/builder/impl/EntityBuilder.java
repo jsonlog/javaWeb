@@ -1,16 +1,16 @@
-package com.smart.generator.builder.impl;
+package smart.generator.builder.impl;
 
-import com.smart.framework.util.StringUtil;
-import com.smart.generator.CodeGenerator;
-import com.smart.generator.bean.Column;
-import com.smart.generator.bean.Field;
-import com.smart.generator.bean.Table;
-import com.smart.generator.builder.Builder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import smart.framework.util.StringUtil;
+import smart.generator.CodeGenerator;
+import smart.generator.bean.Column;
+import smart.generator.bean.Field;
+import smart.generator.bean.Table;
+import smart.generator.builder.Builder;
 
 public class EntityBuilder extends Builder {
 
