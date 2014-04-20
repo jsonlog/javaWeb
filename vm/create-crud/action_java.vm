@@ -1,8 +1,8 @@
 package ${app_package}.action;
 
-import smart.framework.annotation.Action;
-import smart.framework.annotation.Request;
-import smart.framework.bean.Result;
+import org.smart4j.framework.mvc.annotation.Action;
+import org.smart4j.framework.mvc.annotation.Request;
+import org.smart4j.framework.mvc.bean.Result;
 import java.util.Map;
 
 @Action

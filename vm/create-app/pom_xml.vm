@@ -29,10 +29,10 @@
             <version>5.1.25</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- Smart -->
+        <!-- Smart4J -->
         <dependency>
-            <groupId>smart</groupId>
-            <artifactId>smart-framework</artifactId>
+            <groupId>org.smart4j</groupId>
+            <artifactId>smart4j-framework</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
     </dependencies>

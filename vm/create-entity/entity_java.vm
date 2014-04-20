@@ -1,6 +1,6 @@
 package ${app_package}.entity;
 
-import smart.framework.base.BaseEntity;
+import org.smart4j.framework.orm.BaseEntity;
 
 public class ${entity_name_p} extends BaseEntity {
 }

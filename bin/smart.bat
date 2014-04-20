@@ -10,7 +10,7 @@ for %%i in (%SMART_HOME%\lib\*.jar) do (
     set CLASS_PATH=!CLASS_PATH!;%%i
 )
 
-set INVOKER_CLASS=smart.generator.Invoker
+set INVOKER_CLASS=org.smart4j.generator.Invoker
 
 if not "%1" == "" (
     goto %1
@@ -35,7 +35,7 @@ if not "%1" == "" (
 ::----------------------------------------------------------------------------------------------------
 :create-app
 ::----------------------------------------------------------------------------------------------------
-set COMMAND_CLASS=smart.generator.command.impl.CreateAppCommand
+set COMMAND_CLASS=org.smart4j.generator.command.impl.CreateAppCommand
 
 :app_name
 set /p APP_NAME="1/3 - Name: "
@@ -64,7 +64,7 @@ if not exist pom.xml (
     goto error
 )
 
-set COMMAND_CLASS=smart.generator.command.impl.CreateEntityCommand
+set COMMAND_CLASS=org.smart4j.generator.command.impl.CreateEntityCommand
 
 set ENTITY_NAME=%2
 
@@ -78,7 +78,7 @@ if not exist pom.xml (
     goto error
 )
 
-set COMMAND_CLASS=smart.generator.command.impl.CreateServiceCommand
+set COMMAND_CLASS=org.smart4j.generator.command.impl.CreateServiceCommand
 
 set SERVICE_NAME=%2
 
@@ -92,7 +92,7 @@ if not exist pom.xml (
     goto error
 )
 
-set COMMAND_CLASS=smart.generator.command.impl.CreateActionCommand
+set COMMAND_CLASS=org.smart4j.generator.command.impl.CreateActionCommand
 
 set ACTION_NAME=%2
 
@@ -106,7 +106,7 @@ if not exist pom.xml (
     goto error
 )
 
-set COMMAND_CLASS=smart.generator.command.impl.CreatePageCommand
+set COMMAND_CLASS=org.smart4j.generator.command.impl.CreatePageCommand
 
 set PAGE_NAME=%2
 
@@ -120,7 +120,7 @@ if not exist pom.xml (
     goto error
 )
 
-set COMMAND_CLASS=smart.generator.command.impl.CreateCRUDCommand
+set COMMAND_CLASS=org.smart4j.generator.command.impl.CreateCRUDCommand
 
 set CRUD_NAME=%2
 
@@ -134,7 +134,7 @@ if not exist pom.xml (
     goto error
 )
 
-set COMMAND_CLASS=smart.generator.command.impl.LoadDictCommand
+set COMMAND_CLASS=org.smart4j.generator.command.impl.LoadDictCommand
 
 set DICT_PATH=%2
 

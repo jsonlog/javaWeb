@@ -1,6 +1,6 @@
 package ${app_package}.service.impl;
 
-import smart.framework.annotation.Service;
+import org.smart4j.framework.tx.annotation.Service;
 import ${app_package}.service.${service_name_p}Service;
 
 @Service
