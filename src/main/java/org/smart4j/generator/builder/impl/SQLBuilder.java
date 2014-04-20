@@ -1,12 +1,12 @@
-package smart.generator.builder.impl;
+package org.smart4j.generator.builder.impl;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import smart.generator.CodeGenerator;
-import smart.generator.bean.Column;
-import smart.generator.bean.Table;
-import smart.generator.builder.Builder;
+import org.smart4j.generator.CodeGenerator;
+import org.smart4j.generator.bean.Column;
+import org.smart4j.generator.bean.Table;
+import org.smart4j.generator.builder.Builder;
 
 public class SQLBuilder extends Builder {
 

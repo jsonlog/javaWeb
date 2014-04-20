@@ -1,4 +1,4 @@
-package smart.generator.command.impl;
+package org.smart4j.generator.command.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,13 +11,13 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import smart.framework.util.StringUtil;
-import smart.generator.bean.Column;
-import smart.generator.bean.Table;
-import smart.generator.builder.Builder;
-import smart.generator.builder.impl.EntityBuilder;
-import smart.generator.builder.impl.SQLBuilder;
-import smart.generator.command.Command;
+import org.smart4j.framework.util.StringUtil;
+import org.smart4j.generator.bean.Column;
+import org.smart4j.generator.bean.Table;
+import org.smart4j.generator.builder.Builder;
+import org.smart4j.generator.builder.impl.EntityBuilder;
+import org.smart4j.generator.builder.impl.SQLBuilder;
+import org.smart4j.generator.command.Command;
 
 public class LoadDictCommand extends Command {
 

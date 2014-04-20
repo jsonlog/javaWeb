@@ -9,8 +9,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <groupId>smart</groupId>
-    <artifactId>smart-generator</artifactId>
+    <groupId>org.smart4j</groupId>
+    <artifactId>smart4j-generator</artifactId>
     <version>1.0</version>
 
     <dependencies>
@@ -39,10 +39,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Smart -->
+        <!-- Smart4J -->
         <dependency>
-            <groupId>smart</groupId>
-            <artifactId>smart-framework</artifactId>
+            <groupId>org.smart4j</groupId>
+            <artifactId>smart4j-framework</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
     </dependencies>

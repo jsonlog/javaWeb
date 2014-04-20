@@ -1,8 +1,8 @@
-package smart.generator;
+package org.smart4j.generator;
 
-import smart.framework.util.ArrayUtil;
-import smart.framework.util.ObjectUtil;
-import smart.generator.command.Command;
+import org.smart4j.framework.util.ArrayUtil;
+import org.smart4j.framework.util.ObjectUtil;
+import org.smart4j.generator.command.Command;
 
 public class Invoker {
 

@@ -1,4 +1,4 @@
-package smart.generator.bean;
+package org.smart4j.generator.bean;
 
 public class Column {
 

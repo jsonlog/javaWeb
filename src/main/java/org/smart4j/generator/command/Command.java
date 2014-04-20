@@ -1,4 +1,4 @@
-package smart.generator.command;
+package org.smart4j.generator.command;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import smart.framework.util.ArrayUtil;
+import org.smart4j.framework.util.ArrayUtil;
 
 public abstract class Command {
 

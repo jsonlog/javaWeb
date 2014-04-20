@@ -1,32 +1,32 @@
-package smart.generator.test;
+package org.smart4j.generator.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import smart.framework.OrderedRunner;
-import smart.framework.annotation.Order;
-import smart.generator.Invoker;
-import smart.generator.command.impl.CreateActionCommand;
-import smart.generator.command.impl.CreateAppCommand;
-import smart.generator.command.impl.CreateCRUDCommand;
-import smart.generator.command.impl.CreateEntityCommand;
-import smart.generator.command.impl.CreatePageCommand;
-import smart.generator.command.impl.CreateServiceCommand;
-import smart.generator.command.impl.LoadDictCommand;
+import org.smart4j.framework.test.OrderedRunner;
+import org.smart4j.framework.test.annotation.TestOrder;
+import org.smart4j.generator.Invoker;
+import org.smart4j.generator.command.impl.CreateActionCommand;
+import org.smart4j.generator.command.impl.CreateAppCommand;
+import org.smart4j.generator.command.impl.CreateCRUDCommand;
+import org.smart4j.generator.command.impl.CreateEntityCommand;
+import org.smart4j.generator.command.impl.CreatePageCommand;
+import org.smart4j.generator.command.impl.CreateServiceCommand;
+import org.smart4j.generator.command.impl.LoadDictCommand;
 
 @RunWith(OrderedRunner.class)
 public class CommandTest {
 
     @Test
-    @Order(1)
+    @TestOrder(1)
     public void createAppCommandTest() {
         Invoker invoker = new Invoker();
         invoker.setCommand(new CreateAppCommand()); // smart create-app
 
         String[] params = {
-            "C:\\Smart",        // Current Path
-            "demo",             // App Name
-            "smart",        // App Group
-            "smart.demo"    // App Package = <App Group> + <App Artifact>
+            "C:\\Smart4J", // Current Path
+            "demo",        // App Name
+            "smart",       // App Group
+            "smart.demo"   // App Package = <App Group> + <App Artifact>
         };
         boolean result = invoker.execCommand(params);
         if (!result) {
@@ -35,7 +35,7 @@ public class CommandTest {
     }
 
     @Test
-    @Order(2)
+    @TestOrder(2)
     public void createEntityCommandTest() {
         Invoker invoker = new Invoker();
         invoker.setCommand(new CreateEntityCommand()); // smart create-entity <entity-name>
@@ -43,8 +43,8 @@ public class CommandTest {
         String[] entityNameArray = {"product", "product-type"};
         for (String entityName : entityNameArray) {
             String[] params = {
-                "C:\\Smart\\demo",  // Current Path
-                entityName,         // Entity Name
+                "C:\\Smart4J\\demo", // Current Path
+                entityName,          // Entity Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -54,7 +54,7 @@ public class CommandTest {
     }
 
     @Test
-    @Order(3)
+    @TestOrder(3)
     public void createServiceCommandTest() {
         Invoker invoker = new Invoker();
         invoker.setCommand(new CreateServiceCommand()); // smart create-service <service-name>
@@ -62,8 +62,8 @@ public class CommandTest {
         String[] serviceNameArray = {"product", "product-type"};
         for (String serviceName : serviceNameArray) {
             String[] params = {
-                "C:\\Smart\\demo",  // Current Path
-                serviceName,        // Service Name
+                "C:\\Smart4J\\demo", // Current Path
+                serviceName,         // Service Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -73,7 +73,7 @@ public class CommandTest {
     }
 
     @Test
-    @Order(4)
+    @TestOrder(4)
     public void createActionCommandTest() {
         Invoker invoker = new Invoker();
         invoker.setCommand(new CreateActionCommand()); // smart create-action <action-name>
@@ -81,8 +81,8 @@ public class CommandTest {
         String[] actionNameArray = {"product", "product-type"};
         for (String actionName : actionNameArray) {
             String[] params = {
-                "C:\\Smart\\demo",  // Current Path
-                actionName,         // Action Name
+                "C:\\Smart4J\\demo", // Current Path
+                actionName,          // Action Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -92,7 +92,7 @@ public class CommandTest {
     }
 
     @Test
-    @Order(5)
+    @TestOrder(5)
     public void createPageCommandTest() {
         Invoker invoker = new Invoker();
         invoker.setCommand(new CreatePageCommand()); // smart create-page <page-name>
@@ -100,8 +100,8 @@ public class CommandTest {
         String[] pageNameArray = {"product", "product-type"};
         for (String pageName : pageNameArray) {
             String[] params = {
-                "C:\\Smart\\demo",  // Current Path
-                pageName,           // Page Name
+                "C:\\Smart4J\\demo", // Current Path
+                pageName,            // Page Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -111,7 +111,7 @@ public class CommandTest {
     }
 
     @Test
-    @Order(6)
+    @TestOrder(6)
     public void createCRUDCommandTest() {
         Invoker invoker = new Invoker();
         invoker.setCommand(new CreateCRUDCommand()); // smart create-crud <crud-name>
@@ -119,8 +119,8 @@ public class CommandTest {
         String[] crudNameArray = {"customer", "customer-type"};
         for (String crudName : crudNameArray) {
             String[] params = {
-                "C:\\Smart\\demo",  // Current Path
-                crudName,           // CRUD Name
+                "C:\\Smart4J\\demo", // Current Path
+                crudName,            // CRUD Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -130,14 +130,14 @@ public class CommandTest {
     }
 
     @Test
-    @Order(7)
+    @TestOrder(7)
     public void loadDictCommandTest() {
         Invoker invoker = new Invoker();
         invoker.setCommand(new LoadDictCommand()); // smart load-dict <dict-path>
 
         String[] params = {
-            "C:\\Smart\\demo",          // Current Path
-            "C:\\Smart\\demo\\db.xls",  // Dict Path
+            "C:\\Smart4J\\demo",          // Current Path
+            "C:\\Smart4J\\demo\\db.xls",  // Dict Path
         };
         boolean result = invoker.execCommand(params);
         if (!result) {

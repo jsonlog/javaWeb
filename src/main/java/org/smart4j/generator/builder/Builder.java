@@ -1,9 +1,9 @@
-package smart.generator.builder;
+package org.smart4j.generator.builder;
 
 import java.util.List;
 import java.util.Map;
-import smart.generator.bean.Column;
-import smart.generator.bean.Table;
+import org.smart4j.generator.bean.Column;
+import org.smart4j.generator.bean.Table;
 
 public abstract class Builder {
 

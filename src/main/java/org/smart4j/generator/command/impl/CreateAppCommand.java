@@ -1,11 +1,11 @@
-package smart.generator.command.impl;
+package org.smart4j.generator.command.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-import smart.framework.util.FileUtil;
-import smart.framework.util.StringUtil;
-import smart.generator.CodeGenerator;
-import smart.generator.command.Command;
+import org.smart4j.framework.util.FileUtil;
+import org.smart4j.framework.util.StringUtil;
+import org.smart4j.generator.CodeGenerator;
+import org.smart4j.generator.command.Command;
 
 public class CreateAppCommand extends Command {
 
