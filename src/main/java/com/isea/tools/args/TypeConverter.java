@@ -1,12 +1,12 @@
 package com.isea.tools.args;
 
-import com.isea.controller.User;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.*;
 
 /**
+ * 类型转换
+ *
  * Created by liuzh on 14-3-21.
  */
 public class TypeConverter {
@@ -182,19 +184,4 @@ public class TypeConverter {
         }
         return (T)convertedValue;
     }
-
-//    测试代码
-//    public static void main(String[] args) throws Exception {
-//        Method method = TypeConverter.class.getDeclaredMethod("show",List.class);
-//        MethodParameter parameter = new MethodParameter(method,0);
-//
-//        String strs = "1234";
-//
-//        List<Integer> list = (List<Integer>) convertToCollection(strs,parameter.getParameterType(),parameter.getType());
-//
-//        System.out.println(list.toString());
-//
-//    }
-//
-//    public void show(List<Integer> users){}
 }

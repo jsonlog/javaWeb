@@ -1,12 +1,12 @@
 package com.isea.tools.args;
 
-import com.smart.framework.annotation.Request;
-import com.smart.framework.bean.Multipart;
-import com.smart.framework.bean.Multiparts;
-import com.smart.framework.helper.UploadHelper;
-import com.smart.framework.util.ArrayUtil;
-import com.smart.framework.util.StringUtil;
 import org.apache.commons.beanutils.BeanUtils;
+import org.smart4j.framework.mvc.UploadHelper;
+import org.smart4j.framework.mvc.annotation.Request;
+import org.smart4j.framework.mvc.bean.Multipart;
+import org.smart4j.framework.mvc.bean.Multiparts;
+import org.smart4j.framework.util.ArrayUtil;
+import org.smart4j.framework.util.StringUtil;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 参数处理
  * Created by liuzh on 14-3-11.
  */
 public class ArgsUtil {
