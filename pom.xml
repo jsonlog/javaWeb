@@ -10,7 +10,7 @@
     </properties>
 
     <groupId>org.smart4j</groupId>
-    <artifactId>smart4j-generator</artifactId>
+    <artifactId>smart-generator</artifactId>
     <version>1.0</version>
 
     <dependencies>
@@ -39,10 +39,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Smart4J -->
+        <!-- Smart -->
         <dependency>
             <groupId>org.smart4j</groupId>
-            <artifactId>smart4j-framework</artifactId>
+            <artifactId>smart-framework</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -94,7 +94,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <finalName>smart4j-dependency</finalName>
+                    <finalName>smart-dependency</finalName>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <filters>
                         <filter>

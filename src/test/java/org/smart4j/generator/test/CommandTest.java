@@ -23,10 +23,10 @@ public class CommandTest {
         invoker.setCommand(new CreateAppCommand()); // smart create-app
 
         String[] params = {
-            "C:\\Smart4J", // Current Path
-            "demo",        // App Name
-            "smart",       // App Group
-            "smart.demo"   // App Package = <App Group> + <App Artifact>
+            "C:\\Smart", // Current Path
+            "demo",      // App Name
+            "smart",     // App Group
+            "smart.demo" // App Package = <App Group> + <App Artifact>
         };
         boolean result = invoker.execCommand(params);
         if (!result) {
@@ -43,8 +43,8 @@ public class CommandTest {
         String[] entityNameArray = {"product", "product-type"};
         for (String entityName : entityNameArray) {
             String[] params = {
-                "C:\\Smart4J\\demo", // Current Path
-                entityName,          // Entity Name
+                "C:\\Smart\\demo", // Current Path
+                entityName,        // Entity Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -62,8 +62,8 @@ public class CommandTest {
         String[] serviceNameArray = {"product", "product-type"};
         for (String serviceName : serviceNameArray) {
             String[] params = {
-                "C:\\Smart4J\\demo", // Current Path
-                serviceName,         // Service Name
+                "C:\\Smart\\demo", // Current Path
+                serviceName,       // Service Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -81,8 +81,8 @@ public class CommandTest {
         String[] actionNameArray = {"product", "product-type"};
         for (String actionName : actionNameArray) {
             String[] params = {
-                "C:\\Smart4J\\demo", // Current Path
-                actionName,          // Action Name
+                "C:\\Smart\\demo", // Current Path
+                actionName,        // Action Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -100,8 +100,8 @@ public class CommandTest {
         String[] pageNameArray = {"product", "product-type"};
         for (String pageName : pageNameArray) {
             String[] params = {
-                "C:\\Smart4J\\demo", // Current Path
-                pageName,            // Page Name
+                "C:\\Smart\\demo", // Current Path
+                pageName,          // Page Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -119,8 +119,8 @@ public class CommandTest {
         String[] crudNameArray = {"customer", "customer-type"};
         for (String crudName : crudNameArray) {
             String[] params = {
-                "C:\\Smart4J\\demo", // Current Path
-                crudName,            // CRUD Name
+                "C:\\Smart\\demo", // Current Path
+                crudName,          // CRUD Name
             };
             boolean result = invoker.execCommand(params);
             if (!result) {
@@ -136,8 +136,8 @@ public class CommandTest {
         invoker.setCommand(new LoadDictCommand()); // smart load-dict <dict-path>
 
         String[] params = {
-            "C:\\Smart4J\\demo",          // Current Path
-            "C:\\Smart4J\\demo\\db.xls",  // Dict Path
+            "C:\\Smart\\demo",          // Current Path
+            "C:\\Smart\\demo\\db.xls",  // Dict Path
         };
         boolean result = invoker.execCommand(params);
         if (!result) {
