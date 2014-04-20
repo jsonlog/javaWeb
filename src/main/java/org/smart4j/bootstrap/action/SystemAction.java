@@ -9,12 +9,12 @@ import org.smart4j.framework.mvc.bean.View;
 @Action
 public class SystemAction {
 
-    @Request("POST:/login")
+    @Request.Post("/login")
     public View login() {
         return new View("/welcome");
     }
 
-    @Request("GET:/logout")
+    @Request.Get("/logout")
     public Result logout() {
         DataContext.Session.removeAll();
         return new Result(true);

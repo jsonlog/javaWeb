@@ -1,5 +1,5 @@
 /* 全局变量 */
-var BASE = '/smart4j-bootstrap'; // Context Path（若以 ROOT 发布，则为空字符串）
+var BASE = '/smart-bootstrap'; // Context Path（若以 ROOT 发布，则为空字符串）
 
 $(function() {
     // 扩展 jQuery 函数
