@@ -5,22 +5,22 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <smart.version>2.2-SNAPSHOT</smart.version>
-    </properties>
-
-    <groupId>smart</groupId>
-    <artifactId>smart-rest-client</artifactId>
+    <groupId>org.smart4j</groupId>
+    <artifactId>smart4j-rest-client</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <smart4j.version>2.2-SNAPSHOT</smart4j.version>
+    </properties>
+
     <dependencies>
-        <!-- Smart -->
+        <!-- Smart4J -->
         <dependency>
-            <groupId>smart</groupId>
-            <artifactId>smart-sso</artifactId>
-            <version>${smart.version}</version>
+            <groupId>org.smart4j</groupId>
+            <artifactId>smart4j-sso</artifactId>
+            <version>${smart4j.version}</version>
         </dependency>
     </dependencies>
 
