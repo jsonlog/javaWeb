@@ -1,13 +1,15 @@
-package smart.sample.entity;
+package org.smart4j.sample.entity;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import smart.framework.base.BaseEntity;
+import org.smart4j.framework.orm.BaseEntity;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Product extends BaseEntity {
+
+    private long id;
 
     private long productTypeId;
 
@@ -22,6 +24,14 @@ public class Product extends BaseEntity {
     private String picture;
 
     public Product() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getProductTypeId() {

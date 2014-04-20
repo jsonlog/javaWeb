@@ -1,4 +1,4 @@
-package smart.sample.service;
+package org.smart4j.sample.service;
 
 import java.util.List;
 import java.util.Map;
@@ -11,11 +11,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import smart.framework.DataSet;
-import smart.framework.annotation.Service;
-import smart.framework.annotation.Transaction;
-import smart.plugin.rest.Rest;
-import smart.sample.entity.Product;
+import org.smart4j.framework.dao.DataSet;
+import org.smart4j.framework.tx.annotation.Service;
+import org.smart4j.framework.tx.annotation.Transaction;
+import org.smart4j.plugin.rest.Rest;
+import org.smart4j.sample.entity.Product;
 
 @Service
 @Rest("/rest/ProductService")
