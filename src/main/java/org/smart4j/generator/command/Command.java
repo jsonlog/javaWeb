@@ -48,11 +48,12 @@ public abstract class Command {
     }
 
     protected final String getAppName(String appPath) {
+        // TODO 无法获取
         return getConfigProperty(appPath, "app.name");
     }
 
     protected final String getAppPackage(String appPath) {
-        return getConfigProperty(appPath, "app.package");
+        return getConfigProperty(appPath, "app.base_package");
     }
 
     private String getConfigProperty(String appPath, String property) {
