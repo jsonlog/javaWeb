@@ -12,8 +12,8 @@
 
 <%@ include file="common/header.jsp" %>
 
-<div class="container">
-    <div class="jumbotron">
+<div class="jumbotron">
+    <div class="container">
         <h1><f:message key="welcome.word"/></h1>
     </div>
 </div>
