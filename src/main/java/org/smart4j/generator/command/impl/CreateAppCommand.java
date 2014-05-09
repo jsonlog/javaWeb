@@ -86,8 +86,8 @@ public class CreateAppCommand extends Command {
         dataMap.put("app_package", appPackage);
         dataMap.put("db_name", dbName);
 
-        String vmPath = "create-app/config_properties.vm";
-        String filePath = appPath + "/src/main/resources/config.properties";
+        String vmPath = "create-app/smart_properties.vm";
+        String filePath = appPath + "/src/main/resources/smart.properties";
         CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 
@@ -96,8 +96,8 @@ public class CreateAppCommand extends Command {
         dataMap.put("app_package", appPackage);
         dataMap.put("db_name", dbName + "_test");
 
-        String vmPath = "create-app/config_properties.vm";
-        String filePath = appPath + "/src/test/resources/config.properties";
+        String vmPath = "create-app/smart_properties.vm";
+        String filePath = appPath + "/src/test/resources/smart.properties";
         CodeGenerator.generateCode(vmPath, dataMap, filePath);
     }
 
