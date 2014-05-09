@@ -1,3 +1,4 @@
+smart.framework.app.name=${app_name}
 smart.framework.app.base_package=${app_package}
 smart.framework.app.www_path=/www/
 smart.framework.app.home_page=/www/html/index.html
