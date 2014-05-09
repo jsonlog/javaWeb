@@ -12,7 +12,7 @@ public abstract class Command {
 
     private static final Logger logger = LoggerFactory.getLogger(Command.class);
 
-    private static Properties config;
+    private static Properties props;
 
     public final boolean exec(String... params) {
         boolean result = true;
@@ -48,27 +48,26 @@ public abstract class Command {
     }
 
     protected final String getAppName(String appPath) {
-        // TODO 无法获取
-        return getConfigProperty(appPath, "app.name");
+        return getConfigProperty(appPath, "smart.framework.app.name");
     }
 
     protected final String getAppPackage(String appPath) {
-        return getConfigProperty(appPath, "app.base_package");
+        return getConfigProperty(appPath, "smart.framework.app.base_package");
     }
 
-    private String getConfigProperty(String appPath, String property) {
-        String appName;
+    private String getConfigProperty(String appPath, String propKey) {
+        String propValue;
         try {
-            if (config == null) {
-                config = new Properties();
-                config.load(new FileInputStream(appPath + "/src/main/resources/config.properties"));
+            if (props == null) {
+                props = new Properties();
+                props.load(new FileInputStream(appPath + "/src/main/resources/smart.properties"));
             }
-            appName = config.getProperty(property);
+            propValue = props.getProperty(propKey);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("无法找到 config.properties 文件！");
+            throw new RuntimeException("无法找到 smart.properties 文件！");
         } catch (IOException e) {
-            throw new RuntimeException("加载 config.properties 文件出错！");
+            throw new RuntimeException("加载 smart.properties 文件出错！");
         }
-        return appName;
+        return propValue;
     }
 }
