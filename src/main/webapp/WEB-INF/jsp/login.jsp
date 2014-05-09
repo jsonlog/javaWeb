@@ -28,13 +28,13 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label text-right" for="username"><f:message key="login.username"/>:</label>
                             <div class="col-sm-6">
-                                <input class="form-control" type="text" id="username">
+                                <input type="text" class="form-control" id="username">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label text-right" for="password"><f:message key="login.password"/>:</label>
                             <div class="col-sm-6">
-                                <input class="form-control" type="password" id="password">
+                                <input type="password" class="form-control" id="password">
                             </div>
                         </div>
                         <div class="form-group">
@@ -48,7 +48,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-4 text-right">
-                                <button class="btn btn-default btn-success btn-lg" type="submit"><f:message key="login"/></button>
+                                <button type="submit" class="btn btn-default btn-success btn-lg"><f:message key="login"/></button>
                             </div>
                         </div>
                     </form>
