@@ -1,8 +1,8 @@
-app.package=${app_package}
-app.www_path=/www/
-app.home_page=/www/html/index.html
+smart.framework.app.base_package=${app_package}
+smart.framework.app.www_path=/www/
+smart.framework.app.home_page=/www/html/index.html
 
-jdbc.driver=com.mysql.jdbc.Driver
-jdbc.url=jdbc:mysql://localhost:3306/${db_name}
-jdbc.username=root
-jdbc.password=root
+smart.framework.jdbc.driver=com.mysql.jdbc.Driver
+smart.framework.jdbc.url=jdbc:mysql://localhost:3306/${db_name}
+smart.framework.jdbc.username=root
+smart.framework.jdbc.password=root

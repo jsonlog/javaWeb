@@ -1,6 +1,7 @@
 package ${app_package}.entity;
 
-import org.smart4j.framework.orm.BaseEntity;
+import org.smart4j.framework.orm.annotation.Entity;
 
-public class ${entity_name_p} extends BaseEntity {
+@Entity
+public class ${entity_name_p} {
 }
