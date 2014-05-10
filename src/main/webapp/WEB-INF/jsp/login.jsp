@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
     <div class="container">
         <div class="navbar-header">
             <div class="navbar-brand"><f:message key="common.title"/></div>
