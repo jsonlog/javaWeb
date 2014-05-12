@@ -20,8 +20,8 @@ var Smart = {
 
 $(function() {
     /* 忽略空链接 */
-    $('a[href="#"]').click(function(event) {
-        event.preventDefault();
+    $('a[href="#"]').click(function(e) {
+        e.preventDefault();
     });
 
     /* 全局 Ajax 设置 */
