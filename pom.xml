@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.11</junit.version>
         <velocity.version>1.7</velocity.version>
-        <smart.version>2.3-SNAPSHOT</smart.version>
+        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
     </properties>
 
     <dependencies>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.smart4j</groupId>
             <artifactId>smart-framework</artifactId>
-            <version>${smart.version}</version>
+            <version>${smart-framework.version}</version>
         </dependency>
     </dependencies>
 
