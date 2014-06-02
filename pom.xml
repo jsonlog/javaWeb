@@ -16,7 +16,7 @@
         <servlet.version>3.0.1</servlet.version>
         <cxf.version>2.6.9</cxf.version>
         <jackson.version>1.9.13</jackson.version>
-        <smart.version>2.3-SNAPSHOT</smart.version>
+        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
     </properties>
 
     <dependencies>
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.smart4j</groupId>
             <artifactId>smart-framework</artifactId>
-            <version>${smart.version}</version>
+            <version>${smart-framework.version}</version>
         </dependency>
     </dependencies>
 
