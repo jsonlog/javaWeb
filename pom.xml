@@ -12,6 +12,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <c3p0.version>0.9.2.1</c3p0.version>
+        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
     </properties>
 
     <dependencies>
@@ -19,13 +21,13 @@
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
-            <version>0.9.2.1</version>
+            <version>${c3p0.version}</version>
         </dependency>
         <!-- Smart -->
         <dependency>
             <groupId>org.smart4j</groupId>
             <artifactId>smart-framework</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>${smart-framework.version}</version>
         </dependency>
     </dependencies>
 
