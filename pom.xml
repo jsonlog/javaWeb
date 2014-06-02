@@ -12,7 +12,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <smart.version>2.2-SNAPSHOT</smart.version>
+        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
+        <smart-plugin-soap.version>1.0</smart-plugin-soap.version>
+        <smart-plugin-rest.version>1.0</smart-plugin-rest.version>
+        <smart-sso.version>1.0</smart-sso.version>
     </properties>
 
     <dependencies>
@@ -34,22 +37,22 @@
         <dependency>
             <groupId>org.smart4j</groupId>
             <artifactId>smart-framework</artifactId>
-            <version>${smart.version}</version>
+            <version>${smart-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.smart4j</groupId>
             <artifactId>smart-plugin-soap</artifactId>
-            <version>${smart.version}</version>
+            <version>${smart-plugin-soap.version}</version>
         </dependency>
         <dependency>
             <groupId>org.smart4j</groupId>
             <artifactId>smart-plugin-rest</artifactId>
-            <version>${smart.version}</version>
+            <version>${smart-plugin-rest.version}</version>
         </dependency>
         <dependency>
             <groupId>org.smart4j</groupId>
             <artifactId>smart-sso</artifactId>
-            <version>${smart.version}</version>
+            <version>${smart-sso.version}</version>
         </dependency>
     </dependencies>
 
