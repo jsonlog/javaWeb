@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <smart.version>2.2-SNAPSHOT</smart.version>
+        <smart-sso.version>1.0</smart-sso.version>
     </properties>
 
     <dependencies>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.smart4j</groupId>
             <artifactId>smart-sso</artifactId>
-            <version>${smart.version}</version>
+            <version>${smart-sso.version}</version>
         </dependency>
     </dependencies>
 
@@ -62,18 +62,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <!-- OSC Public -->
-        <repository>
-            <id>osc</id>
-            <url>http://maven.oschina.net/content/groups/public/</url>
-        </repository>
-        <!-- OSC Thirdparty -->
-        <repository>
-            <id>osc_thirdparty</id>
-            <url>http://maven.oschina.net/content/repositories/thirdparty/</url>
-        </repository>
-    </repositories>
 
 </project>
