@@ -44,7 +44,7 @@
         <servlet.version>3.0.1</servlet.version>
         <jsp.version>2.2</jsp.version>
         <shrio.version>1.2.3</shrio.version>
-        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
+        <smart-framework.version>2.3</smart-framework.version>
     </properties>
 
     <dependencies>
