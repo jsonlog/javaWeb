@@ -43,7 +43,7 @@
     <properties>
         <junit.version>4.11</junit.version>
         <lucene.version>4.6.0</lucene.version>
-        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
+        <smart-framework.version>2.3</smart-framework.version>
     </properties>
 
     <dependencies>
