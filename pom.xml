@@ -6,12 +6,41 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.smart4j</groupId>
+    <parent>
+        <groupId>org.smart4j</groupId>
+        <artifactId>smart-root</artifactId>
+        <version>1.0</version>
+        <relativePath>../smart-root</relativePath>
+    </parent>
+
     <artifactId>smart-plugin-rest</artifactId>
     <version>1.0</version>
 
+    <name>smart-plugin-rest</name>
+    <description>Smart REST Plugin</description>
+    <url>http://www.smart4j.org/</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>huangyong</name>
+            <email>huangyong.java@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@git.oschina.net:huangyong/smart-plugin-rest.git</connection>
+        <developerConnection>scm:git:git@git.oschina.net:huangyong/smart-plugin-rest.git</developerConnection>
+        <url>git@git.oschina.net:huangyong/smart-plugin-rest.git</url>
+    </scm>
+
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.11</junit.version>
         <servlet.version>3.0.1</servlet.version>
         <cxf.version>2.6.9</cxf.version>
