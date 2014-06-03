@@ -11,7 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import org.smart4j.framework.dao.DataSet;
+import org.smart4j.framework.orm.DataSet;
 import org.smart4j.framework.tx.annotation.Service;
 import org.smart4j.framework.tx.annotation.Transaction;
 import org.smart4j.plugin.rest.Rest;
@@ -26,7 +26,7 @@ public class ProductService {
     @GET
     @Path("/products")
     public List<Product> getProductList() {
-        return DataSet.selectList(Product.class, "", "id asc");
+        return DataSet.selectListWithSort(Product.class, "id asc");
     }
 
     @GET

@@ -1,13 +1,15 @@
 package org.smart4j.sample.entity;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.smart4j.framework.orm.BaseEntity;
+import org.smart4j.framework.orm.annotation.Entity;
 
+@Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Product extends BaseEntity {
+public class Product implements Serializable {
 
     private long id;
 
