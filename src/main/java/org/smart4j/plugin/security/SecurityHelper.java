@@ -3,6 +3,8 @@ package org.smart4j.plugin.security;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.DefaultPasswordService;
+import org.apache.shiro.authc.credential.PasswordService;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,8 @@ import org.smart4j.plugin.security.fault.LoginException;
 public final class SecurityHelper {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityHelper.class);
+
+    private static final PasswordService passwordService = new DefaultPasswordService();
 
     /**
      * 登录
@@ -43,5 +47,12 @@ public final class SecurityHelper {
         if (currentUser != null) {
             currentUser.logout();
         }
+    }
+
+    /**
+     * 加密
+     */
+    public static String encrypt(String plaintext) {
+        return passwordService.encryptPassword(plaintext);
     }
 }
