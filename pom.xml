@@ -42,7 +42,7 @@
 
     <properties>
         <c3p0.version>0.9.2.1</c3p0.version>
-        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
+        <smart-framework.version>2.3</smart-framework.version>
     </properties>
 
     <dependencies>
