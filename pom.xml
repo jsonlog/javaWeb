@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
+        <smart-framework.version>2.3</smart-framework.version>
         <smart-plugin-soap.version>1.0</smart-plugin-soap.version>
         <smart-plugin-rest.version>1.0</smart-plugin-rest.version>
         <smart-sso.version>1.0</smart-sso.version>
