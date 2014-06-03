@@ -43,7 +43,7 @@
     <properties>
         <servlet.version>3.0.1</servlet.version>
         <druid.version>1.0.4</druid.version>
-        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
+        <smart-framework.version>2.3</smart-framework.version>
     </properties>
 
     <dependencies>
