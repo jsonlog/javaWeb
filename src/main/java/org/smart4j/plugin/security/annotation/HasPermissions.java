@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 public @interface HasPermissions {
 
     /**
-     * 权限字符串（支持逻辑运算：and-与、or-或，可使用小括号提高优先级）
+     * 权限字符串
      */
     String value();
 }
