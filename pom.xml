@@ -15,7 +15,7 @@
         <junit.version>4.11</junit.version>
         <velocity.version>1.7</velocity.version>
         <jxl.version>2.6.12</jxl.version>
-        <smart-framework.version>2.3-SNAPSHOT</smart-framework.version>
+        <smart-framework.version>2.3</smart-framework.version>
     </properties>
 
     <dependencies>
