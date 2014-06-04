@@ -1,7 +1,6 @@
 package com.smart.cache.redis;
 
-import com.smart.cache.SmartCacheException;
-
+import org.smart4j.cache.SmartCacheException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -13,18 +12,16 @@ import java.io.ObjectOutputStream;
 public class SerializeUtil {
     /**
      * 序列化
-     * @param object
-     * @return
      */
+    @SuppressWarnings("unchecked")
     public static byte[] serialize(Object object) {
-        ObjectOutputStream oos = null;
-        ByteArrayOutputStream baos = null;
+        ObjectOutputStream oos;
+        ByteArrayOutputStream baos;
         try {
             baos = new ByteArrayOutputStream();
             oos = new ObjectOutputStream(baos);
             oos.writeObject(object);
-            byte[] bytes = baos.toByteArray();
-            return bytes;
+            return baos.toByteArray();
         } catch (Throwable t) {
             throw new SmartCacheException(t);
         }
@@ -32,14 +29,13 @@ public class SerializeUtil {
 
     /**
      * 反序列化
-     * @param bytes
-     * @return
      */
+    @SuppressWarnings("unchecked")
     public static Object unserialize(byte[] bytes) {
         if(bytes==null){
             return null;
         }
-        ByteArrayInputStream bais = null;
+        ByteArrayInputStream bais;
         try {
             bais = new ByteArrayInputStream(bytes);
             ObjectInputStream ois = new ObjectInputStream(bais);

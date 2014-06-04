@@ -1,9 +1,5 @@
 package com.smart.cache.redis;
 
-import com.smart.cache.ISmartCache;
-import com.smart.cache.SmartCacheException;
-
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,9 +7,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
+import org.smart4j.cache.SmartCache;
+import org.smart4j.cache.SmartCacheException;
 import redis.clients.jedis.Jedis;
 
-public class RedisCache<K, V> implements ISmartCache<K, V> {
+public class RedisCache<K, V> implements SmartCache<K, V> {
 
     private Jedis jedis;
 
