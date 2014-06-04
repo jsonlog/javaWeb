@@ -8,21 +8,21 @@ package org.smart4j.plugin.security;
  */
 public interface SecurityConstant {
 
-    String REALMS = "smart.security.realms";
+    String REALMS = "smart.plugin.security.realms";
     String REALMS_JDBC = "jdbc";
     String REALMS_AD = "ad";
     String REALMS_CUSTOM = "custom";
 
-    String SMART_SECURITY = "smart.security.custom.class";
+    String SMART_SECURITY = "smart.plugin.security.custom.class";
 
-    String JDBC_AUTHC_QUERY = "smart.security.jdbc.authc_query";
-    String JDBC_ROLES_QUERY = "smart.security.jdbc.roles_query";
-    String JDBC_PERMISSIONS_QUERY = "smart.security.jdbc.permissions_query";
+    String JDBC_AUTHC_QUERY = "smart.plugin.security.jdbc.authc_query";
+    String JDBC_ROLES_QUERY = "smart.plugin.security.jdbc.roles_query";
+    String JDBC_PERMISSIONS_QUERY = "smart.plugin.security.jdbc.permissions_query";
 
-    String AD_URL = "smart.security.ad.url";
-    String AD_SYSTEM_USERNAME = "smart.security.ad.system_username";
-    String AD_SYSTEM_PASSWORD = "smart.security.ad.system_password";
-    String AD_SEARCH_BASE = "smart.security.ad.search_base";
+    String AD_URL = "smart.plugin.security.ad.url";
+    String AD_SYSTEM_USERNAME = "smart.plugin.security.ad.system_username";
+    String AD_SYSTEM_PASSWORD = "smart.plugin.security.ad.system_password";
+    String AD_SEARCH_BASE = "smart.plugin.security.ad.search_base";
 
-    String CACHEABLE = "smart.security.cacheable";
+    String CACHEABLE = "smart.plugin.security.cacheable";
 }
