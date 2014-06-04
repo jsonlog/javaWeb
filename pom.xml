@@ -125,22 +125,4 @@
         </profile>
     </profiles>
 
-    <modules>
-        <module>../smart-framework</module>
-        <module>../smart-sso</module>
-        <module>../smart-cache</module>
-        <module>../smart-cache-ehcache</module>
-        <module>../smart-plugin-cache</module>
-        <module>../smart-plugin-soap</module>
-        <module>../smart-plugin-rest</module>
-        <module>../smart-plugin-xmlrpc</module>
-        <module>../smart-plugin-mail</module>
-        <module>../smart-plugin-i18n</module>
-        <module>../smart-plugin-job</module>
-        <module>../smart-plugin-hessian</module>
-        <module>../smart-plugin-template</module>
-        <module>../smart-plugin-search</module>
-        <module>../smart-plugin-security</module>
-    </modules>
-
 </project>
