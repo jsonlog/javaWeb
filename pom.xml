@@ -16,7 +16,7 @@
     <artifactId>smart-plugin-job</artifactId>
     <version>1.0</version>
 
-    <name>smart-plugin-i18n</name>
+    <name>smart-plugin-job</name>
     <description>Smart Job Plugin</description>
     <url>http://www.smart4j.org/</url>
 
