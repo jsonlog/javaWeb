@@ -71,6 +71,7 @@
             <groupId>org.smart4j</groupId>
             <artifactId>smart-framework</artifactId>
             <version>${smart-framework.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
