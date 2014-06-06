@@ -1,25 +1,29 @@
-smart4j_plugin_Args
+#smart_plugin_args
 ==================
 
 Args 是用来获取Web中Action(或Controller)参数的,
-可以通过反射传入参数调用Action方法.<br>
+可以通过反射传入参数调用Action方法.  
 Args的作用是获取参数,不提供其他功能,
 Args的目的是给其他的WEB(Servlet)框架提供获取方法参数值的功能。
 
-Args支持以下参数注解:<br>
-@Param<br>
-@Path<br>
+##Args支持以下参数注解:  
+@Param  
+@Path  
 
-Args支持下面的直接参数类型:<br>
-ServletRequest<br>
-ServletResponse<br>
-HttpSession<br>
-Principal<br>
-Locale<br>
-InputStream<br>
-Reader<br>
-OutputStream<br>
-Writer<br>
+##Args支持下面的直接参数类型:  
+ServletRequest  
+ServletResponse  
+HttpSession  
+Principal  
+Locale  
+InputStream  
+Reader  
+OutputStream  
+Writer  
 
-支持最新版smart4j
+##使用方法:  
+###在smart.properties中配置:  
+`smart.handler_invoker=com.isea.tools.args.ArgsHandlerInvoker`  
+  
+##支持smart 2.3及以上版本
 =============
