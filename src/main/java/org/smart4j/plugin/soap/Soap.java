@@ -5,9 +5,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * SOAP Web Services 注解
+ * <br/>
+ * 注意：必须定义在接口上
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Soap {
 
+    /**
+     * Web Services 相对路径
+     */
     String value() default "";
 }

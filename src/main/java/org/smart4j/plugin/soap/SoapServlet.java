@@ -12,6 +12,9 @@ import org.smart4j.framework.ioc.IocHelper;
 import org.smart4j.framework.util.CollectionUtil;
 import org.smart4j.framework.util.StringUtil;
 
+/**
+ * 发布 SOAP Web Services
+ */
 @WebServlet(urlPatterns = SoapConstant.SERVLET_URL, loadOnStartup = 0)
 public class SoapServlet extends CXFNonSpringServlet {
 
@@ -22,10 +25,10 @@ public class SoapServlet extends CXFNonSpringServlet {
         Bus bus = getBus();
         BusFactory.setDefaultBus(bus);
         // 发布 SOAP 服务
-        publishSOAPService();
+        publishSoapService();
     }
 
-    private void publishSOAPService() {
+    private void publishSoapService() {
         // 遍历所有标注了 Soap 注解的接口
         List<Class<?>> interfaceClassList = ClassHelper.getClassListByAnnotation(Soap.class);
         if (CollectionUtil.isNotEmpty(interfaceClassList)) {
