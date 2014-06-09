@@ -22,11 +22,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Smart Sample</a>
+                <a class="navbar-brand">Smart Sample</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="https://cas:8443/logout">Logout</a></li>
+                    <!--<li><a href="https://cas:8443/logout">Logout</a></li>-->
                 </ul>
             </div>
         </div>
@@ -65,7 +65,7 @@
 <script type="text/javascript">
     $(function() {
         $.ajax({
-            url: 'http://server:8080/rest-server/ws/rest/ProductService/products',
+            url: 'http://server:8080/rest-server/rest/ProductService/products',
             type: 'GET',
             dataType: 'jsonp',
             success: function(data) {
