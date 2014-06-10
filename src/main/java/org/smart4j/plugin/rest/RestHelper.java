@@ -27,7 +27,8 @@ public class RestHelper {
 
     static {
         // 添加 JSON Provider
-        JacksonJsonProvider jsonProvider = new JacksonJsonProvider();
+//        JSONProvider jsonProvider = new JSONProvider(); // 基于 Jettison 实现
+        JacksonJsonProvider jsonProvider = new JacksonJsonProvider(); // 基于 Jackson 实现
         providerList.add(jsonProvider);
         // 添加 Logging Interceptor
         boolean log = ConfigHelper.getBoolean("smart.plugin.rest.log");
@@ -64,7 +65,7 @@ public class RestHelper {
         JAXRSServerFactoryBean factory = new JAXRSServerFactoryBean();
         factory.setAddress(wadl);
         factory.setResourceClasses(resourceClass);
-        factory.setResourceProvider(resourceClass, new SingletonResourceProvider(BeanHelper.getBean(resourceClass)));
+        factory.setResourceProvider(new SingletonResourceProvider(BeanHelper.getBean(resourceClass)));
         factory.setProviders(providerList);
         factory.setInInterceptors(inInterceptorList);
         factory.setOutInterceptors(outInterceptorList);
