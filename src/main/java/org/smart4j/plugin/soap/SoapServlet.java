@@ -13,7 +13,10 @@ import org.smart4j.framework.util.CollectionUtil;
 import org.smart4j.framework.util.StringUtil;
 
 /**
- * 发布 SOAP Web Services
+ * 发布 SOAP 服务
+ *
+ * @since 1.0
+ * @author huangyong
  */
 @WebServlet(urlPatterns = SoapConstant.SERVLET_URL, loadOnStartup = 0)
 public class SoapServlet extends CXFNonSpringServlet {
@@ -48,9 +51,9 @@ public class SoapServlet extends CXFNonSpringServlet {
     private String getAddress(Class<?> interfaceClass) {
         String address;
         // 若 Soap 注解的 value 属性不为空，则获取当前值，否则获取类名
-        String soapValue = interfaceClass.getAnnotation(Soap.class).value();
-        if (StringUtil.isNotEmpty(soapValue)) {
-            address = soapValue;
+        String value = interfaceClass.getAnnotation(Soap.class).value();
+        if (StringUtil.isNotEmpty(value)) {
+            address = value;
         } else {
             address = interfaceClass.getSimpleName();
         }
