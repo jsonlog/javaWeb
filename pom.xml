@@ -42,7 +42,7 @@
     <properties>
         <junit.version>4.11</junit.version>
         <servlet.version>3.0.1</servlet.version>
-        <cxf.version>2.6.9</cxf.version>
+        <cxf.version>3.0.0</cxf.version>
         <!--<jettison.version>1.3.5</jettison.version>-->
         <jackson.version>1.9.13</jackson.version>
         <smart-framework.version>2.3</smart-framework.version>
@@ -67,6 +67,11 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-client</artifactId>
             <version>${cxf.version}</version>
         </dependency>
         <dependency>

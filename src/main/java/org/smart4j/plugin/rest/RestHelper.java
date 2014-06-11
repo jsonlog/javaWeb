@@ -7,7 +7,6 @@ import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
 import org.apache.cxf.jaxrs.provider.jsonp.JsonpInInterceptor;
 import org.apache.cxf.jaxrs.provider.jsonp.JsonpPostStreamInterceptor;
@@ -15,34 +14,51 @@ import org.apache.cxf.jaxrs.provider.jsonp.JsonpPreStreamInterceptor;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
-import org.smart4j.framework.core.ConfigHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.smart4j.framework.ioc.BeanHelper;
 import org.smart4j.framework.util.StringUtil;
 
+/**
+ * REST 插件助手类
+ *
+ * @since 1.0
+ * @author huangyong
+ */
 public class RestHelper {
+
+    private static final Logger logger = LoggerFactory.getLogger(RestHelper.class);
 
     private static final List<Object> providerList = new ArrayList<Object>();
     private static final List<Interceptor<? extends Message>> inInterceptorList = new ArrayList<Interceptor<? extends Message>>();
     private static final List<Interceptor<? extends Message>> outInterceptorList = new ArrayList<Interceptor<? extends Message>>();
 
     static {
-        // 添加 JSON Provider
+        addJsonProvider();
+        addLogingInterceptor();
+        addJsonpInterceptor();
+        addCorsProvider();
+    }
+
+    private static void addJsonProvider() {
 //        JSONProvider jsonProvider = new JSONProvider(); // 基于 Jettison 实现
         JacksonJsonProvider jsonProvider = new JacksonJsonProvider(); // 基于 Jackson 实现
         providerList.add(jsonProvider);
-        // 添加 Logging Interceptor
-        boolean log = ConfigHelper.getBoolean("smart.plugin.rest.log");
-        if (log) {
+    }
+
+    private static void addLogingInterceptor() {
+        if (RestConfig.isLog()) {
             LoggingInInterceptor loggingInInterceptor = new LoggingInInterceptor();
             inInterceptorList.add(loggingInInterceptor);
             LoggingOutInterceptor loggingOutInterceptor = new LoggingOutInterceptor();
             outInterceptorList.add(loggingOutInterceptor);
         }
-        // 添加 JSONP Interceptor
-        boolean jsonp = ConfigHelper.getBoolean("smart.plugin.rest.jsonp");
-        if (jsonp) {
+    }
+
+    private static void addJsonpInterceptor() {
+        if (RestConfig.isJsonp()) {
             JsonpInInterceptor jsonpInInterceptor = new JsonpInInterceptor();
-            String jsonpFunction = ConfigHelper.getString("smart.plugin.rest.jsonp.function");
+            String jsonpFunction = RestConfig.getJsonpFunction();
             jsonpInInterceptor.setCallbackParam(jsonpFunction);
             inInterceptorList.add(jsonpInInterceptor);
             JsonpPreStreamInterceptor jsonpPreStreamInterceptor = new JsonpPreStreamInterceptor();
@@ -50,30 +66,26 @@ public class RestHelper {
             JsonpPostStreamInterceptor jsonpPostStreamInterceptor = new JsonpPostStreamInterceptor();
             outInterceptorList.add(jsonpPostStreamInterceptor);
         }
-        // 添加 CORS Provider
-        boolean cors = ConfigHelper.getBoolean("smart.plugin.rest.cors");
-        if (cors) {
+    }
+
+    private static void addCorsProvider() {
+        if (RestConfig.isCors()) {
             CrossOriginResourceSharingFilter corsProvider = new CrossOriginResourceSharingFilter();
-            String corsOrigin = ConfigHelper.getString("smart.plugin.rest.cors.origin");
+            String corsOrigin = RestConfig.getCorsOrigin();
             corsProvider.setAllowOrigins(Arrays.asList(StringUtil.splitString(corsOrigin, ",")));
             providerList.add(corsProvider);
         }
     }
 
-    // 发布 REST 服务
-    public static void publishService(String wadl, Class<?> resourceClass) {
+    public static void publishService(String address, Class<?> resourceClass) {
         JAXRSServerFactoryBean factory = new JAXRSServerFactoryBean();
-        factory.setAddress(wadl);
+        factory.setAddress(address);
         factory.setResourceClasses(resourceClass);
         factory.setResourceProvider(new SingletonResourceProvider(BeanHelper.getBean(resourceClass)));
         factory.setProviders(providerList);
         factory.setInInterceptors(inInterceptorList);
         factory.setOutInterceptors(outInterceptorList);
         factory.create();
-    }
-
-    // 创建 REST 客户端
-    public static <T> T createClient(String wadl, Class<? extends T> resourceClass) {
-        return JAXRSClientFactory.create(wadl, resourceClass, providerList);
+        logger.debug("Publish REST Service: " + resourceClass.getSimpleName());
     }
 }
