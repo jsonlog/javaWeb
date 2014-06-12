@@ -86,6 +86,6 @@ public class RestHelper {
         factory.setInInterceptors(inInterceptorList);
         factory.setOutInterceptors(outInterceptorList);
         factory.create();
-        logger.debug("Publish REST Service: " + resourceClass.getSimpleName());
+        logger.debug("Publish REST Service: " + resourceClass.getName());
     }
 }
