@@ -44,6 +44,6 @@ public class SoapHelper {
         factory.setInInterceptors(inInterceptorList);
         factory.setOutInterceptors(outInterceptorList);
         factory.create();
-        logger.debug("Publish SOAP Service: " + interfaceClass.getSimpleName());
+        logger.debug("Publish SOAP Service: " + interfaceClass.getName());
     }
 }
