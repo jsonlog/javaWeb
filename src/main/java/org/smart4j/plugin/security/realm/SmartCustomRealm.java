@@ -58,17 +58,16 @@ public class SmartCustomRealm extends AuthorizingRealm {
 
         Set<String> roleNameSet = smartSecurity.getRoleNameSet(username);
 
-        Set<String> permNameSet = new HashSet<String>();
+        Set<String> permissionNameSet = new HashSet<String>();
         if (roleNameSet != null && roleNameSet.size() > 0) {
             for (String roleName : roleNameSet) {
-                Set<String> currentPermNameSet = smartSecurity.getPermissionNameSet(roleName);
-                permNameSet.addAll(currentPermNameSet);
+                permissionNameSet.addAll(smartSecurity.getPermissionNameSet(roleName));
             }
         }
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(roleNameSet);
-        authorizationInfo.setStringPermissions(permNameSet);
+        authorizationInfo.setStringPermissions(permissionNameSet);
         return authorizationInfo;
     }
 }
