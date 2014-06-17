@@ -3,7 +3,7 @@ package org.smart4j.plugin.rest;
 import org.smart4j.framework.core.ConfigHelper;
 
 /**
- * 获取 REST 插件配置项
+ * 用于获取 REST 插件相关配置项
  *
  * @since 1.1
  * @author huangyong

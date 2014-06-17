@@ -7,11 +7,13 @@ import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.transport.servlet.CXFNonSpringServlet;
 import org.smart4j.framework.core.ClassHelper;
+import org.smart4j.framework.ioc.BeanHelper;
+import org.smart4j.framework.ioc.IocHelper;
 import org.smart4j.framework.util.CollectionUtil;
 import org.smart4j.framework.util.StringUtil;
 
 /**
- * 发布 REST 服务
+ * 用于发布 REST 服务
  *
  * @since 1.0
  * @author huangyong
@@ -22,34 +24,42 @@ public class RestServlet extends CXFNonSpringServlet {
     @Override
     protected void loadBus(ServletConfig sc) {
         // 初始化 CXF 总线
-        super.loadBus(sc);
-        Bus bus = getBus();
-        BusFactory.setDefaultBus(bus);
+        initCxfBus(sc);
         // 发布 REST 服务
         publishRestService();
     }
 
+    private void initCxfBus(ServletConfig sc) {
+        super.loadBus(sc);
+        Bus bus = getBus();
+        BusFactory.setDefaultBus(bus);
+    }
+
     private void publishRestService() {
-        // 遍历所有标注了 Rest 注解的类
-        List<Class<?>> resourceClassList = ClassHelper.getClassListByAnnotation(Rest.class);
-        if (CollectionUtil.isNotEmpty(resourceClassList)) {
-            for (Class<?> resourceClass : resourceClassList) {
+        // 遍历所有标注了 Rest 注解的接口
+        List<Class<?>> interfaceClassList = ClassHelper.getClassListByAnnotation(Rest.class);
+        if (CollectionUtil.isNotEmpty(interfaceClassList)) {
+            for (Class<?> interfaceClass : interfaceClassList) {
                 // 获取 REST 地址
-                String address = getAddress(resourceClass);
+                String address = getAddress(interfaceClass);
+                // 获取 REST 实现类（找到唯一的实现类）
+                Class<?> implementClass = IocHelper.findImplementClass(interfaceClass);
+                // 获取实现类的实例
+                Object implementInstance = BeanHelper.getBean(implementClass);
                 // 发布 REST 服务
-                RestHelper.publishService(address, resourceClass);
+                RestPlugin.publishService(address, interfaceClass, implementInstance);
             }
         }
     }
 
-    private String getAddress(Class<?> resourceClass) {
+    private String getAddress(Class<?> interfaceClass) {
         String address;
-        // 若 Rest 注解的 value 属性不为空，则获取当前值，否则获取类名
-        String value = resourceClass.getAnnotation(Rest.class).value();
+        // 若 Rest 注解的 value 属性不为空，则获取当前值，否则获取简单类名
+        String value = interfaceClass.getAnnotation(Rest.class).value();
         if (StringUtil.isNotEmpty(value)) {
             address = value;
         } else {
-            address = resourceClass.getSimpleName();
+            address = interfaceClass.getSimpleName();
         }
         // 确保最前面只有一个 /
         if (!address.startsWith("/")) {

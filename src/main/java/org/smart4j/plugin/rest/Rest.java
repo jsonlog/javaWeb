@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * REST 注解
+ * 用于标注 REST 接口
  *
  * @since 1.0
  * @author huangyong

@@ -1,7 +1,7 @@
 package org.smart4j.plugin.rest;
 
 /**
- * 定义 REST 常量
+ * 用于定义 REST 插件相关常量
  *
  * @since 1.0
  * @author huangyong
