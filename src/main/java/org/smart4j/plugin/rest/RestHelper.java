@@ -7,6 +7,7 @@ import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
 import org.apache.cxf.jaxrs.provider.jsonp.JsonpInInterceptor;
 import org.apache.cxf.jaxrs.provider.jsonp.JsonpPostStreamInterceptor;
@@ -87,5 +88,12 @@ public class RestHelper {
         factory.setOutInterceptors(outInterceptorList);
         factory.create();
         logger.debug("Publish REST Service: " + resourceClass.getName());
+    }
+
+    /**
+     * 创建 REST 客户端（代理方式）
+     */
+    public static <T> T createClient(String wadl, Class<? extends T> resourceClass) {
+        return JAXRSClientFactory.create(wadl, resourceClass, providerList);
     }
 }
