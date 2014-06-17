@@ -1,7 +1,7 @@
 package org.smart4j.plugin.soap;
 
 /**
- * 定义 SOAP 常量
+ * 用于定义 SOAP 插件相关常量
  *
  * @since 1.0
  * @author huangyong

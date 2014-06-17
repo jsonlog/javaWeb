@@ -6,9 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * SOAP 注解
- * <br/>
- * 注意：必须定义在接口上
+ * 用于标注 SOAP 接口
  *
  * @since 1.0
  * @author huangyong

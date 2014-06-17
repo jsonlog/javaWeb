@@ -13,7 +13,7 @@ import org.smart4j.framework.util.CollectionUtil;
 import org.smart4j.framework.util.StringUtil;
 
 /**
- * 发布 SOAP 服务
+ * 用于发布 SOAP 服务
  *
  * @since 1.0
  * @author huangyong
@@ -24,11 +24,15 @@ public class SoapServlet extends CXFNonSpringServlet {
     @Override
     protected void loadBus(ServletConfig sc) {
         // 初始化 CXF 总线
+        initCxfBus(sc);
+        // 发布 SOAP 服务
+        publishSoapService();
+    }
+
+    private void initCxfBus(ServletConfig sc) {
         super.loadBus(sc);
         Bus bus = getBus();
         BusFactory.setDefaultBus(bus);
-        // 发布 SOAP 服务
-        publishSoapService();
     }
 
     private void publishSoapService() {
@@ -43,14 +47,14 @@ public class SoapServlet extends CXFNonSpringServlet {
                 // 获取实现类的实例
                 Object implementInstance = BeanHelper.getBean(implementClass);
                 // 发布 SOAP 服务
-                SoapHelper.publishService(address, interfaceClass, implementInstance);
+                SoapPlugin.publishService(address, interfaceClass, implementInstance);
             }
         }
     }
 
     private String getAddress(Class<?> interfaceClass) {
         String address;
-        // 若 Soap 注解的 value 属性不为空，则获取当前值，否则获取类名
+        // 若 Soap 注解的 value 属性不为空，则获取当前值，否则获取简单类名
         String value = interfaceClass.getAnnotation(Soap.class).value();
         if (StringUtil.isNotEmpty(value)) {
             address = value;
