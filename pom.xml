@@ -13,7 +13,7 @@
     </parent>
 
     <artifactId>smart-plugin-security</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 
     <name>smart-plugin-security</name>
     <description>Smart Security Plugin</description>
