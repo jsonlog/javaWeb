@@ -17,5 +17,11 @@ public class SendHtmlMailTest {
         MailSender mailSender = new HtmlMailSender(subject, content, to);
         mailSender.addAttachment("http://www.oschina.net/img/logo_s2.png");
         mailSender.send();
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
