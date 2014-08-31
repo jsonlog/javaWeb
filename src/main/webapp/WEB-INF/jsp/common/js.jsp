@@ -3,7 +3,7 @@
 <script type="text/javascript" src="${BASE}/www/lib/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="${BASE}/www/lib/jquery-form/3.46.0/jquery.form.min.js"></script>
 <script type="text/javascript" src="${BASE}/www/lib/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
-<script type="text/javascript" src="${BASE}/www/lib/boostrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${BASE}/www/lib/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${BASE}/www/js/global.js"></script>
 <script type="text/javascript" src="${BASE}/www/i18n/i18n_${system_language}.js"></script>
 
