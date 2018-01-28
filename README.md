@@ -1,4 +1,11 @@
+
+
 # Web-Framework-From-Zero
+
+[toc]
+
+
+
 ## Maven
 
 使用Maven来组织工程。
@@ -284,4 +291,243 @@ public final class DatabaseHelper {
 需要获得Connection时，先在ThreadLocal中寻找。若不存在则创建一个并且放置到ThreadLocal中。当Connection关闭时需要从ThreadLocal中移除
 
 ### 提升四  使用数据库连接池
+将从直接jdbc方式获取Connection变为通过数据库连接池获取。
 
+```java
+
+public final class DatabaseHelper {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHelper.class);
+    private static final QueryRunner QUERY_RUNNER = new QueryRunner();
+    private static final BasicDataSource DATA_SOURCE;
+    private static final ThreadLocal<Connection> CONNECTION_HOLDER = new ThreadLocal<Connection>();
+
+    static {
+
+        Properties conf = PropsUtil.loadProps("config.properties");
+        String DRIVER = conf.getProperty("jdbc.driver");
+        String URL = conf.getProperty("jdbc.url");
+        String USERNAME = conf.getProperty("jdbc.username");
+        String PASSWORD = conf.getProperty("jdbc.password");
+        DATA_SOURCE = new BasicDataSource();
+        DATA_SOURCE.setDriverClassName(DRIVER);
+        DATA_SOURCE.setUrl(URL);
+        DATA_SOURCE.setUsername(USERNAME);
+        DATA_SOURCE.setPassword(PASSWORD);
+    }
+
+    public static Connection getConnection() {
+        Connection conn = CONNECTION_HOLDER.get();
+        if(conn == null) {
+            try {
+                conn = DATA_SOURCE.getConnection();
+            } catch (SQLException e) {
+                LOGGER.error("get connection failure", e);
+                throw new RuntimeException(e);
+            }finally {
+                CONNECTION_HOLDER.set(conn);
+            }
+        }
+        return conn;
+    }
+
+```
+并将closeConnection()注释掉。
+
+
+## 第三章 实现IoC功能
+
+### 帮助类 ConfigHelper 加载配置
+
+PropsUtil 类： 读取配置文件，加载为Priperties对象，并提供一系列的getString()、getInt()...方法
+
+ConfigHelper类 :提供获得JDBC连接等方法。
+```java
+package org.smart4j.framwork.helper;
+
+import org.smart4j.framwork.ConfigConstant;
+import org.smart4j.framwork.util.PropsUtil;
+
+import java.util.Properties;
+
+public class ConfigHelper {
+    private static final Properties CONFIG_PROPS = PropsUtil.loadProps(ConfigConstant.CONFIG_FILE);
+
+    public static String getJdbcDriver() {
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_DRIVER);
+    }
+
+    public static String getJdbcUrl() {
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_USERNAME);
+    }
+
+    public static String getJdbcPassword() {
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.JDBC_PASSWORD);
+
+    }
+
+    public static String getAppBasePackage() {
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.APP_BASE_PACKAGE);
+
+    }
+
+    public static String getAppJspPath() {
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.APP_JSP_PATH,"WEB-INF/view/");
+    }
+
+    public static String getAppAssertPath() {
+        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.APP_ASSERT_PATH,"asset/");
+    }
+}
+
+
+```
+
+### 帮助类 ClassHelper 加载类
+
+ClassUtil 类： 根据类名和类路径进行类的加载。
+ClassHelper 类：通过注解的不同来判断Controller和Service。
+
+```java
+package org.smart4j.framwork.helper;
+
+import org.smart4j.framwork.annotation.Controller;
+import org.smart4j.framwork.annotation.Service;
+import org.smart4j.framwork.util.ClassUtil;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class ClassHelper {
+
+    private static final Set<Class<?>> CLASS_SET;
+
+    static {
+        String basePackage = ConfigHelper.getAppBasePackage();
+        CLASS_SET = ClassUtil.getClassSet(basePackage);
+    }
+
+    public static Set<Class<?>> getClassSet() {
+        return CLASS_SET;
+    }
+
+    public static Set<Class<?>> getServiceClassSet() {
+        Set<Class<?>> classSet = new HashSet<Class<?>>();
+        for(Class<?> cls:CLASS_SET) {
+            if(cls.isAnnotationPresent(Service.class)) {
+                classSet.add(cls);
+            }
+        }
+        return classSet;
+    }
+
+
+    public static Set<Class<?>> getControllerClassSet() {
+        Set<Class<?>> classSet = new HashSet<Class<?>>();
+        for(Class<?> cls : CLASS_SET) {
+            if(cls.isAnnotationPresent(Controller.class)) {
+                classSet.add(cls);
+            }
+        }
+        return classSet;
+    }
+
+
+    public static Set<Class<?>> getBeanClassSet() {
+        Set<Class<?>> classSet = new HashSet<Class<?>>();
+        classSet.addAll(getServiceClassSet());
+        classSet.addAll(getControllerClassSet());
+        return classSet;
+    }
+}
+
+```
+### 帮助类 BeanHelper Bean容器
+
+ReflectionUtil 类：通过反射实例化类，调用类方法和填充类变量。
+
+BeanHelper类: 实例化并保存所有的Bean。
+
+```java
+package org.smart4j.framwork.helper;
+
+import org.smart4j.framwork.util.ReflectionUtil;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class BeanHelper {
+    private static final Map<Class<?>,Object> BEAN_MAP = new HashMap<Class<?>, Object>();
+
+    static {
+        Set<Class<?>> beanClssSet = ClassHelper.getBeanClassSet();
+        for(Class<?> beanClass : beanClssSet) {
+            Object obj = ReflectionUtil.newInstance(beanClass);
+            BEAN_MAP.put(beanClass,obj);
+        }
+    }
+
+    public static Map<Class<?>,Object> getBeanMap() {
+        return BEAN_MAP;
+    }
+
+    public static <T> T getBean(Class<T> cls) {
+        if(!BEAN_MAP.containsKey(cls)) {
+            throw new RuntimeException("can not get bean by class:"+cls);
+        }
+        return (T)BEAN_MAP.get(cls);
+    }
+}
+
+```
+
+
+### 帮助类 IoCHelper 实现IoC
+遍历BeanMap中的每一个对象的每一个变量，若有Inject注解则进行注入。
+
+```java
+package org.smart4j.framwork.helper;
+
+
+import org.smart4j.framwork.annotation.Inject;
+import org.smart4j.framwork.util.ArrayUtil;
+import org.smart4j.framwork.util.CollectionUtil;
+import org.smart4j.framwork.util.ReflectionUtil;
+
+import java.lang.reflect.Field;
+import java.util.Map;
+
+public class IoCHelper {
+
+    static {
+        Map<Class<?>,Object> beanMap = BeanHelper.getBeanMap();
+        if(CollectionUtil.isNotEmpty(beanMap)) {
+            // 遍历Map
+            for(Map.Entry<Class<?>,Object> beanEntry : beanMap.entrySet()) {
+                Class<?> beanClass = beanEntry.getKey();
+                Object beanInstance = beanEntry.getValue();
+
+                // 获取所有成员变量
+                Field[] beanFields = beanClass.getDeclaredFields();
+                if(ArrayUtil.isNotEmpty(beanFields)) {
+                    for(Field beanField:beanFields) {
+                        if(beanField.isAnnotationPresent(Inject.class)) {
+                            // 需要注入
+                            Class<?> beanFieldClass = beanField.getType();
+                            Object beanFieldInstance = beanMap.get(beanFieldClass);
+                            if(beanFieldInstance!=null) {
+                                // 反射初始化BeanField值
+
+                                // 将beanInstance对象中的beanField变量设置为beanFieldInstace
+                                ReflectionUtil.setField(beanInstance,beanField,beanFieldInstance);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+```
