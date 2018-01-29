@@ -546,3 +546,103 @@ public class IoCHelper {
 
 
 ```
+
+
+### 帮助类 ControllerHelper 处理请求与方法间的映射
+
+遍历Controller的每一个方法，对于有Action注解的保存下来便与后续使用。
+
+```java
+
+package org.smart4j.framwork.helper;
+
+import org.smart4j.framwork.annotation.Action;
+import org.smart4j.framwork.bean.Handler;
+import org.smart4j.framwork.bean.Request;
+import org.smart4j.framwork.util.ArrayUtil;
+import org.smart4j.framwork.util.CollectionUtil;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class ControllerHelper {
+
+    private static final Map<Request,Handler> ACTION_MAP = new HashMap<Request, Handler>();
+
+    static {
+        Set<Class<?>> controllerClassSet = ClassHelper.getControllerClassSet();
+        if(CollectionUtil.isNotEmpty(controllerClassSet)) {
+            // 遍历Controller类的方法
+            for(Class<?> controllerClass:controllerClassSet) {
+                Method[] methods = controllerClass.getDeclaredMethods();
+                if(ArrayUtil.isNotEmpty(methods)) {
+                    for(Method method:methods) {
+                        if(method.isAnnotationPresent(Action.class)){
+                            Action action = method.getAnnotation(Action.class);
+                            String mapping = action.value();
+                            // 验证URL
+                            if(mapping.matches("\\w+:/\\w*")) {
+                                String[] array = mapping.split(":");
+                                if(ArrayUtil.isNotEmpty(array) && array.length == 2) {
+                                    String requestMethod = array[0];
+                                    String requestPath = array[1];
+                                    Request request = new Request(requestMethod,requestPath);
+                                    Handler handler = new Handler(controllerClass,method);
+                                    ACTION_MAP.put(request,handler);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static Handler getHandler(String requestMethod,String requestPath) {
+        Request request = new Request(requestMethod,requestPath);
+        return ACTION_MAP.get(request);
+    }
+}
+
+```
+
+### 帮助类加载器 HelperLoader 加载四个Helper类
+
+```java
+
+package org.smart4j.framwork;
+
+import org.smart4j.framwork.annotation.Controller;
+import org.smart4j.framwork.helper.BeanHelper;
+import org.smart4j.framwork.helper.ClassHelper;
+import org.smart4j.framwork.helper.ControllerHelper;
+import org.smart4j.framwork.helper.IoCHelper;
+import org.smart4j.framwork.util.ClassUtil;
+
+public class HelperLoader {
+    /**
+     * ClassHelper        保存所有的加载类
+     * BeanHelper         Bean容器 单例模式
+     * IoCHelper          实现IoC功能
+     * ControllerHelper   处理URL与Controller的关系
+     */
+    public static void init() {
+        Class<?>[] classList = {
+                ClassHelper.class,
+                BeanHelper.class,
+                IoCHelper.class,
+                ControllerHelper.class
+        };
+        for(Class<?> cls : classList) {
+            ClassUtil.loadClass(cls.getName(),true);
+        }
+    }
+}
+
+```
+### 控制器类DispatcherServlet 
+在init()中初始化框架，注册JSPServlet和静态资源Servlet。
+在service()中对请求进行直接的处理，将get与post请求中的所有
