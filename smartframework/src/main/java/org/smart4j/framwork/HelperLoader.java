@@ -1,10 +1,7 @@
 package org.smart4j.framwork;
 
 import org.smart4j.framwork.annotation.Controller;
-import org.smart4j.framwork.helper.BeanHelper;
-import org.smart4j.framwork.helper.ClassHelper;
-import org.smart4j.framwork.helper.ControllerHelper;
-import org.smart4j.framwork.helper.IoCHelper;
+import org.smart4j.framwork.helper.*;
 import org.smart4j.framwork.util.ClassUtil;
 
 public class HelperLoader {
@@ -18,6 +15,7 @@ public class HelperLoader {
         Class<?>[] classList = {
                 ClassHelper.class,
                 BeanHelper.class,
+                AopHelper.class,
                 IoCHelper.class,
                 ControllerHelper.class
         };

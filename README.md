@@ -17,7 +17,15 @@
          * [帮助类 ClassHelper 加载类](#帮助类-classhelper-加载类)
          * [帮助类 BeanHelper Bean容器](#帮助类-beanhelper-bean容器)
          * [帮助类 IoCHelper 实现IoC](#帮助类-iochelper-实现ioc)
-
+         * [帮助类 ControllerHelper 处理请求与方法间的映射](#帮助类-controllerhelper-处理请求与方法间的映射)
+         * [帮助类加载器 HelperLoader 加载四个Helper类](#帮助类加载器-helperloader-加载四个helper类)
+         * [控制器类DispatcherServlet](#控制器类dispatcherservlet)
+      * [第四章 实现AOP](#第四章-实现aop)
+         * [静态代理](#静态代理)
+         * [JDK动态代理](#jdk动态代理)
+         * [CGLib动态代理](#cglib动态代理)
+         * [事务管理](#事务管理)
+         * [实现事务](#实现事务)
 
 
 
@@ -645,4 +653,331 @@ public class HelperLoader {
 ```
 ### 控制器类DispatcherServlet 
 在init()中初始化框架，注册JSPServlet和静态资源Servlet。
-在service()中对请求进行直接的处理，将get与post请求中的所有
+在service()中对请求进行直接的处理，将get与post请求中的所有键值对映射都放置到Map对象中。
+为了确保能得到所有提交的键值对，再次遍历body，解析字符串放入Map中[参考博文](https://my.oschina.net/huangyong/blog/158738)
+
+```java
+package org.smart4j.framwork;
+
+import com.mysql.jdbc.SocketMetadata;
+import org.apache.commons.lang3.StringUtils;
+import org.smart4j.framwork.bean.Data;
+import org.smart4j.framwork.bean.Handler;
+import org.smart4j.framwork.bean.Param;
+import org.smart4j.framwork.bean.View;
+import org.smart4j.framwork.helper.BeanHelper;
+import org.smart4j.framwork.helper.ConfigHelper;
+import org.smart4j.framwork.helper.ControllerHelper;
+import org.smart4j.framwork.util.*;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
+@WebServlet(urlPatterns = {"/*"},loadOnStartup = 0)
+public class DispatcherServlet extends HttpServlet{
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        // 先初始化
+        HelperLoader.init();
+        // 注册Servlet
+        ServletContext servletContext = config.getServletContext();
+
+        // 注册JSPServlet
+        ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
+        jspServlet.addMapping(ConfigHelper.getAppJspPath()+"*");
+        // 注册静态资源
+        ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
+
+        defaultServlet.addMapping(ConfigHelper.getAppAssertPath()+"*");
+    }
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // 获取请求的方法和请求路径
+        String requestMethod = req.getMethod().toLowerCase();
+        String requestPath = req.getPathInfo();
+
+        // 获取Action处理器
+        Handler handler = ControllerHelper.getHandler(requestMethod,requestPath);
+        if(handler!=null) {
+            // 获取Controller类 及实例
+            Class<?> controllerClass = handler.getControllerClass();
+            Object controllerBean = BeanHelper.getBean(controllerClass);
+            // 创建请求参数请求
+            Map<String,Object> paramMap = new HashMap<String, Object>();
+            // 得到get请求
+            Enumeration<String> paramNames = req.getParameterNames();
+            while(paramNames.hasMoreElements()) {
+                String paramsName = paramNames.nextElement();
+                String paramsValue = req.getParameter(paramsName);
+                paramMap.put(paramsName,paramsValue);
+
+            }
+
+            String body = CodecUtil.decodeURL(StreamUtil.getString(req.getInputStream()));
+            if(StringUtil.isNotEmpty(body)) {
+                String[] params = StringUtils.split(body,"&");
+                if(ArrayUtil.isNotEmpty(params)) {
+                    for(String param : params){
+                        String[] array = StringUtils.split(param,"=");
+                        if(ArrayUtil.isNotEmpty(array) && array.length==2) {
+                            String paramName = array[0];
+                            String paramValue = array[1];
+                            paramMap.put(paramName,paramValue);
+                        }
+                    }
+                }
+            }
+            Param param = new Param(paramMap);
+            Method actionMethod = handler.getActionMethod();
+            Object result = ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+            // 处理Action方法返回值
+            if(result instanceof View) {
+                View view = (View) result;
+                String path = view.getPath();
+                if(StringUtil.isNotEmpty(path)) {
+                    if(path.startsWith("/")) {
+                        resp.sendRedirect(req.getContextPath()+path);
+                    } else {
+                        Map<String,Object> model = view.getModel();
+                        for(Map.Entry<String,Object> entry:model.entrySet()) {
+                            req.setAttribute(entry.getKey(),entry.getValue());
+                        }
+                        req.getRequestDispatcher(ConfigHelper.getAppJspPath()+path).forward(req,resp);
+                    }
+                }
+            }else if(result instanceof Data) {
+                Data data = (Data)result;
+                Object model = data.getModel();
+                if(model != null) {
+                    resp.setContentType("application/json");
+                    resp.setCharacterEncoding("UTF-8");
+                    PrintWriter writer = resp.getWriter();
+                    String json = JsonUtil.toJson(model);
+                    writer.write(json);
+                    writer.flush();
+                    writer.close();
+                }
+            }
+
+        }
+    }
+}
+
+```
+
+## 第四章 实现AOP
+已知如下接口和实现类。
+```java
+public interface Greeting {
+
+    void sayHello(String name);
+}
+
+
+
+```
+
+```java
+public class GreetingImpl implements Greeting {
+    public void sayHello(String name) {
+        System.out.println(name+" say hello! ");
+    }
+}
+
+```
+### 静态代理
+```java
+public class GreetingProxy implements Greeting {
+    private GreetingImpl greetingImpl;
+
+    public GreetingProxy(GreetingImpl greetingImpl) {
+        this.greetingImpl = greetingImpl;
+    }
+
+    public void sayHello(String name) {
+        before();
+        greetingImpl.sayHello(name);
+        after();
+    }
+
+    private void before() {
+        System.out.println("Before");
+    }
+    private void after() {
+        System.out.println("After");
+    }
+
+
+
+    public static void main(String[] args) {
+        Greeting greetingProxy = new GreetingProxy(new GreetingImpl());
+        greetingProxy.sayHello("Jack");
+    }
+}
+
+
+```
+
+### JDK动态代理
+需要实现InvocationHandler接口
+```java
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+public class JDKDynamicProxy implements InvocationHandler {
+
+    private Object obj;
+
+    public JDKDynamicProxy(Object obj) {
+        this.obj = obj;
+    }
+
+    public <T> T getProxy() {
+        return (T) Proxy.newProxyInstance(
+                obj.getClass().getClassLoader(),
+                obj.getClass().getInterfaces(),
+                this
+        );
+    }
+
+
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        before();
+        Object result = method.invoke(obj,args);
+        after();
+        return result;
+    }
+    private void before() {
+        System.out.println("Before");
+    }
+    private void after() {
+        System.out.println("After");
+    }
+
+
+
+    public static void main(String[] args) {
+        Greeting greeting = new JDKDynamicProxy(new GreetingImpl()).getProxy();
+        greeting.sayHello("Jack");
+    }
+}
+
+```
+
+### CGLib动态代理
+```java
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
+
+import java.lang.reflect.Method;
+
+public class CGLibDynamicProxy implements MethodInterceptor {
+    private static CGLibDynamicProxy instance = new CGLibDynamicProxy();
+
+    private CGLibDynamicProxy() {
+    }
+
+    public static CGLibDynamicProxy getInstance() {
+        return instance;
+    }
+
+    public <T> T getProxy(Class<T> cls) {
+        return (T)Enhancer.create(cls,this);
+    }
+    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+        before();
+        Object obj = methodProxy.invokeSuper(o,objects);
+        after();
+        return obj;
+    }
+
+    private void before() {
+        System.out.println("Before");
+    }
+    private void after() {
+        System.out.println("After");
+    }
+
+    public static void main(String[] args) {
+        Greeting greeting = CGLibDynamicProxy.getInstance().getProxy(GreetingImpl.class);
+        greeting.sayHello("Jack");
+
+    }
+}
+
+```
+
+### 事务管理
+
+* 原子性 Atomicity 	不可分
+* 一致性 Consistency	数据一致
+* 隔离性 Isolation		操作隔离
+* 持久性 Durability	保证存在
+
+
+### 实现事务
+使用AOP特性实现事务管理
+```java
+package org.smart4j.framwork.proxy;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.smart4j.framwork.annotation.Transaction;
+import org.smart4j.framwork.helper.DatabaseHelper;
+
+import javax.swing.text.DefaultEditorKit;
+import java.lang.reflect.Method;
+
+public class TransactionProxy implements Proxy {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransactionProxy.class);
+
+    private static final ThreadLocal<Boolean> FLAG_HOLDER = new ThreadLocal<Boolean>() {
+        @Override
+        protected Boolean initialValue() {
+            return false;
+        }
+    };
+
+    public Object doProxy(ProxyChain proxyChain) throws Throwable {
+        Object result;
+        boolean flag = FLAG_HOLDER.get();
+        Method method = proxyChain.getTargetMethod();
+        if(!flag && method.isAnnotationPresent(Transaction.class)) {
+            FLAG_HOLDER.set(true);
+            try {
+                DatabaseHelper.beginTransaction();
+                LOGGER.debug("begin transaction");
+                result = proxyChain.doProxyChain();
+                DatabaseHelper.commitTransaction();
+                LOGGER.debug("commit transaction");
+            }catch (Exception e) {
+                DatabaseHelper.rollbackTransaction();
+                LOGGER.debug("rollback transaction");
+                throw e;
+            }finally {
+                FLAG_HOLDER.remove();
+            }
+        } else {
+            result = proxyChain.doProxyChain();
+        }
+        return result;
+    }
+}
+
+```
+
