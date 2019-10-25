@@ -1,0 +1,9 @@
+{
+  "name": "msa-sample-web",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.13.4",
+    "node-zookeeper-client": "^0.2.2",
+    "http-proxy": "^1.13.3"
+  }
+}

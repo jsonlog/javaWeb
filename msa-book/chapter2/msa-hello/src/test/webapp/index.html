@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+
+<div id="console"></div>
+
+<script src="js/jquery.min.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            method: 'GET',
+            url: 'http://localhost:8080/hello',
+            success: function (data) {
+                $('#console').text(data);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
