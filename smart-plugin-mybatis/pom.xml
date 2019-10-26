@@ -1,0 +1,69 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.smart4j</groupId>
+        <artifactId>smart-root</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>smart-plugin-mybatis</artifactId>
+    <version>1.0</version>
+
+    <name>smart-plugin-mybatis</name>
+    <description>Smart Mybatis Plugin</description>
+    <url>http://www.smart4j.org/</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>abel533</name>
+            <email>abel533@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@git.oschina.net:free/smart-plugin-mybatis.git</connection>
+        <developerConnection>scm:git:git@git.oschina.net:free/smart-plugin-mybatis.git</developerConnection>
+        <url>git@git.oschina.net:free/smart-plugin-mybatis.git</url>
+    </scm>
+
+    <properties>
+        <log4j.version>1.2.17</log4j.version>
+        <mybatis.version>3.2.6</mybatis.version>
+        <smart-framework.version>2.3</smart-framework.version>
+    </properties>
+
+    <dependencies>
+        <!-- Smart -->
+        <dependency>
+            <groupId>org.smart4j</groupId>
+            <artifactId>smart-framework</artifactId>
+            <version>${smart-framework.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+    </dependencies>
+</project>
