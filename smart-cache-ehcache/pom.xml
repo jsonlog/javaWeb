@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.smart4j</groupId>
+        <artifactId>smart-root</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>smart-cache-ehcache</artifactId>
+    <version>1.0</version>
+
+    <name>smart-cache-ehcache</name>
+    <description>Smart Cache for Ehcache</description>
+    <url>http://www.smart4j.org/</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>huangyong</name>
+            <email>huangyong.java@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@git.oschina.net:huangyong/smart-cache-ehcache.git</connection>
+        <developerConnection>scm:git:git@git.oschina.net:huangyong/smart-cache-ehcache.git</developerConnection>
+        <url>git@git.oschina.net:huangyong/smart-cache-ehcache.git</url>
+    </scm>
+
+    <properties>
+        <junit.version>4.11</junit.version>
+        <slf4j.version>1.7.5</slf4j.version>
+        <ehcache.version>2.8.1</ehcache.version>
+        <commons-lang.version>2.4</commons-lang.version>
+        <smart-cache.version>1.0</smart-cache.version>
+    </properties>
+
+    <dependencies>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- EhCache -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
+        </dependency>
+        <!-- Apache Commons -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons-lang.version}</version>
+        </dependency>
+        <!-- Smart -->
+        <dependency>
+            <groupId>org.smart4j</groupId>
+            <artifactId>smart-cache</artifactId>
+            <version>${smart-cache.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
