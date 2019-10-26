@@ -5,7 +5,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
-import org.apache.taglibs.standard.tag.el.sql.QueryTag;
+//import org.apache.taglibs.standard.tag.el.sql.QueryTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smart4j.chapter2.service.CustomerService;
