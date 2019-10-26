@@ -1,15 +1,9 @@
-.DS_Store
-*.class
-out/
-
 # Maven #
 target/
 
 # IDEA #
 .idea/
 *.iml
-*.ipr
-*.iws
 
 # Eclipse #
 .settings/

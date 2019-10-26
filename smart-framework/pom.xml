@@ -42,7 +42,7 @@
     <properties>
         <junit.version>4.11</junit.version>
         <slf4j.version>1.7.5</slf4j.version>
-        <servlet.version>3.0.1</servlet.version>
+        <servlet.version>3.0.1</servlet.version><!-- 4.0.1 -->
         <jackson.version>1.9.13</jackson.version>
         <cglib.version>2.2.2</cglib.version>
         <commons-lang.version>2.4</commons-lang.version>
@@ -108,11 +108,13 @@
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
         </dependency>
+<!--  数据库连接池  -->
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>${commons-dbcp.version}</version>
         </dependency>
+<!--  JDBC封装  -->
         <dependency>
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>
