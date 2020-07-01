@@ -41,7 +41,7 @@
 
     <properties>
         <junit.version>4.11</junit.version>
-        <quartz.version>2.2.1</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
         <smart-framework.version>2.3</smart-framework.version>
     </properties>
 
