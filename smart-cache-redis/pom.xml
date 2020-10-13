@@ -41,7 +41,7 @@
     </scm>
 
     <properties>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.13.1</junit.version>
         <slf4j.version>1.7.5</slf4j.version>
         <jedis.version>2.4.2</jedis.version>
         <commons-lang.version>2.4</commons-lang.version>
