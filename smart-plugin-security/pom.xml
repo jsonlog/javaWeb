@@ -42,7 +42,7 @@
     <properties>
         <servlet.version>3.0.1</servlet.version>
         <jsp.version>2.2</jsp.version>
-        <shrio.version>1.2.3</shrio.version>
+        <shrio.version>1.7.1</shrio.version>
         <smart-framework.version>2.3</smart-framework.version>
     </properties>
 
